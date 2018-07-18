@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.diamondq</groupId>
         <artifactId>master-parent</artifactId>
-        <version>3</version>
+        <version>4</version>
         <relativePath>../master-parent</relativePath>
     </parent>
     <artifactId>diamondq-parent</artifactId>
@@ -644,6 +644,11 @@
             </dependency>
             <dependency>
                 <groupId>io.opentracing</groupId>
+                <artifactId>opentracing-noop</artifactId>
+                <version>0.31.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.opentracing</groupId>
                 <artifactId>opentracing-util</artifactId>
                 <version>0.31.0</version>
             </dependency>
@@ -676,18 +681,19 @@
                 <groupId>com.diamondq.common</groupId>
                 <artifactId>common-thirdparty.checker.qual</artifactId>
                 <version>2.5.1</version>
+                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.checkerframework</groupId>
                 <artifactId>checker</artifactId>
                 <version>2.5.1</version>
-                <scope>provided</scope>
+                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.checkerframework</groupId>
                 <artifactId>jdk8</artifactId>
                 <version>2.5.1</version>
-                <scope>provided</scope>
+                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.osgi</groupId>
@@ -938,6 +944,11 @@
                 <artifactId>jersey-container-servlet-core</artifactId>
                 <version>2.27</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.servicemix.bundles</groupId>
+                <artifactId>org.apache.servicemix.bundles.javax-inject</artifactId>
+                <version>1_3</version>
+            </dependency>
             <!-- Testing -->
             <dependency>
                 <groupId>junit</groupId>
@@ -983,6 +994,14 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>25.1-jre</version>
+                <exclusions>
+                    <!-- This is excluded because the a) the common-thirdparty.checker.qual 
+                        provides it and b) we want to make sure it's marked optional -->
+                    <exclusion>
+                        <groupId>org.checkerframework</groupId>
+                        <artifactId>checker-qual</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.diamondq.common</groupId>
@@ -1035,13 +1054,11 @@
         <dependency>
             <groupId>org.eclipse.jdt</groupId>
             <artifactId>org.eclipse.jdt.annotation</artifactId>
-            <scope>provided</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.diamondq.common</groupId>
             <artifactId>common-thirdparty.checker.qual</artifactId>
-            <scope>provided</scope>
             <optional>true</optional>
         </dependency>
     </dependencies>
