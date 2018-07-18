@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>3</version>
+    <version>4</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -595,6 +595,192 @@
                 </plugins>
             </build>
         </profile>
+        <!-- Add support for a karaf-feature project. This is a simple POM 
+            with a single feature.xml file. -->
+        <profile>
+            <id>karaf-feature-profile</id>
+            <activation>
+                <file>
+                    <exists>profiles/karaf-feature</exists>
+                </file>
+            </activation>
+            <properties>
+                <!-- The file that is the feature file. By default it's named the same as the artifactId and exists at the root of the project -->
+                <karaf.feature.file>${project.artifactId}.xml</karaf.feature.file>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-artifacts</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>attach-artifact</goal>
+                                </goals>
+                                <configuration>
+                                    <artifacts>
+                                        <artifact>
+                                            <file>${karaf.feature.file}</file>
+                                            <type>xml</type>
+                                        </artifact>
+                                    </artifacts>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>karaf-generated-feature-profile</id>
+            <activation>
+                <file>
+                    <exists>profiles/karaf-generated-feature</exists>
+                </file>
+            </activation>
+            <properties>
+                <!-- Redefine the feature file since it's now generated -->
+                <karaf.feature.file>${project.build.directory}/generated-fmpp/${project.artifactId}.xml</karaf.feature.file>
+                <!-- The list of projects that should not be locked (groupId:artifactId:type:version format).
+                    This is what should be overridden by child projects -->
+                <karaf.dont.lock.snapshots></karaf.dont.lock.snapshots>
+                <!-- The combination of the karaf.dont.lock.snapshots and an explicit not locking of ourself -->
+                <karaf.dont.lock.snapshots.final>${karaf.dont.lock.snapshots}${project.groupId}:${project.artifactId}:jar:${project.version}</karaf.dont.lock.snapshots.final>
+                <!-- The file containing the library scripts needed to generate the karaf feature -->
+                <karaf.freemarker.script>com.diamondq.osgi:osgi-feature.scripts:1:zip</karaf.freemarker.script>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-help-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>generate-effective</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>effective-pom</goal>
+                                </goals>
+                                <configuration>
+                                    <output>${project.build.directory}/.effective-pom.xml</output>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>lock-snapshots</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>mvn</executable>
+                                    <toolchain>mvn</toolchain>
+                                    <arguments>
+                                        <argument>-q</argument>
+                                        <argument>-f</argument>
+                                        <argument>${project.build.directory}/.effective-pom.xml</argument>
+                                        <argument>versions:lock-snapshots</argument>
+                                        <argument>-Dexcludes=${karaf.dont.lock.snapshots.final}</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>generate-pom-json</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>mvn</executable>
+                                    <toolchain>mvn</toolchain>
+                                    <arguments>
+                                        <argument>-q</argument>
+                                        <argument>-f</argument>
+                                        <argument>${project.build.directory}/.effective-pom.xml</argument>
+                                        <argument>com.github.ferstl:depgraph-maven-plugin:3.1.0:graph</argument>
+                                        <argument>-DgraphFormat=json</argument>
+                                        <argument>-DshowDuplicates=true</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                     <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>unpack-scripts</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/scripts</outputDirectory>
+                                    <artifact>com.diamondq.osgi:osgi-feature.scripts:1:zip</artifact>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-code</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/scripts</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/resources/fmpp</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                     <plugin>
+                        <groupId>com.googlecode.fmpp-maven-plugin</groupId>
+                        <artifactId>fmpp-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <cfgFile>src/main/resources/config.fmpp</cfgFile>
+                                    <outputDirectory>target/generated-fmpp/</outputDirectory>
+                                    <templateDirectory>target/scripts</templateDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.freemarker</groupId>
+                                <artifactId>freemarker</artifactId>
+                                <version>2.3.28</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>net.sourceforge.fmpp</groupId>
+                                <artifactId>fmpp</artifactId>
+                                <version>0.9.15</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <!-- If we're running in Jenkins, then make sure we always update 
             snapshots -->
         <profile>
@@ -855,6 +1041,11 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-help-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-invoker-plugin</artifactId>
                     <version>3.1.0</version>
                 </plugin>
@@ -931,6 +1122,11 @@
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.6.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
                     <version>1.0.1</version>
                 </plugin>
@@ -968,6 +1164,16 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>2.5</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.googlecode.fmpp-maven-plugin</groupId>
+                    <artifactId>fmpp-maven-plugin</artifactId>
+                    <version>1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.karaf.tooling</groupId>
+                    <artifactId>karaf-maven-plugin</artifactId>
+                    <version>4.2.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
