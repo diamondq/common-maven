@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>4</version>
+    <version>5</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -650,7 +650,7 @@
                 <!-- The combination of the karaf.dont.lock.snapshots and an explicit not locking of ourself -->
                 <karaf.dont.lock.snapshots.final>${karaf.dont.lock.snapshots}${project.groupId}:${project.artifactId}:jar:${project.version}</karaf.dont.lock.snapshots.final>
                 <!-- The file containing the library scripts needed to generate the karaf feature -->
-                <karaf.freemarker.script>com.diamondq.osgi:osgi-feature.scripts:1:zip</karaf.freemarker.script>
+                <karaf.freemarker.script>com.diamondq.osgi:osgi-feature.scripts:2:zip</karaf.freemarker.script>
             </properties>
             <build>
                 <plugins>
@@ -724,7 +724,7 @@
                                 </goals>
                                 <configuration>
                                     <outputDirectory>${project.build.directory}/scripts</outputDirectory>
-                                    <artifact>com.diamondq.osgi:osgi-feature.scripts:1:zip</artifact>
+                                    <artifact>${karaf.freemarker.script}</artifact>
                                 </configuration>
                             </execution>
                         </executions>
