@@ -75,17 +75,17 @@
             <properties>
                 <scm.project>common-maven</scm.project>
                 <nexus.url>https://nexus.diamondq.com</nexus.url>
-                <nexus.serverId>dq-release</nexus.serverId>
+                <nexus.serverId>2-dq-release</nexus.serverId>
                 <nexus.auto.release>false</nexus.auto.release>
                 <nexus.skip.staging>true</nexus.skip.staging>
             </properties>
             <distributionManagement>
                 <snapshotRepository>
-                    <id>dq-snapshot</id>
+                    <id>1-dq-snapshot</id>
                     <url>https://nexus.diamondq.com/repository/maven-snapshots/</url>
                 </snapshotRepository>
                 <repository>
-                    <id>dq-release</id>
+                    <id>2-dq-release</id>
                     <url>https://nexus.diamondq.com/repository/maven-releases/</url>
                 </repository>
             </distributionManagement>
@@ -106,7 +106,7 @@
     </profiles>
     <repositories>
         <repository>
-            <id>dq-snapshot</id>
+            <id>1-dq-snapshot</id>
             <url>https://nexus.diamondq.com/repository/maven-snapshots/</url>
             <snapshots>
                 <enabled>true</enabled>
@@ -117,7 +117,7 @@
             </releases>
         </repository>
         <repository>
-            <id>dq-release</id>
+            <id>2-dq-release</id>
             <url>https://nexus.diamondq.com/repository/maven-public/</url>
             <snapshots>
                 <enabled>false</enabled>
