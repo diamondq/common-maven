@@ -9,7 +9,7 @@
         <relativePath>../master-parent</relativePath>
     </parent>
     <artifactId>diamondq-parent</artifactId>
-    <version>6.0.0.2</version>
+    <version>6.0.0.3</version>
     <packaging>pom</packaging>
     <name>DiamondQ: DiamondQ Parent</name>
     <description>A common POM for parents of DiamondQ projects.</description>
