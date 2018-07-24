@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>5</version>
+    <version>6.0.0</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -605,7 +605,8 @@
                 </file>
             </activation>
             <properties>
-                <!-- The file that is the feature file. By default it's named the same as the artifactId and exists at the root of the project -->
+                <!-- The file that is the feature file. By default it's named 
+                    the same as the artifactId and exists at the root of the project -->
                 <karaf.feature.file>${project.artifactId}.xml</karaf.feature.file>
             </properties>
             <build>
@@ -644,12 +645,14 @@
             <properties>
                 <!-- Redefine the feature file since it's now generated -->
                 <karaf.feature.file>${project.build.directory}/generated-fmpp/${project.artifactId}.xml</karaf.feature.file>
-                <!-- The list of projects that should not be locked (groupId:artifactId:type:version format).
-                    This is what should be overridden by child projects -->
+                <!-- The list of projects that should not be locked (groupId:artifactId:type:version 
+                    format). This is what should be overridden by child projects -->
                 <karaf.dont.lock.snapshots></karaf.dont.lock.snapshots>
-                <!-- The combination of the karaf.dont.lock.snapshots and an explicit not locking of ourself -->
+                <!-- The combination of the karaf.dont.lock.snapshots and 
+                    an explicit not locking of ourself -->
                 <karaf.dont.lock.snapshots.final>${karaf.dont.lock.snapshots}${project.groupId}:${project.artifactId}:jar:${project.version}</karaf.dont.lock.snapshots.final>
-                <!-- The file containing the library scripts needed to generate the karaf feature -->
+                <!-- The file containing the library scripts needed to generate 
+                    the karaf feature -->
                 <karaf.freemarker.script>com.diamondq.osgi:osgi-feature.scripts:2:zip</karaf.freemarker.script>
             </properties>
             <build>
@@ -713,7 +716,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                     <plugin>
+                    <plugin>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
@@ -749,7 +752,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                     <plugin>
+                    <plugin>
                         <groupId>com.googlecode.fmpp-maven-plugin</groupId>
                         <artifactId>fmpp-maven-plugin</artifactId>
                         <executions>
@@ -1032,7 +1035,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.0.0-M1</version>
+                    <version>3.0.0-M2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -1332,9 +1335,11 @@
                         <configuration>
                             <rules>
                                 <banDuplicatePomDependencyVersions />
-                                <requirePluginVersions />
+                                <!-- The enforcer plugin 3.0.0-M2 regresses 
+                                    on requirePluginVersions (see MENFORCER-306). Disabling until fixed. -->
+                                <!-- <requirePluginVersions /> -->
                                 <requireMavenVersion>
-                                    <version>3.0.5</version>
+                                    <version>3.3.9</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
