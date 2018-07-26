@@ -9,7 +9,7 @@
         <relativePath>../master-parent</relativePath>
     </parent>
     <artifactId>diamondq-parent</artifactId>
-    <version>6.0.0.3</version>
+    <version>6.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>DiamondQ: DiamondQ Parent</name>
     <description>A common POM for parents of DiamondQ projects.</description>
@@ -20,7 +20,7 @@
         <jackson.version>2.9.6</jackson.version>
         <scm.project />
         <!-- This is an override until the master is updated. -->
-        <karaf.freemarker.script>com.diamondq.osgi:osgi-feature.scripts:2.1.2:zip</karaf.freemarker.script>
+        <karaf.freemarker.script>com.diamondq.osgi:osgi-feature.scripts:2.1.3:zip</karaf.freemarker.script>
     </properties>
     <licenses>
         <license>
@@ -74,19 +74,15 @@
             </activation>
             <properties>
                 <scm.project>common-maven</scm.project>
-                <nexus.url>https://nexus.diamondq.com</nexus.url>
-                <nexus.serverId>2-dq-release</nexus.serverId>
-                <nexus.auto.release>false</nexus.auto.release>
-                <nexus.skip.staging>true</nexus.skip.staging>
             </properties>
             <distributionManagement>
                 <snapshotRepository>
-                    <id>1-dq-snapshot</id>
-                    <url>https://nexus.diamondq.com/repository/maven-snapshots/</url>
+                    <id>ossrh-snap</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
                 </snapshotRepository>
                 <repository>
-                    <id>2-dq-release</id>
-                    <url>https://nexus.diamondq.com/repository/maven-releases/</url>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
             </distributionManagement>
         </profile>
@@ -122,17 +118,6 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>ossrh-snap</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>${snapshot.update.policy}</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
         </repository>
     </repositories>
     <dependencyManagement>
