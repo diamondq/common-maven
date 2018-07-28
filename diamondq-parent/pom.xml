@@ -43,6 +43,42 @@
     </scm>
     <profiles>
         <profile>
+            <id>bom-profile</id>
+            <activation>
+                <file>
+                    <exists>profiles/bom</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>flatten-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>flatten-pom</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>flatten</goal>
+                                </goals>
+                                <configuration>
+                                    <flattenMode>bom</flattenMode>
+                                    <updatePomFile>true</updatePomFile>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>flatten-pom-clean</id>
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>diamondq-generate-i18n-strings</id>
             <activation>
                 <file>
@@ -87,7 +123,7 @@
             </distributionManagement>
         </profile>
         <profile>
-            <id>diamondq-sign</id>
+            <id>diamondq-jenkins</id>
             <activation>
                 <property>
                     <name>jenkins</name>
@@ -98,28 +134,102 @@
                 <gpg.arg1>--pinentry-mode</gpg.arg1>
                 <gpg.arg2>loopback</gpg.arg2>
             </properties>
+            <repositories>
+                <repository>
+                    <id>1-dq-snapshot</id>
+                    <url>https://nexus.diamondq.com/repository/maven-snapshots/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </repository>
+                <repository>
+                    <id>2-dq-release</id>
+                    <url>https://nexus.diamondq.com/repository/maven-public/</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>ossrh-snap</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>ossrh-snap</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+        <profile>
+            <id>diamondq-default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>1-dq-snapshot</id>
+                    <url>https://nexus.diamondq.com/repository/maven-snapshots/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </repository>
+                <repository>
+                    <id>2-dq-release</id>
+                    <url>https://nexus.diamondq.com/repository/maven-public/</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>ossrh-snap</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>ossrh-snap</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>daily</updatePolicy>
+                    </snapshots>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                </pluginRepository>
+            </pluginRepositories>
         </profile>
     </profiles>
-    <repositories>
-        <repository>
-            <id>1-dq-snapshot</id>
-            <url>https://nexus.diamondq.com/repository/maven-snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>${snapshot.update.policy}</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>2-dq-release</id>
-            <url>https://nexus.diamondq.com/repository/maven-public/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
     <dependencyManagement>
         <dependencies>
             <!-- Log4j2 -->
@@ -848,11 +958,21 @@
                 <artifactId>pax-web-spi</artifactId>
                 <version>7.2.1</version>
             </dependency>
-            <!-- <dependency> <groupId>org.apache.xbean</groupId> <artifactId>xbean-bundleutils</artifactId> 
-                <version>4.6</version> </dependency> <dependency> <groupId>org.apache.xbean</groupId> 
-                <artifactId>xbean-reflect</artifactId> <version>4.6</version> </dependency> 
-                <dependency> <groupId>org.apache.xbean</groupId> <artifactId>xbean-finder</artifactId> 
-                <version>4.6</version> </dependency> -->
+            <dependency>
+                <groupId>org.apache.xbean</groupId>
+                <artifactId>xbean-bundleutils</artifactId>
+                <version>4.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.xbean</groupId>
+                <artifactId>xbean-reflect</artifactId>
+                <version>4.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.xbean</groupId>
+                <artifactId>xbean-finder</artifactId>
+                <version>4.6</version>
+            </dependency>
             <!-- pax-http-undertow -->
             <dependency>
                 <groupId>org.ops4j.pax.web</groupId>
