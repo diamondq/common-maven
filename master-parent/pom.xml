@@ -517,6 +517,35 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>not-osgi-pde-target</id>
+      <activation>
+        <file>
+          <missing>profiles/osgi-pde-target</missing>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>enforce-non-pde</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <banDuplicatePomDependencyVersions />
+                  </rules>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <!-- If there is an OSGi project, then add the maven-bundle-plugin -->
     <profile>
       <id>osgi-project</id>
@@ -1436,7 +1465,6 @@
             </goals>
             <configuration>
               <rules>
-                <banDuplicatePomDependencyVersions />
                 <!-- The enforcer plugin 3.0.0-M2 regresses on requirePluginVersions 
                   (see MENFORCER-306). Disabling until fixed. -->
                 <!-- <requirePluginVersions /> -->
