@@ -1,11 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>6.1.1</version>
+    <version>[6.2-SNAPSHOT,7)</version>
     <relativePath>../master-parent</relativePath>
   </parent>
   <artifactId>diamondq-parent</artifactId>
@@ -512,9 +511,8 @@
             <artifactId>org.eclipse.equinox.console</artifactId>
             <version>1.3.0</version>
           </dependency>
-          <!-- Felix Gogo is the underlying implementation for the Equinox 
-            console. However, it needs to be locked to 0.10 due to the Equinox Console 
-            package dependencies -->
+          <!-- Felix Gogo is the underlying implementation for the Equinox console. However, it needs to be locked to 0.10 
+            due to the Equinox Console package dependencies -->
           <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.gogo.runtime</artifactId>
@@ -535,9 +533,8 @@
             <artifactId>org.eclipse.equinox.ds</artifactId>
             <version>1.5.100</version>
           </dependency>
-          <!-- Felix SCR is the implementation for Equinox DS. However, something 
-            is broken in the 2.1.x versions with the 1.5.0 versions of ds, so locking 
-            to 2.0.x -->
+          <!-- Felix SCR is the implementation for Equinox DS. However, something is broken in the 2.1.x versions with the 
+            1.5.0 versions of ds, so locking to 2.0.x -->
           <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.scr</artifactId>
@@ -1105,8 +1102,8 @@
             <artifactId>guava</artifactId>
             <version>25.1-jre</version>
             <exclusions>
-              <!-- This is excluded because the a) the common-thirdparty.checker.qual 
-                provides it and b) we want to make sure it's marked optional -->
+              <!-- This is excluded because the a) the common-thirdparty.checker.qual provides it and b) we want to make 
+                sure it's marked optional -->
               <exclusion>
                 <groupId>org.checkerframework</groupId>
                 <artifactId>checker-qual</artifactId>
@@ -1152,6 +1149,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
+          </dependency>
+          <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>3.0.6</version>
           </dependency>
           <dependency>
             <groupId>org.apache.commons</groupId>
