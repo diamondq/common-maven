@@ -469,6 +469,8 @@
       <properties>
         <!-- This defines the name of the target file. If 'something' is provided here, then the file name will be something.target. -->
         <osgi.pde.target.name>${project.artifactId}</osgi.pde.target.name>
+        <!-- Allow extra dependencies to be defined. Format is groupId:artifactId:version:type:classifer,... -->
+        <osgi.pde.target.extra.deps></osgi.pde.target.extra.deps>
       </properties>
       <build>
         <plugins>
@@ -520,6 +522,7 @@
                   <outputFile>${project.basedir}/${osgi.pde.target.name}.target</outputFile>
                   <excludeArtifactIds>osgi.core,osgi.cmpn</excludeArtifactIds>
                   <targetName><![CDATA[${osgi.pde.target.name} target]]></targetName>
+                  <extraDeps>${osgi.pde.target.extra.deps}</extraDeps>
                 </configuration>
               </execution>
             </executions>
@@ -1295,7 +1298,7 @@
         <plugin>
           <groupId>com.diamondq.maven</groupId>
           <artifactId>osgi-target-maven-plugin</artifactId>
-          <version>1.0.1</version>
+          <version>1.0.2</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
