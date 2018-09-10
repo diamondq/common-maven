@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
@@ -10,7 +11,8 @@
   <url>https://github.com/diamondq/common-maven/tree/master</url>
   <properties>
     <!-- If you are using the Eclipse External Annotations https://wiki.eclipse.org/JDT_Core/Null_Analysis/External_Annotations 
-      then define the location of the folder. NOTE: Mostly commonly this will be defined in the .settings.xml -->
+      then define the location of the folder. NOTE: Mostly commonly this will be 
+      defined in the .settings.xml -->
     <eclipse.external.annotations />
     <!-- For use for Java builds -->
     <javac.source.version>1.8</javac.source.version>
@@ -74,7 +76,8 @@
     </pluginRepository>
   </pluginRepositories>
   <profiles>
-    <!-- Define the Eclipse External Annotations only if we're in the Eclipse M2E environment -->
+    <!-- Define the Eclipse External Annotations only if we're in the Eclipse 
+      M2E environment -->
     <profile>
       <id>m2e</id>
       <activation>
@@ -98,7 +101,8 @@
         <environment.eclipse>false</environment.eclipse>
       </properties>
     </profile>
-    <!-- If there is a src/i18n/resources then add in the generation of the Messages class -->
+    <!-- If there is a src/i18n/resources then add in the generation of the 
+      Messages class -->
     <profile>
       <id>generate-i18n-strings</id>
       <activation>
@@ -108,8 +112,8 @@
       </activation>
       <properties>
         <osgi.dont.export.i18n>!${osgi.base.package}.*.i18n,</osgi.dont.export.i18n>
-        <!-- When generating the i18n enum classes from a messages.properties, this setting allows the enum class to extend 
-          a class -->
+        <!-- When generating the i18n enum classes from a messages.properties, 
+          this setting allows the enum class to extend a class -->
         <i18n.implementation.class />
         <!-- Defines the directory to store the generated enum class into -->
         <i18n.output.dir>${project.build.directory}/generated-sources/i18n</i18n.output.dir>
@@ -173,7 +177,8 @@
         </plugins>
       </build>
     </profile>
-    <!-- If there is an OSGI-INF directory, then add it as a resource and make sure that the Manifest includes the XML files -->
+    <!-- If there is an OSGI-INF directory, then add it as a resource and 
+      make sure that the Manifest includes the XML files -->
     <profile>
       <id>osgi-inf-present</id>
       <activation>
@@ -255,6 +260,77 @@
                 </configuration>
               </execution>
             </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>aspectj-aspect-project</id>
+      <activation>
+        <file>
+          <exists>profiles/aspects</exists>
+        </file>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.aspectj</groupId>
+          <artifactId>aspectjrt</artifactId>
+        </dependency>
+      </dependencies>
+      <dependencyManagement>
+        <dependencies>
+          <!-- AspectJ -->
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.9.1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.9.1</version>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>aspectj-maven-plugin</artifactId>
+            <version>1.11.1-SNAPSHOT</version>
+            <configuration>
+              <complianceLevel>1.8</complianceLevel>
+              <includes>
+                <include>**/*.java</include>
+                <include>**/*.aj</include>
+              </includes>
+            </configuration>
+            <executions>
+              <execution>
+                <id>compile_with_aspectj</id>
+                <goals>
+                  <goal>compile</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>test-compile_with_aspectj</id>
+                <goals>
+                  <goal>test-compile</goal>
+                </goals>
+              </execution>
+            </executions>
+            <dependencies>
+              <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>1.9.1</version>
+              </dependency>
+              <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjtools</artifactId>
+                <version>1.9.1</version>
+              </dependency>
+            </dependencies>
           </plugin>
         </plugins>
       </build>
@@ -355,8 +431,8 @@
         </plugins>
       </build>
     </profile>
-    <!-- A leaf project should have it's POM flattened. This allows for interpolation within the version as well as just 
-      increasing the cleanliness of the result. -->
+    <!-- A leaf project should have it's POM flattened. This allows for interpolation 
+      within the version as well as just increasing the cleanliness of the result. -->
     <profile>
       <id>leaf-project</id>
       <activation>
@@ -467,16 +543,18 @@
         </file>
       </activation>
       <properties>
-        <!-- This defines the name of the target file. If 'something' is provided here, then the file name will be something.target. -->
+        <!-- This defines the name of the target file. If 'something' is 
+          provided here, then the file name will be something.target. -->
         <osgi.pde.target.name>${project.artifactId}</osgi.pde.target.name>
         <!-- Allow extra dependencies to be defined. Format is groupId:artifactId:version:type:classifer,... -->
         <osgi.pde.target.extra.deps></osgi.pde.target.extra.deps>
       </properties>
       <build>
         <plugins>
-          <!-- Since the target contains absolute paths, we don't want to deploy it to a permanent/remote repository -->
-          <!-- However, since it's only used for the build process, as long as it gets deployed to the local repository, 
-            we're fine. -->
+          <!-- Since the target contains absolute paths, we don't want to 
+            deploy it to a permanent/remote repository -->
+          <!-- However, since it's only used for the build process, as long 
+            as it gets deployed to the local repository, we're fine. -->
           <plugin>
             <artifactId>maven-deploy-plugin</artifactId>
             <executions>
@@ -577,37 +655,46 @@
       </activation>
       <properties>
         <!-- The basic list of headers to remove from the generated MANIFEST.MF -->
-        <osgi.base.removeheaders>Tool, Originally-Created-By, Bnd-LastModified, Private-Package, Include-Resource</osgi.base.removeheaders>
-        <!-- The basic list of headers to remove from the source JAR generated MANIFEST.MF -->
-        <osgi.base.removesrcheaders>Tool, Originally-Created-By, Bnd-LastModified, Private-Package, Include-Resource,
-          Import-Package, Export-Package, Require-Capability, Provide-Capability</osgi.base.removesrcheaders>
-        <!-- To make it easier to extend the list, override this property with your own settings, potentially including the 
-          osgi.base.removeheaders -->
+        <osgi.base.removeheaders>Tool, Originally-Created-By,
+          Bnd-LastModified, Private-Package, Include-Resource</osgi.base.removeheaders>
+        <!-- The basic list of headers to remove from the source JAR generated 
+          MANIFEST.MF -->
+        <osgi.base.removesrcheaders>Tool, Originally-Created-By,
+          Bnd-LastModified, Private-Package, Include-Resource,
+          Import-Package, Export-Package, Require-Capability,
+          Provide-Capability</osgi.base.removesrcheaders>
+        <!-- To make it easier to extend the list, override this property 
+          with your own settings, potentially including the osgi.base.removeheaders -->
         <osgi.removeheaders>${osgi.base.removeheaders}</osgi.removeheaders>
-        <!-- To make it easier to extend the list, override this property with your own settings, potentially including the 
-          osgi.base.removesrcheaders -->
+        <!-- To make it easier to extend the list, override this property 
+          with your own settings, potentially including the osgi.base.removesrcheaders -->
         <osgi.removesrcheaders>${osgi.base.removesrcheaders}</osgi.removesrcheaders>
-        <!-- The base package to always export. NOTE: This must be defined in a child project -->
+        <!-- The base package to always export. NOTE: This must be defined 
+          in a child project -->
         <osgi.base.package />
-        <!-- A placeholder to inject a DON'T export for i18n. Automatically added by the i18n profile. This is expected to 
-          end in a comma to allow chaining. -->
+        <!-- A placeholder to inject a DON'T export for i18n. Automatically 
+          added by the i18n profile. This is expected to end in a comma to allow chaining. -->
         <osgi.dont.export.i18n />
-        <!-- The standard to not Export any package ending in impl. This is expected to end in a comma to allow chaining. -->
+        <!-- The standard to not Export any package ending in impl. This 
+          is expected to end in a comma to allow chaining. -->
         <osgi.dont.export.impl>!${osgi.base.package}.*.impl,</osgi.dont.export.impl>
-        <!-- Override this property to inject extra DON'T commands not NOT Export. This is expected to end in a comma to 
-          allow chaining. -->
+        <!-- Override this property to inject extra DON'T commands not NOT 
+          Export. This is expected to end in a comma to allow chaining. -->
         <osgi.extra.dont.export.packages />
-        <!-- The list of packages that won't be exported. NOTE: This list requires the ! to be already added. -->
+        <!-- The list of packages that won't be exported. NOTE: This list 
+          requires the ! to be already added. -->
         <osgi.dont.export.packages>${osgi.dont.export.i18n}${osgi.dont.export.impl}${osgi.extra.dont.export.packages}</osgi.dont.export.packages>
-        <!-- Override this property to inject extra Export-Package commands. This is expected to end in a comma to allow 
-          chaining. -->
+        <!-- Override this property to inject extra Export-Package commands. 
+          This is expected to end in a comma to allow chaining. -->
         <osgi.extra.export.packages />
         <!-- The base package that is always exported -->
         <osgi.export.base.package>${osgi.base.package}.*</osgi.export.base.package>
-        <!-- This is the Export-Package. Generally override one of the component properties -->
+        <!-- This is the Export-Package. Generally override one of the component 
+          properties -->
         <osgi.export.packages>${osgi.dont.export.packages}${osgi.extra.export.packages}${osgi.export.base.package}</osgi.export.packages>
-        <!-- Override this property to inject extra Import-Package elements. NOTE: The osgi.import.packages property expects 
-          this property to end with a comma to support chaining -->
+        <!-- Override this property to inject extra Import-Package elements. 
+          NOTE: The osgi.import.packages property expects this property to end with 
+          a comma to support chaining -->
         <osgi.extra.import.packages />
         <!-- This represents the packages to import. The default is * -->
         <osgi.import.packages>${osgi.extra.import.packages}*</osgi.import.packages>
@@ -721,7 +808,8 @@
         </plugins>
       </build>
     </profile>
-    <!-- Add support for a karaf-feature project. This is a simple POM with a single feature.xml file. -->
+    <!-- Add support for a karaf-feature project. This is a simple POM with 
+      a single feature.xml file. -->
     <profile>
       <id>karaf-feature-profile</id>
       <activation>
@@ -730,8 +818,8 @@
         </file>
       </activation>
       <properties>
-        <!-- The file that is the feature file. By default it's named the same as the artifactId and exists at the root of 
-          the project -->
+        <!-- The file that is the feature file. By default it's named the 
+          same as the artifactId and exists at the root of the project -->
         <karaf.feature.file>${project.artifactId}.xml</karaf.feature.file>
       </properties>
       <build>
@@ -770,12 +858,14 @@
       <properties>
         <!-- Redefine the feature file since it's now generated -->
         <karaf.feature.file>${project.build.directory}/generated-fmpp/${project.artifactId}.xml</karaf.feature.file>
-        <!-- The list of projects that should not be locked (groupId:artifactId:type:version format). This is what should 
-          be overridden by child projects -->
+        <!-- The list of projects that should not be locked (groupId:artifactId:type:version 
+          format). This is what should be overridden by child projects -->
         <karaf.dont.lock.snapshots></karaf.dont.lock.snapshots>
-        <!-- The combination of the karaf.dont.lock.snapshots and an explicit not locking of ourself -->
+        <!-- The combination of the karaf.dont.lock.snapshots and an explicit 
+          not locking of ourself -->
         <karaf.dont.lock.snapshots.final>${karaf.dont.lock.snapshots}${project.groupId}:${project.artifactId}:jar:${project.version}</karaf.dont.lock.snapshots.final>
-        <!-- The file containing the library scripts needed to generate the karaf feature -->
+        <!-- The file containing the library scripts needed to generate the 
+          karaf feature -->
         <karaf.freemarker.script>com.diamondq.osgi:osgi-feature.scripts:2:zip</karaf.freemarker.script>
       </properties>
       <build>
@@ -1242,6 +1332,11 @@
         <!-- Other plugins -->
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
+          <artifactId>aspectj-maven-plugin</artifactId>
+          <version>1.11</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
           <artifactId>animal-sniffer-maven-plugin</artifactId>
           <version>1.16</version>
         </plugin>
@@ -1484,8 +1579,8 @@
             </goals>
             <configuration>
               <rules>
-                <!-- The enforcer plugin 3.0.0-M2 regresses on requirePluginVersions (see MENFORCER-306). Disabling until 
-                  fixed. -->
+                <!-- The enforcer plugin 3.0.0-M2 regresses on requirePluginVersions 
+                  (see MENFORCER-306). Disabling until fixed. -->
                 <!-- <requirePluginVersions /> -->
                 <requireMavenVersion>
                   <version>3.3.9</version>
