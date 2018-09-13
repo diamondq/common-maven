@@ -741,7 +741,8 @@
           <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
+            <!-- Limited to ver 3 due to Pax-Web 7.x limitations -->
+            <version>3.1.0</version>
           </dependency>
           <dependency>
             <groupId>javax.websocket</groupId>
@@ -955,7 +956,7 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
           </dependency>
-          <!-- Undertow -->
+          <!-- Undertow (currently limited to 1.4.x, which is Servlet 3 compliant due to Pax-Web) -->
           <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>
@@ -975,12 +976,12 @@
           <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-api</artifactId>
-            <version>7.2.1</version>
+            <version>7.2.3</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-spi</artifactId>
-            <version>7.2.1</version>
+            <version>7.2.3</version>
           </dependency>
           <dependency>
             <groupId>org.apache.xbean</groupId>
@@ -1001,12 +1002,12 @@
           <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-runtime</artifactId>
-            <version>7.2.1</version>
+            <version>7.2.3</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-undertow</artifactId>
-            <version>7.2.1</version>
+            <version>7.2.3</version>
           </dependency>
           <!-- Jersey -->
           <dependency>
