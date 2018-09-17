@@ -529,6 +529,29 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+      <id>test-jar</id>
+      <activation>
+        <file>
+          <exists>profiles/test-jar</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-jar-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>test-jar</id>
+                <goals>
+                  <goal>test-jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <!-- If there is a osgi-pde-target profile, include the necessary plugins -->
     <profile>
       <id>osgi-pde-target</id>
