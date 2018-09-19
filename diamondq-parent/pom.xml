@@ -1307,7 +1307,7 @@
         </file>
       </activation>
       <properties>
-        <docker.registry>abc</docker.registry>
+        <docker.registry>docker-registry.diamondq.com</docker.registry>
         <dockerbuild.image>${project.artifactId}</dockerbuild.image>
         <dockerbuild.repository>${docker.registry}/${dockerbuild.image}</dockerbuild.repository>
       </properties>
