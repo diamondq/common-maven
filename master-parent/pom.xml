@@ -337,6 +337,9 @@
           <exists>src/test</exists>
         </file>
       </activation>
+      <properties>
+        <javac.skip.test.categories></javac.skip.test.categories>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -368,6 +371,7 @@
                   <systemPropertyVariables>
                     <env.eclipse>${environment.eclipse}</env.eclipse>
                   </systemPropertyVariables>
+                  <excludedGroups>${javac.skip.test.categories}</excludedGroups>
                 </configuration>
               </execution>
             </executions>
