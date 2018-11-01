@@ -691,7 +691,7 @@
           end in a comma to allow chaining. -->
         <osgi.dont.export.i18n />
         <!-- The standard to not Export any package ending in impl. This is expected to end in a comma to allow chaining. -->
-        <osgi.dont.export.impl>!${osgi.base.package}.*.impl,</osgi.dont.export.impl>
+        <osgi.dont.export.impl>!${osgi.base.package}.*.impl,!${osgi.base.package}.*.impl.*,</osgi.dont.export.impl>
         <!-- Override this property to inject extra DON'T commands not NOT Export. This is expected to end in a comma to 
           allow chaining. -->
         <osgi.extra.dont.export.packages />
@@ -851,6 +851,7 @@
                   <artifacts>
                     <artifact>
                       <file>${karaf.feature.file}</file>
+                      <classifier>features</classifier>
                       <type>xml</type>
                     </artifact>
                   </artifacts>
