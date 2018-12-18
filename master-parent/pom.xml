@@ -372,6 +372,7 @@
                     <env.eclipse>${environment.eclipse}</env.eclipse>
                   </systemPropertyVariables>
                   <excludedGroups>${javac.skip.test.categories}</excludedGroups>
+                  <argLine>--illegal-access=permit</argLine>
                 </configuration>
               </execution>
             </executions>
@@ -1020,6 +1021,8 @@
       </activation>
       <properties>
         <snapshot.update.policy>always</snapshot.update.policy>
+        <gpg.arg1>--pinentry-mode</gpg.arg1>
+        <gpg.arg2>loopback</gpg.arg2>
       </properties>
     </profile>
     <profile>
