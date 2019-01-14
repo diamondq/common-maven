@@ -676,7 +676,7 @@
       </activation>
       <properties>
         <!-- The basic list of headers to remove from the generated MANIFEST.MF -->
-        <osgi.base.removeheaders>Tool, Originally-Created-By, Bnd-LastModified, Private-Package, Include-Resource</osgi.base.removeheaders>
+        <osgi.base.removeheaders>Tool, Originally-Created-By, Bnd-LastModified, Private-Package, Include-Resource, Embed-Transitive, Embed-Dependency</osgi.base.removeheaders>
         <!-- The basic list of headers to remove from the source JAR generated MANIFEST.MF -->
         <osgi.base.removesrcheaders>Tool, Originally-Created-By, Bnd-LastModified, Private-Package, Include-Resource,
           Import-Package, Export-Package, Require-Capability, Provide-Capability</osgi.base.removesrcheaders>
@@ -918,6 +918,7 @@
                     <argument>${project.build.directory}/.effective-pom.xml</argument>
                     <argument>versions:lock-snapshots</argument>
                     <argument>-Dexcludes=${karaf.dont.lock.snapshots.final}</argument>
+                    <argument>-DexcludeReactor=false</argument>
                   </arguments>
                 </configuration>
               </execution>
