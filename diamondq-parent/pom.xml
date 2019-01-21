@@ -278,8 +278,8 @@
             <version>3.6.2</version>
           </dependency>
           <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-service-discovery</artifactId>
+            <groupId>com.diamondq.common</groupId>
+            <artifactId>common-thirdparty.vertx.service.discovery</artifactId>
             <version>3.6.2</version>
           </dependency>
           <dependency>
@@ -1391,8 +1391,18 @@
           </dependency>
           <dependency>
             <groupId>com.diamondq.common</groupId>
+            <artifactId>common-thirdparty.imageio</artifactId>
+            <version>3.4.1</version>
+          </dependency>
+          <dependency>
+            <groupId>com.diamondq.common</groupId>
+            <artifactId>common-thirdparty.jcasbin</artifactId>
+            <version>1.1.0</version>
+          </dependency>
+          <dependency>
+            <groupId>com.diamondq.common</groupId>
             <artifactId>common-thirdparty.micrometer.core</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
           </dependency>
           <dependency>
             <groupId>com.diamondq.common</groupId>
