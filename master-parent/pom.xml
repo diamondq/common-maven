@@ -440,44 +440,47 @@
           <exists>src/main</exists>
         </file>
       </activation>
+      <properties>
+        <flatten.pom.type>jar</flatten.pom.type>
+      </properties>
       <build>
         <plugins>
           <plugin>
             <groupId>com.carrotgarden.maven</groupId>
             <artifactId>flatten-maven-plugin</artifactId>
-            <configuration>
-              <!-- Control dependency resolution. -->
-              <performDependencyResolve>true</performDependencyResolve>
-              <includeScope>runtime</includeScope>
-              <excludeTransitive>false</excludeTransitive>
-              <!-- Remove these pom.xml members. -->
-              <performRemoveMembers>true</performRemoveMembers>
-              <memberRemoveList>
-                <member>parent</member>
-                <member>properties</member>
-                <member>distributionManagement</member>
-                <member>dependencyManagement</member>
-                <member>repositories</member>
-                <member>pluginRepositories</member>
-                <member>build</member>
-                <member>profiles</member>
-                <member>reporting</member>
-              </memberRemoveList>
-              <!-- Change published artifact identity. -->
-              <performOverrideIdentity>true</performOverrideIdentity>
-              <overrideArtifactId>${project.artifactId}</overrideArtifactId>
-              <!-- Switch project from pom.xml to pom.xml.flatten. -->
-              <performSwitchPomXml>true</performSwitchPomXml>
-              <packagingSwitchList>
-                <packaging>jar</packaging>
-              </packagingSwitchList>
-            </configuration>
             <executions>
               <!-- Activate "flatten:flatten" during "prepare-package" -->
               <execution>
                 <goals>
                   <goal>flatten</goal>
                 </goals>
+                <configuration>
+                  <!-- Control dependency resolution. -->
+                  <performDependencyResolve>true</performDependencyResolve>
+                  <includeScope>runtime</includeScope>
+                  <excludeTransitive>false</excludeTransitive>
+                  <!-- Remove these pom.xml members. -->
+                  <performRemoveMembers>true</performRemoveMembers>
+                  <memberRemoveList>
+                    <member>parent</member>
+                    <member>properties</member>
+                    <member>distributionManagement</member>
+                    <member>dependencyManagement</member>
+                    <member>repositories</member>
+                    <member>pluginRepositories</member>
+                    <member>build</member>
+                    <member>profiles</member>
+                    <member>reporting</member>
+                  </memberRemoveList>
+                  <!-- Change published artifact identity. -->
+                  <performOverrideIdentity>true</performOverrideIdentity>
+                  <overrideArtifactId>${project.artifactId}</overrideArtifactId>
+                  <!-- Switch project from pom.xml to pom.xml.flatten. -->
+                  <performSwitchPomXml>true</performSwitchPomXml>
+                  <packagingSwitchList>
+                    <packaging>${flatten.pom.type}</packaging>
+                  </packagingSwitchList>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -496,38 +499,38 @@
           <plugin>
             <groupId>com.carrotgarden.maven</groupId>
             <artifactId>flatten-maven-plugin</artifactId>
-            <configuration>
-              <!-- Control dependency resolution. -->
-              <performDependencyResolve>true</performDependencyResolve>
-              <includeScope>runtime</includeScope>
-              <excludeTransitive>false</excludeTransitive>
-              <!-- Remove these pom.xml members. -->
-              <performRemoveMembers>true</performRemoveMembers>
-              <memberRemoveList>
-                <member>parent</member>
-                <member>properties</member>
-                <member>distributionManagement</member>
-                <member>repositories</member>
-                <member>pluginRepositories</member>
-                <member>build</member>
-                <member>profiles</member>
-                <member>reporting</member>
-              </memberRemoveList>
-              <!-- Change published artifact identity. -->
-              <performOverrideIdentity>true</performOverrideIdentity>
-              <overrideArtifactId>${project.artifactId}</overrideArtifactId>
-              <!-- Switch project from pom.xml to pom.xml.flatten. -->
-              <performSwitchPomXml>true</performSwitchPomXml>
-              <packagingSwitchList>
-                <packaging>pom</packaging>
-              </packagingSwitchList>
-            </configuration>
             <executions>
               <!-- Activate "flatten:flatten" during "prepare-package" -->
               <execution>
                 <goals>
                   <goal>flatten</goal>
                 </goals>
+                <configuration>
+                  <!-- Control dependency resolution. -->
+                  <performDependencyResolve>true</performDependencyResolve>
+                  <includeScope>runtime</includeScope>
+                  <excludeTransitive>false</excludeTransitive>
+                  <!-- Remove these pom.xml members. -->
+                  <performRemoveMembers>true</performRemoveMembers>
+                  <memberRemoveList>
+                    <member>parent</member>
+                    <member>properties</member>
+                    <member>distributionManagement</member>
+                    <member>repositories</member>
+                    <member>pluginRepositories</member>
+                    <member>build</member>
+                    <member>profiles</member>
+                    <member>reporting</member>
+                  </memberRemoveList>
+                  <!-- Change published artifact identity. -->
+                  <performOverrideIdentity>true</performOverrideIdentity>
+                  <overrideArtifactId>${project.artifactId}</overrideArtifactId>
+                  <!-- Switch project from pom.xml to pom.xml.flatten. -->
+                  <performSwitchPomXml>true</performSwitchPomXml>
+                  <packagingSwitchList>
+                    <packaging>pom</packaging>
+                  </packagingSwitchList>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -880,7 +883,7 @@
         <!-- The combination of the karaf.dont.lock.snapshots and an explicit not locking of ourself -->
         <karaf.dont.lock.snapshots.final>${karaf.dont.lock.snapshots}${project.groupId}:${project.artifactId}:jar:${project.version}</karaf.dont.lock.snapshots.final>
         <!-- The file containing the library scripts needed to generate the karaf feature -->
-        <karaf.freemarker.script>com.diamondq.osgi:osgi-feature.scripts:2:zip</karaf.freemarker.script>
+        <karaf.freemarker.script>com.diamondq.osgi:osgi-feature.scripts:2.2.0:zip</karaf.freemarker.script>
       </properties>
       <build>
         <plugins>
@@ -1005,7 +1008,7 @@
               <dependency>
                 <groupId>net.sourceforge.fmpp</groupId>
                 <artifactId>fmpp</artifactId>
-                <version>0.9.15</version>
+                <version>0.9.16</version>
               </dependency>
             </dependencies>
           </plugin>
@@ -1140,7 +1143,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>2.22.1</version>
+          <version>3.0.0-M3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1160,7 +1163,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
+          <version>3.0.0-M3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1181,7 +1184,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.1.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1201,7 +1204,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.2.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1267,7 +1270,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.10.0</version>
+          <version>3.11.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1277,7 +1280,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-report-plugin</artifactId>
-          <version>2.22.0</version>
+          <version>3.0.0-M3</version>
         </plugin>
         <!-- Tool plugins -->
         <plugin>
@@ -1293,7 +1296,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.1.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1313,12 +1316,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-help-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.1.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-invoker-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.2.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1348,7 +1351,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-remote-resources-plugin</artifactId>
-          <version>1.5</version>
+          <version>1.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1402,11 +1405,6 @@
           <version>1.6.0</version>
         </plugin>
         <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>flatten-maven-plugin</artifactId>
-          <version>1.1.0-SNAPSHOT</version>
-        </plugin>
-        <plugin>
           <groupId>com.carrotgarden.maven</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
           <version>1.4.20180402132337</version>
@@ -1454,7 +1452,7 @@
         <plugin>
           <groupId>org.apache.karaf.tooling</groupId>
           <artifactId>karaf-maven-plugin</artifactId>
-          <version>4.2.1</version>
+          <version>4.2.2</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
@@ -1478,12 +1476,12 @@
                 </pluginExecution>
                 <pluginExecution>
                   <pluginExecutionFilter>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>flatten-maven-plugin</artifactId>
-                    <versionRange>[1.0.1,)</versionRange>
+                    <groupId>org.apache.karaf.tooling</groupId>
+                    <artifactId>karaf-maven-plugin</artifactId>
+                    <versionRange>[4.2.2,)</versionRange>
                     <goals>
-                      <goal>flatten</goal>
-                      <goal>clean</goal>
+                      <goal>features-add-to-repository</goal>
+                      <goal>assembly</goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>
