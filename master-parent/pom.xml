@@ -16,6 +16,7 @@
     <javac.source.version>1.8</javac.source.version>
     <javac.target.version>1.8</javac.target.version>
     <javac.release.version>8</javac.release.version>
+    <java.toolchain.version>8</java.toolchain.version>
     <javac.debug>true</javac.debug>
     <javac.optimize>false</javac.optimize>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -166,6 +167,71 @@
                       <targetPath></targetPath>
                     </resource>
                   </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>generate-asciidoc</id>
+      <activation>
+        <file>
+          <exists>src/main/asciidoc</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctor-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>output-html</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>process-asciidoc</goal>
+                </goals>
+                <configuration>
+                  <sourceHighlighter>coderay</sourceHighlighter>
+                  <backend>html</backend>
+                  <preserveDirectories>true</preserveDirectories>
+                  <attributes>
+                    <toc>left</toc>
+                    <revnumber>${project.version}</revnumber>
+                    <revdate>${maven.build.timestamp}</revdate>
+                    <organization>${project.organization.name}</organization>
+                  </attributes>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>generate-antlr</id>
+      <activation>
+        <file>
+          <exists>src/main/antlr4</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate-code</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>antlr4</goal>
+                </goals>
+                <configuration>
+                  <visitor>true</visitor>
+                  <listener>true</listener>
                 </configuration>
               </execution>
             </executions>
@@ -331,11 +397,12 @@
       </build>
     </profile>
     <profile>
-      <id>java-test</id>
+      <id>java-test-jdk8</id>
       <activation>
         <file>
           <exists>src/test</exists>
         </file>
+        <jdk>(,1.9]</jdk>
       </activation>
       <properties>
         <javac.skip.test.categories></javac.skip.test.categories>
@@ -353,7 +420,6 @@
                   <debuglevel>lines,vars,source</debuglevel>
                   <optimize>${javac.optimize}</optimize>
                   <parameters>true</parameters>
-                  <release>${javac.release.version}</release>
                   <showDeprecation>true</showDeprecation>
                   <showWarnings>true</showWarnings>
                   <source>${javac.source.version}</source>
@@ -370,6 +436,57 @@
                 <configuration>
                   <systemPropertyVariables>
                     <env.eclipse>${environment.eclipse}</env.eclipse>
+                    <env.maven>true</env.maven>
+                  </systemPropertyVariables>
+                  <excludedGroups>${javac.skip.test.categories}</excludedGroups>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>java-test-jdk9</id>
+      <activation>
+        <file>
+          <exists>src/test</exists>
+        </file>
+        <jdk>(9,]</jdk>
+      </activation>
+      <properties>
+        <javac.skip.test.categories></javac.skip.test.categories>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <debug>${javac.debug}</debug>
+                  <debuglevel>lines,vars,source</debuglevel>
+                  <optimize>${javac.optimize}</optimize>
+                  <parameters>true</parameters>
+                  <showDeprecation>true</showDeprecation>
+                  <showWarnings>true</showWarnings>
+                  <source>${javac.source.version}</source>
+                  <target>${javac.target.version}</target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-test</id>
+                <configuration>
+                  <systemPropertyVariables>
+                    <env.eclipse>${environment.eclipse}</env.eclipse>
+                    <env.maven>true</env.maven>
                   </systemPropertyVariables>
                   <excludedGroups>${javac.skip.test.categories}</excludedGroups>
                   <argLine>--illegal-access=permit</argLine>
@@ -1115,6 +1232,82 @@
       </build>
     </profile>
     <profile>
+      <id>micronaut-dependencies</id>
+      <activation>
+        <file>
+          <exists>profiles/micronaut-dependency</exists>
+        </file>
+      </activation>
+      <properties>
+        <micronaut.version>1.1.0.RC1</micronaut.version>
+      </properties>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-bom</artifactId>
+            <version>${micronaut.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>io.micronaut</groupId>
+          <artifactId>micronaut-inject-java</artifactId>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <configuration>
+                  <annotationProcessorPaths>
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-inject-java</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-validation</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <annotationProcessorPaths>
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-inject-java</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-validation</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- Disabled because shading everything is not what we want. This was intended to just merge the ServicesResourceTransformer. -->
+          <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-shade-plugin</artifactId> <executions> 
+            <execution> <phase>package</phase> <goals> <goal>shade</goal> </goals> <configuration> <transformers> <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" 
+            /> </transformers> </configuration> </execution> </executions> </plugin> -->
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>default</id>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -1380,6 +1573,11 @@
         </plugin>
         <!-- Other plugins -->
         <plugin>
+          <groupId>org.asciidoctor</groupId>
+          <artifactId>asciidoctor-maven-plugin</artifactId>
+          <version>1.5.7.1</version>
+        </plugin>
+        <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>aspectj-maven-plugin</artifactId>
           <version>1.11</version>
@@ -1455,12 +1653,43 @@
           <version>4.2.2</version>
         </plugin>
         <plugin>
+          <groupId>org.antlr</groupId>
+          <artifactId>antlr4-maven-plugin</artifactId>
+          <version>4.7.2</version>
+        </plugin>
+        <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>
           <version>1.0.0</version>
           <configuration>
             <lifecycleMappingMetadata>
               <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <versionRange>[1.6.0,)</versionRange>
+                    <goals>
+                      <goal>java</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <versionRange>[1.5.7.1,)</versionRange>
+                    <goals>
+                      <goal>process-asciidoc</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
                 <pluginExecution>
                   <pluginExecutionFilter>
                     <groupId>com.carrotgarden.maven</groupId>
@@ -1543,10 +1772,11 @@
             <goals>
               <goal>toolchain</goal>
             </goals>
+            <phase>validate</phase>
             <configuration>
               <toolchains>
                 <jdk>
-                  <version>10</version>
+                  <version>${java.toolchain.version}</version>
                 </jdk>
               </toolchains>
             </configuration>
@@ -1564,7 +1794,6 @@
               <debuglevel>lines,vars,source</debuglevel>
               <optimize>${javac.optimize}</optimize>
               <parameters>true</parameters>
-              <release>${javac.release.version}</release>
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <source>${javac.source.version}</source>
@@ -1578,7 +1807,6 @@
               <debuglevel>lines,vars,source</debuglevel>
               <optimize>${javac.optimize}</optimize>
               <parameters>true</parameters>
-              <release>${javac.release.version}</release>
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <source>${javac.source.version}</source>
