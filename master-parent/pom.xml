@@ -28,6 +28,8 @@
     <nexus.auto.release>true</nexus.auto.release>
     <nexus.skip.staging>false</nexus.skip.staging>
     <nexus.skip.local.staging>false</nexus.skip.local.staging>
+    <!-- Special version properties -->
+    <plugins.surefire.version>3.0.0-M3</plugins.surefire.version>
   </properties>
   <licenses>
     <license>
@@ -1356,7 +1358,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.0.0-M3</version>
+          <version>${plugins.surefire.version}</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
