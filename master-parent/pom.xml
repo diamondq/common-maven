@@ -1241,7 +1241,7 @@
         </file>
       </activation>
       <properties>
-        <micronaut.version>1.1.0.RC1</micronaut.version>
+        <micronaut.version>1.1.0.RC2</micronaut.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1302,10 +1302,79 @@
               </execution>
             </executions>
           </plugin>
-          <!-- Disabled because shading everything is not what we want. This was intended to just merge the ServicesResourceTransformer. -->
-          <!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-shade-plugin</artifactId> <executions> 
-            <execution> <phase>package</phase> <goals> <goal>shade</goal> </goals> <configuration> <transformers> <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" 
-            /> </transformers> </configuration> </execution> </executions> </plugin> -->
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>micronaut-dependencies-optional</id>
+      <activation>
+        <file>
+          <exists>profiles/micronaut-dependency-optional</exists>
+        </file>
+      </activation>
+      <properties>
+        <micronaut.version>1.1.0.RC2</micronaut.version>
+      </properties>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-bom</artifactId>
+            <version>${micronaut.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>io.micronaut</groupId>
+          <artifactId>micronaut-inject-java</artifactId>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <configuration>
+                  <annotationProcessorPaths>
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-inject-java</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-validation</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <annotationProcessorPaths>
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-inject-java</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-validation</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
         </plugins>
       </build>
     </profile>
