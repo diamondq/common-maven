@@ -193,7 +193,7 @@
     </profile>
     <!-- If this isn't a BOM then load all the dependencies -->
     <profile>
-      <id>osgi-project</id>
+      <id>non-bom-dependency-management</id>
       <activation>
         <file>
           <missing>profiles/bom</missing>
@@ -201,6 +201,13 @@
       </activation>
       <dependencyManagement>
         <dependencies>
+          <dependency>
+            <groupId>org.junit</groupId>
+            <artifactId>junit-bom</artifactId>
+            <version>5.4.2</version>
+            <scope>import</scope>
+            <type>pom</type>
+          </dependency>
           <dependency>
             <groupId>com.github.zafarkhaja</groupId>
             <artifactId>java-semver</artifactId>
@@ -257,38 +264,49 @@
           <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-core</artifactId>
-            <version>3.6.2</version>
-          </dependency>
-          <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-service-proxy</artifactId>
-            <version>3.6.2</version>
+            <version>3.7.0</version>
           </dependency>
           <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-codegen</artifactId>
-            <version>3.6.2</version>
+            <version>3.7.0</version>
+            <classifier>processor</classifier>
           </dependency>
           <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-service-proxy</artifactId>
-            <version>3.6.2</version>
+            <version>3.7.0</version>
+          </dependency>
+          <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-service-discovery</artifactId>
+            <version>3.7.0</version>
+          </dependency>
+          <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-codegen</artifactId>
+            <version>3.7.0</version>
+          </dependency>
+          <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-service-proxy</artifactId>
+            <version>3.7.0</version>
             <classifier>processor</classifier>
           </dependency>
           <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-micrometer-metrics</artifactId>
-            <version>3.6.2</version>
+            <version>3.7.0</version>
           </dependency>
           <dependency>
             <groupId>com.diamondq.common</groupId>
             <artifactId>common-thirdparty.vertx.service.discovery</artifactId>
-            <version>3.6.2</version>
+            <version>3.7.0</version>
           </dependency>
           <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-circuit-breaker</artifactId>
-            <version>3.6.2</version>
+            <version>3.7.0</version>
           </dependency>
           <dependency>
             <groupId>org.jetbrains.xodus</groupId>
@@ -1254,12 +1272,6 @@
             <version>1_3</version>
           </dependency>
           <!-- Testing -->
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.4.2</version>
-            <scope>test</scope>
-          </dependency>
           <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
