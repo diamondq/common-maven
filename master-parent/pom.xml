@@ -1241,7 +1241,7 @@
         </file>
       </activation>
       <properties>
-        <micronaut.version>1.1.0</micronaut.version>
+        <micronaut.version>1.1.2</micronaut.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1269,7 +1269,7 @@
               <execution>
                 <id>default-compile</id>
                 <configuration>
-                  <annotationProcessorPaths>
+                  <annotationProcessorPaths combine.children="append">
                     <path>
                       <groupId>io.micronaut</groupId>
                       <artifactId>micronaut-inject-java</artifactId>
@@ -1281,12 +1281,17 @@
                       <version>${micronaut.version}</version>
                     </path>
                   </annotationProcessorPaths>
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>io.micronaut.annotation.processing.TypeElementVisitorProcessor</annotationProcessor>
+                    <annotationProcessor>io.micronaut.annotation.processing.PackageConfigurationInjectProcessor</annotationProcessor>
+                    <annotationProcessor>io.micronaut.annotation.processing.BeanDefinitionInjectProcessor</annotationProcessor>
+                  </annotationProcessors>
                 </configuration>
               </execution>
               <execution>
                 <id>default-testCompile</id>
                 <configuration>
-                  <annotationProcessorPaths>
+                  <annotationProcessorPaths combine.children="append">
                     <path>
                       <groupId>io.micronaut</groupId>
                       <artifactId>micronaut-inject-java</artifactId>
@@ -1298,6 +1303,11 @@
                       <version>${micronaut.version}</version>
                     </path>
                   </annotationProcessorPaths>
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>io.micronaut.annotation.processing.TypeElementVisitorProcessor</annotationProcessor>
+                    <annotationProcessor>io.micronaut.annotation.processing.PackageConfigurationInjectProcessor</annotationProcessor>
+                    <annotationProcessor>io.micronaut.annotation.processing.BeanDefinitionInjectProcessor</annotationProcessor>
+                  </annotationProcessors>
                 </configuration>
               </execution>
             </executions>
@@ -1313,7 +1323,7 @@
         </file>
       </activation>
       <properties>
-        <micronaut.version>1.1.0</micronaut.version>
+        <micronaut.version>1.1.2</micronaut.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1342,7 +1352,7 @@
               <execution>
                 <id>default-compile</id>
                 <configuration>
-                  <annotationProcessorPaths>
+                  <annotationProcessorPaths combine.children="append">
                     <path>
                       <groupId>io.micronaut</groupId>
                       <artifactId>micronaut-inject-java</artifactId>
@@ -1359,7 +1369,7 @@
               <execution>
                 <id>default-testCompile</id>
                 <configuration>
-                  <annotationProcessorPaths>
+                  <annotationProcessorPaths combine.children="append">
                     <path>
                       <groupId>io.micronaut</groupId>
                       <artifactId>micronaut-inject-java</artifactId>
@@ -1371,6 +1381,78 @@
                       <version>${micronaut.version}</version>
                     </path>
                   </annotationProcessorPaths>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>vertx-annotations</id>
+      <activation>
+        <file>
+          <exists>profiles/vertx-annotations</exists>
+        </file>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>io.vertx</groupId>
+          <artifactId>vertx-codegen</artifactId>
+          <classifier>processor</classifier>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>io.vertx</groupId>
+          <artifactId>vertx-service-proxy</artifactId>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <configuration>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>io.vertx</groupId>
+                      <artifactId>vertx-codegen</artifactId>
+                      <classifier>processor</classifier>
+                      <version>3.7.0</version>
+                    </path>
+                    <path>
+                      <groupId>io.vertx</groupId>
+                      <artifactId>vertx-service-proxy</artifactId>
+                      <version>3.7.0</version>
+                    </path>
+                  </annotationProcessorPaths>
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
+                  </annotationProcessors>
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>io.vertx</groupId>
+                      <artifactId>vertx-codegen</artifactId>
+                      <classifier>processor</classifier>
+                      <version>3.7.0</version>
+                    </path>
+                    <path>
+                      <groupId>io.vertx</groupId>
+                      <artifactId>vertx-service-proxy</artifactId>
+                      <version>3.7.0</version>
+                    </path>
+                  </annotationProcessorPaths>
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
+                  </annotationProcessors>
                 </configuration>
               </execution>
             </executions>
