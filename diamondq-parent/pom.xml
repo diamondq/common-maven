@@ -224,6 +224,12 @@
           </dependency>
           <dependency>
             <groupId>com.github.mcollovati.vertx</groupId>
+            <artifactId>vaadin-flow-sockjs</artifactId>
+            <version>13.0.0DQ-SNAPSHOT</version>
+            <classifier>vaadin-13.0.9</classifier>
+          </dependency>
+          <dependency>
+            <groupId>com.github.mcollovati.vertx</groupId>
             <artifactId>vertx-vaadin-flow</artifactId>
             <version>13.0.0DQ-SNAPSHOT</version>
           </dependency>
