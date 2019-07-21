@@ -1296,6 +1296,14 @@
           </dependency>
         </dependencies>
       </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>io.micronaut</groupId>
+          <artifactId>micronaut-inject-java</artifactId>
+          <version>${micronaut.version}</version>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
       <build>
         <plugins>
           <plugin>
