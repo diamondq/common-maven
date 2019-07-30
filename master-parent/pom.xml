@@ -133,10 +133,84 @@
     </profile>
     <!-- If there is a src/i18n/resources then add in the generation of the Messages class -->
     <profile>
+      <id>generate-i18n-strings-internal</id>
+      <activation>
+        <file>
+          <exists>profiles/internal-i18n-enums</exists>
+        </file>
+      </activation>
+      <properties>
+        <osgi.dont.export.i18n>!${osgi.base.package}.*.i18n,</osgi.dont.export.i18n>
+        <!-- When generating the i18n enum classes from a messages.properties, this setting allows the enum class to extend 
+          a class -->
+        <i18n.implementation.class />
+        <!-- Defines the directory to store the generated enum class into -->
+        <i18n.output.dir>${project.build.directory}/generated-sources/i18n</i18n.output.dir>
+        <!-- Defines the separator between package names in the enum key -->
+        <i18n.package.separator>_</i18n.package.separator>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.diamondq.maven</groupId>
+            <artifactId>i18n-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate-i18n-enums</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>generateEnums</goal>
+                </goals>
+                <configuration>
+                  <propsDir>${project.basedir}/src/i18n/resources</propsDir>
+                  <outputDir>${i18n.output.dir}</outputDir>
+                  <implementsClass>${i18n.implementation.class}</implementsClass>
+                  <packageSeparator>${i18n.package.separator}</packageSeparator>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>add-i18n-enums</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>add-source</goal>
+                </goals>
+                <configuration>
+                  <sources>
+                    <source>${i18n.output.dir}</source>
+                  </sources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>add-i18n-properties</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>add-resource</goal>
+                </goals>
+                <configuration>
+                  <resources>
+                    <resource>
+                      <directory>src/i18n/resources</directory>
+                      <targetPath></targetPath>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>generate-i18n-strings</id>
       <activation>
         <file>
-          <exists>src/i18n/resources</exists>
+          <exists>profiles/i18n-enums</exists>
         </file>
       </activation>
       <properties>
