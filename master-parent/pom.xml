@@ -149,6 +149,12 @@
         <!-- Defines the separator between package names in the enum key -->
         <i18n.package.separator>_</i18n.package.separator>
       </properties>
+      <dependencies>
+        <dependency>
+          <groupId>com.diamondq.common</groupId>
+          <artifactId>common-utils.misc</artifactId>
+        </dependency>
+      </dependencies>
       <build>
         <plugins>
           <plugin>
