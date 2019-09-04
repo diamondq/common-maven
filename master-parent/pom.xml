@@ -77,35 +77,37 @@
     </pluginRepository>
   </pluginRepositories>
   <profiles>
+    <!-- Make sure that the DiamondQ Maven Profile Activator Extension is present and running. Otherwise, the complex profile 
+      rules won't work properly. -->
     <profile>
-      <id>java-11</id>
+      <id>fail-if-extension-missing</id>
       <activation>
-        <file>
-          <exists>profiles/java-11</exists>
-        </file>
+        <property>
+          <name>![DIAMONDQ-PROFILE-ACTIVATOR]</name>
+        </property>
       </activation>
-      <properties>
-        <!-- For use for Java builds -->
-        <javac.source.version>11</javac.source.version>
-        <javac.target.version>11</javac.target.version>
-        <javac.release.version>11</javac.release.version>
-        <java.toolchain.version>11</java.toolchain.version>
-      </properties>
-    </profile>
-    <profile>
-      <id>java-12</id>
-      <activation>
-        <file>
-          <exists>profiles/java-12</exists>
-        </file>
-      </activation>
-      <properties>
-        <!-- For use for Java builds -->
-        <javac.source.version>12</javac.source.version>
-        <javac.target.version>12</javac.target.version>
-        <javac.release.version>12</javac.release.version>
-        <java.toolchain.version>12</java.toolchain.version>
-      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>enforce-if-diamondq-maven-profile-activator-extension-missing</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <AlwaysFail />
+                  </rules>
+                  <fail>true</fail>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
     <!-- Define the Eclipse External Annotations only if we're in the Eclipse M2E environment -->
     <profile>
@@ -120,6 +122,7 @@
         <environment.eclipse>true</environment.eclipse>
       </properties>
     </profile>
+    <!-- If we're not in the Eclipse M2E environment, then set the environment.eclipse to false -->
     <profile>
       <id>not-m2e</id>
       <activation>
@@ -131,13 +134,569 @@
         <environment.eclipse>false</environment.eclipse>
       </properties>
     </profile>
-    <!-- If there is a src/i18n/resources then add in the generation of the Messages class -->
+    <!-- A leaf project should have it's POM flattened. This allows for interpolation within the version as well as just 
+      increasing the cleanliness of the result. -->
     <profile>
-      <id>generate-i18n-strings-internal</id>
+      <id>leaf-project</id>
       <activation>
-        <file>
-          <exists>profiles/internal-i18n-enums</exists>
-        </file>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>or(file(src/main),file(src/test))</value>
+        </property>
+      </activation>
+      <properties>
+        <flatten.pom.type>jar</flatten.pom.type>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.carrotgarden.maven</groupId>
+            <artifactId>flatten-maven-plugin</artifactId>
+            <executions>
+              <!-- Activate "flatten:flatten" during "prepare-package" -->
+              <execution>
+                <goals>
+                  <goal>flatten</goal>
+                </goals>
+                <configuration>
+                  <!-- Control dependency resolution. -->
+                  <performDependencyResolve>true</performDependencyResolve>
+                  <includeScope>runtime</includeScope>
+                  <excludeTransitive>false</excludeTransitive>
+                  <!-- Remove these pom.xml members. -->
+                  <performRemoveMembers>true</performRemoveMembers>
+                  <memberRemoveList>
+                    <member>parent</member>
+                    <member>properties</member>
+                    <member>distributionManagement</member>
+                    <member>dependencyManagement</member>
+                    <member>repositories</member>
+                    <member>pluginRepositories</member>
+                    <member>build</member>
+                    <member>profiles</member>
+                    <member>reporting</member>
+                  </memberRemoveList>
+                  <!-- Change published artifact identity. -->
+                  <performOverrideIdentity>true</performOverrideIdentity>
+                  <overrideArtifactId>${project.artifactId}</overrideArtifactId>
+                  <!-- Switch project from pom.xml to pom.xml.flatten. -->
+                  <performSwitchPomXml>true</performSwitchPomXml>
+                  <packagingSwitchList>
+                    <packaging>${flatten.pom.type}</packaging>
+                  </packagingSwitchList>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- If we're running in Jenkins, then make sure we always update snapshots -->
+    <profile>
+      <id>update-snapshots-during-build</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>property(jenkins=true)</value>
+        </property>
+      </activation>
+      <properties>
+        <snapshot.update.policy>always</snapshot.update.policy>
+      </properties>
+    </profile>
+    <!-- Only SIGN if we're running within Jenkins -->
+    <profile>
+      <id>sign</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>property(jenkins=true)</value>
+        </property>
+      </activation>
+      <properties>
+        <gpg.arg1>--pinentry-mode</gpg.arg1>
+        <gpg.arg2>loopback</gpg.arg2>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+                <configuration>
+                  <gpgArguments>
+                    <arg>${gpg.arg1}</arg>
+                    <arg>${gpg.arg2}</arg>
+                  </gpgArguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- Due to interactions between normal profiles and a master, special overrides if we're deploying ourselves as opposed 
+      to be used to deploy a child artifact -->
+    <profile>
+      <id>deploy-self</id>
+      <activation>
+        <property>
+          <name>deploy</name>
+          <value>self</value>
+        </property>
+      </activation>
+      <properties>
+        <scm.project>common-maven</scm.project>
+      </properties>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh-snap</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+    <!-- For BOM projects, perform a slightly special flatten -->
+    <profile>
+      <id>bom-profile</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>file(profiles/type-bom)</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.carrotgarden.maven</groupId>
+            <artifactId>flatten-maven-plugin</artifactId>
+            <executions>
+              <!-- Activate "flatten:flatten" during "prepare-package" -->
+              <execution>
+                <goals>
+                  <goal>flatten</goal>
+                </goals>
+                <configuration>
+                  <!-- Control dependency resolution. -->
+                  <performDependencyResolve>true</performDependencyResolve>
+                  <includeScope>runtime</includeScope>
+                  <excludeTransitive>false</excludeTransitive>
+                  <!-- Remove these pom.xml members. -->
+                  <performRemoveMembers>true</performRemoveMembers>
+                  <memberRemoveList>
+                    <member>parent</member>
+                    <member>properties</member>
+                    <member>distributionManagement</member>
+                    <member>repositories</member>
+                    <member>pluginRepositories</member>
+                    <member>build</member>
+                    <member>profiles</member>
+                    <member>reporting</member>
+                  </memberRemoveList>
+                  <!-- Change published artifact identity. -->
+                  <performOverrideIdentity>true</performOverrideIdentity>
+                  <overrideArtifactId>${project.artifactId}</overrideArtifactId>
+                  <!-- Switch project from pom.xml to pom.xml.flatten. -->
+                  <performSwitchPomXml>true</performSwitchPomXml>
+                  <packagingSwitchList>
+                    <packaging>pom</packaging>
+                  </packagingSwitchList>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- For non-OSGi projects, prevent duplicate POM dependencies from being listed -->
+    <profile>
+      <id>standard-enforcement</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>file(profiles/osgi-pde-target)</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>enforce-non-pde</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <banDuplicatePomDependencyVersions />
+                  </rules>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- If an assembly is present, then build that -->
+    <profile>
+      <id>build-assembly</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>file(profiles/assembly)</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+              <descriptors>
+                <descriptor>src/assembly/assembly.xml</descriptor>
+              </descriptors>
+            </configuration>
+            <executions>
+              <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>build-Dockerfile</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>type(dockerfile)</value>
+        </property>
+      </activation>
+      <properties>
+        <docker.registry>registry.hub.docker.com</docker.registry>
+        <dockerbuild.image>${project.artifactId}</dockerbuild.image>
+        <dockerbuild.repository>${docker.registry}/${dockerbuild.image}</dockerbuild.repository>
+      </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>com.spotify</groupId>
+              <artifactId>dockerfile-maven-plugin</artifactId>
+              <version>1.4.12</version>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <!-- Build Docker image -->
+          <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>dockerfile-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>docker-build-tag</id>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+                <configuration>
+                  <repository>${dockerbuild.repository}</repository>
+                </configuration>
+              </execution>
+              <execution>
+                <id>docker-push-latest</id>
+                <goals>
+                  <goal>tag</goal>
+                  <goal>push</goal>
+                </goals>
+                <configuration>
+                  <repository>${dockerbuild.repository}</repository>
+                  <tag>latest</tag>
+                </configuration>
+              </execution>
+              <execution>
+                <id>docker-push-tagged</id>
+                <goals>
+                  <goal>tag</goal>
+                  <goal>push</goal>
+                </goals>
+                <configuration>
+                  <repository>${dockerbuild.repository}</repository>
+                  <tag>${project.version}-${maven.build.timestamp}</tag>
+                </configuration>
+              </execution>
+            </executions>
+            <dependencies>
+              <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>activation</artifactId>
+                <version>1.1.1</version>
+              </dependency>
+            </dependencies>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- ****************************************************************************************************************** 
+      Java based -->
+    <!-- Java based project using Java 8 as a target -->
+    <profile>
+      <id>java-8</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>jdk(8)</value>
+        </property>
+      </activation>
+      <properties>
+        <javac.source.version>1.8</javac.source.version>
+        <javac.target.version>1.8</javac.target.version>
+        <javac.release.version>8</javac.release.version>
+        <java.toolchain.version>8</java.toolchain.version>
+      </properties>
+    </profile>
+    <!-- Java based project using Java 9 as a target -->
+    <profile>
+      <id>java-9</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>jdk(9)</value>
+        </property>
+      </activation>
+      <properties>
+        <javac.source.version>9</javac.source.version>
+        <javac.target.version>9</javac.target.version>
+        <javac.release.version>9</javac.release.version>
+        <java.toolchain.version>9</java.toolchain.version>
+      </properties>
+    </profile>
+    <!-- Java based project using Java 10 as a target -->
+    <profile>
+      <id>java-10</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>jdk(10)</value>
+        </property>
+      </activation>
+      <properties>
+        <javac.source.version>10</javac.source.version>
+        <javac.target.version>10</javac.target.version>
+        <javac.release.version>10</javac.release.version>
+        <java.toolchain.version>10</java.toolchain.version>
+      </properties>
+    </profile>
+    <!-- Java based project using Java 11 as a target -->
+    <profile>
+      <id>java-11</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>jdk(11)</value>
+        </property>
+      </activation>
+      <properties>
+        <javac.source.version>11</javac.source.version>
+        <javac.target.version>11</javac.target.version>
+        <javac.release.version>11</javac.release.version>
+        <java.toolchain.version>11</java.toolchain.version>
+      </properties>
+    </profile>
+    <!-- Java based project using Java 12 as a target -->
+    <profile>
+      <id>java-12</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>jdk(12)</value>
+        </property>
+      </activation>
+      <properties>
+        <javac.source.version>12</javac.source.version>
+        <javac.target.version>12</javac.target.version>
+        <javac.release.version>12</javac.release.version>
+        <java.toolchain.version>12</java.toolchain.version>
+      </properties>
+    </profile>
+    <!-- Setup the compilation of the test code -->
+    <profile>
+      <id>java-test</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(src/test))</value>
+        </property>
+      </activation>
+      <properties>
+        <javac.skip.test.categories></javac.skip.test.categories>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <debug>${javac.debug}</debug>
+                  <debuglevel>lines,vars,source</debuglevel>
+                  <optimize>${javac.optimize}</optimize>
+                  <parameters>true</parameters>
+                  <showDeprecation>true</showDeprecation>
+                  <showWarnings>true</showWarnings>
+                  <source>${javac.source.version}</source>
+                  <target>${javac.target.version}</target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-test</id>
+                <configuration>
+                  <systemPropertyVariables>
+                    <env.eclipse>${environment.eclipse}</env.eclipse>
+                    <env.maven>true</env.maven>
+                  </systemPropertyVariables>
+                  <excludedGroups>${javac.skip.test.categories}</excludedGroups>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- Setup the Surefire for testing under Java 9 or greater -->
+    <profile>
+      <id>java-test-jdk9</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),jdk(>=9),file(src/test))</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-test</id>
+                <configuration>
+                  <argLine>--illegal-access=permit</argLine>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- If there is no test, then make sure that all the default JAR plugins are disabled -->
+    <profile>
+      <id>java-test-skip</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),missing(src/test))</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-testCompile</id>
+                <phase />
+                <configuration>
+                  <skip>true</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-testResources</id>
+                <phase />
+                <configuration>
+                  <skip>true</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-test</id>
+                <phase />
+                <configuration>
+                  <skip>true</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- Request that the test code be packaged up into a Jar and deployed -->
+    <profile>
+      <id>ship-tests</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/ship-tests))</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-jar-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>ship-tests</id>
+                <goals>
+                  <goal>test-jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- Generate I18N strings -->
+    <profile>
+      <id>generate-i18n-strings</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),or(file(profiles/internal-i18n-enums),file(profiles/i18n-enums)))</value>
+        </property>
       </activation>
       <properties>
         <osgi.dont.export.i18n>!${osgi.base.package}.*.i18n,</osgi.dont.export.i18n>
@@ -206,138 +765,31 @@
         </plugins>
       </build>
     </profile>
+    <!-- For normal cases, add a dependency to the common-utils.misc project so that the default implementation of I18N class 
+      can be resolved -->
     <profile>
-      <id>generate-i18n-strings</id>
+      <id>generate-i18n-strings-dependencies</id>
       <activation>
-        <file>
-          <exists>profiles/i18n-enums</exists>
-        </file>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/i18n-enums))</value>
+        </property>
       </activation>
-      <properties>
-        <osgi.dont.export.i18n>!${osgi.base.package}.*.i18n,</osgi.dont.export.i18n>
-        <!-- When generating the i18n enum classes from a messages.properties, this setting allows the enum class to extend 
-          a class -->
-        <i18n.implementation.class />
-        <!-- Defines the directory to store the generated enum class into -->
-        <i18n.output.dir>${project.build.directory}/generated-sources/i18n</i18n.output.dir>
-        <!-- Defines the separator between package names in the enum key -->
-        <i18n.package.separator>_</i18n.package.separator>
-      </properties>
       <dependencies>
         <dependency>
           <groupId>com.diamondq.common</groupId>
           <artifactId>common-utils.misc</artifactId>
         </dependency>
       </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.diamondq.maven</groupId>
-            <artifactId>i18n-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>generate-i18n-enums</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>generateEnums</goal>
-                </goals>
-                <configuration>
-                  <propsDir>${project.basedir}/src/i18n/resources</propsDir>
-                  <outputDir>${i18n.output.dir}</outputDir>
-                  <implementsClass>${i18n.implementation.class}</implementsClass>
-                  <packageSeparator>${i18n.package.separator}</packageSeparator>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>add-i18n-enums</id>
-                <phase>generate-sources</phase>
-                <goals>
-                  <goal>add-source</goal>
-                </goals>
-                <configuration>
-                  <sources>
-                    <source>${i18n.output.dir}</source>
-                  </sources>
-                </configuration>
-              </execution>
-              <execution>
-                <id>add-i18n-properties</id>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>add-resource</goal>
-                </goals>
-                <configuration>
-                  <resources>
-                    <resource>
-                      <directory>src/i18n/resources</directory>
-                      <targetPath></targetPath>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
     </profile>
-    <profile>
-      <id>generate-asciidoc</id>
-      <activation>
-        <file>
-          <exists>src/main/asciidoc</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.asciidoctor</groupId>
-            <artifactId>asciidoctor-maven-plugin</artifactId>
-            <dependencies>
-              <dependency>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctorj-diagram</artifactId>
-                <version>1.5.8</version>
-              </dependency>
-            </dependencies>
-            <executions>
-              <execution>
-                <id>output-html</id>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>process-asciidoc</goal>
-                </goals>
-                <configuration>
-                  <backend>html</backend>
-                  <preserveDirectories>true</preserveDirectories>
-                  <attributes>
-                    <source-highlighter>coderay</source-highlighter>
-                    <toc>left</toc>
-                    <revnumber>${project.version}</revnumber>
-                    <revdate>${maven.build.timestamp}</revdate>
-                    <organization>${project.organization.name}</organization>
-                  </attributes>
-                  <requires>
-                    <require>asciidoctor-diagram</require>
-                  </requires>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
+    <!-- Generate the ANTRL4 classes based on the definition -->
     <profile>
       <id>generate-antlr</id>
       <activation>
-        <file>
-          <exists>src/main/antlr4</exists>
-        </file>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(src/main/antlr4))</value>
+        </property>
       </activation>
       <build>
         <plugins>
@@ -361,61 +813,14 @@
         </plugins>
       </build>
     </profile>
-    <!-- If there is an OSGI-INF directory, then add it as a resource and make sure that the Manifest includes the XML files -->
-    <profile>
-      <id>osgi-inf-present</id>
-      <activation>
-        <file>
-          <exists>OSGI-INF</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>build-helper-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>add-osgi-inf</id>
-                <phase>generate-resources</phase>
-                <goals>
-                  <goal>add-resource</goal>
-                </goals>
-                <configuration>
-                  <resources>
-                    <resource>
-                      <directory>OSGI-INF</directory>
-                      <targetPath>OSGI-INF</targetPath>
-                    </resource>
-                  </resources>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>maven-bundle-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>bundle-manifest</id>
-                <configuration>
-                  <instructions>
-                    <Service-Component>OSGI-INF/*.xml</Service-Component>
-                  </instructions>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <!-- If there is a META-INF folder then make sure it's added to the build -->
     <profile>
       <id>meta-inf-present</id>
       <activation>
-        <file>
-          <exists>META-INF</exists>
-        </file>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(META-INF))</value>
+        </property>
       </activation>
       <build>
         <plugins>
@@ -447,12 +852,14 @@
         </plugins>
       </build>
     </profile>
+    <!-- WIP support for AspectJ compilation -->
     <profile>
       <id>aspectj-aspect-project</id>
       <activation>
-        <file>
-          <exists>profiles/aspects</exists>
-        </file>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/aspects))</value>
+        </property>
       </activation>
       <dependencies>
         <dependency>
@@ -518,17 +925,36 @@
         </plugins>
       </build>
     </profile>
+    <!-- Micronaut dependencies -->
     <profile>
-      <id>java-test-jdk8</id>
+      <id>micronaut-injection</id>
       <activation>
-        <file>
-          <exists>src/test</exists>
-        </file>
-        <jdk>(,1.9]</jdk>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),or(file(profiles/micronaut-dependency-optional),file(profiles/micronaut-dependency)))</value>
+        </property>
       </activation>
       <properties>
-        <javac.skip.test.categories></javac.skip.test.categories>
+        <micronaut.version>1.1.3</micronaut.version>
       </properties>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-bom</artifactId>
+            <version>${micronaut.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>io.micronaut</groupId>
+          <artifactId>micronaut-inject</artifactId>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -536,32 +962,47 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <executions>
               <execution>
-                <id>default-testCompile</id>
+                <id>default-compile</id>
                 <configuration>
-                  <debug>${javac.debug}</debug>
-                  <debuglevel>lines,vars,source</debuglevel>
-                  <optimize>${javac.optimize}</optimize>
-                  <parameters>true</parameters>
-                  <showDeprecation>true</showDeprecation>
-                  <showWarnings>true</showWarnings>
-                  <source>${javac.source.version}</source>
-                  <target>${javac.target.version}</target>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-inject-java</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-validation</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>io.micronaut.annotation.processing.TypeElementVisitorProcessor</annotationProcessor>
+                    <annotationProcessor>io.micronaut.annotation.processing.PackageConfigurationInjectProcessor</annotationProcessor>
+                    <annotationProcessor>io.micronaut.annotation.processing.BeanDefinitionInjectProcessor</annotationProcessor>
+                  </annotationProcessors>
                 </configuration>
               </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <executions>
               <execution>
-                <id>default-test</id>
+                <id>default-testCompile</id>
                 <configuration>
-                  <systemPropertyVariables>
-                    <env.eclipse>${environment.eclipse}</env.eclipse>
-                    <env.maven>true</env.maven>
-                  </systemPropertyVariables>
-                  <excludedGroups>${javac.skip.test.categories}</excludedGroups>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-inject-java</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                    <path>
+                      <groupId>io.micronaut</groupId>
+                      <artifactId>micronaut-validation</artifactId>
+                      <version>${micronaut.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>io.micronaut.annotation.processing.TypeElementVisitorProcessor</annotationProcessor>
+                    <annotationProcessor>io.micronaut.annotation.processing.PackageConfigurationInjectProcessor</annotationProcessor>
+                    <annotationProcessor>io.micronaut.annotation.processing.BeanDefinitionInjectProcessor</annotationProcessor>
+                  </annotationProcessors>
                 </configuration>
               </execution>
             </executions>
@@ -569,17 +1010,45 @@
         </plugins>
       </build>
     </profile>
+    <!-- Add extra dependencies for non-optional micronaut -->
     <profile>
-      <id>java-test-jdk9</id>
+      <id>micronaut-injection-dependencies</id>
       <activation>
-        <file>
-          <exists>src/test</exists>
-        </file>
-        <jdk>(9,]</jdk>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/micronaut-dependency))</value>
+        </property>
       </activation>
-      <properties>
-        <javac.skip.test.categories></javac.skip.test.categories>
-      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>io.micronaut</groupId>
+          <artifactId>micronaut-inject-java</artifactId>
+          <version>${micronaut.version}</version>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
+    </profile>
+    <!-- Vert.x support -->
+    <profile>
+      <id>vertx-annotations</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/vertx-annotations))</value>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>io.vertx</groupId>
+          <artifactId>vertx-codegen</artifactId>
+          <classifier>processor</classifier>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>io.vertx</groupId>
+          <artifactId>vertx-service-proxy</artifactId>
+        </dependency>
+      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -587,84 +1056,45 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <executions>
               <execution>
-                <id>default-testCompile</id>
+                <id>default-compile</id>
                 <configuration>
-                  <debug>${javac.debug}</debug>
-                  <debuglevel>lines,vars,source</debuglevel>
-                  <optimize>${javac.optimize}</optimize>
-                  <parameters>true</parameters>
-                  <showDeprecation>true</showDeprecation>
-                  <showWarnings>true</showWarnings>
-                  <source>${javac.source.version}</source>
-                  <target>${javac.target.version}</target>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>io.vertx</groupId>
+                      <artifactId>vertx-codegen</artifactId>
+                      <classifier>processor</classifier>
+                      <version>3.7.0</version>
+                    </path>
+                    <path>
+                      <groupId>io.vertx</groupId>
+                      <artifactId>vertx-service-proxy</artifactId>
+                      <version>3.7.0</version>
+                    </path>
+                  </annotationProcessorPaths>
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
+                  </annotationProcessors>
                 </configuration>
               </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-test</id>
-                <configuration>
-                  <systemPropertyVariables>
-                    <env.eclipse>${environment.eclipse}</env.eclipse>
-                    <env.maven>true</env.maven>
-                  </systemPropertyVariables>
-                  <excludedGroups>${javac.skip.test.categories}</excludedGroups>
-                  <argLine>--illegal-access=permit</argLine>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>java-test-skip</id>
-      <activation>
-        <file>
-          <missing>src/test</missing>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
               <execution>
                 <id>default-testCompile</id>
-                <phase />
                 <configuration>
-                  <skip>true</skip>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-testResources</id>
-                <phase />
-                <configuration>
-                  <skip>true</skip>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-test</id>
-                <phase />
-                <configuration>
-                  <skip>true</skip>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>io.vertx</groupId>
+                      <artifactId>vertx-codegen</artifactId>
+                      <classifier>processor</classifier>
+                      <version>3.7.0</version>
+                    </path>
+                    <path>
+                      <groupId>io.vertx</groupId>
+                      <artifactId>vertx-service-proxy</artifactId>
+                      <version>3.7.0</version>
+                    </path>
+                  </annotationProcessorPaths>
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
+                  </annotationProcessors>
                 </configuration>
               </execution>
             </executions>
@@ -672,129 +1102,51 @@
         </plugins>
       </build>
     </profile>
-    <!-- A leaf project should have it's POM flattened. This allows for interpolation within the version as well as just 
-      increasing the cleanliness of the result. -->
+    <!-- ****************************************************************************************************************** 
+      Java OSGi based -->
+    <!-- If there is an OSGI-INF directory, then add it as a resource and make sure that the Manifest includes the XML files -->
     <profile>
-      <id>leaf-project</id>
+      <id>osgi-inf-present</id>
       <activation>
-        <file>
-          <exists>src/main</exists>
-        </file>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(osgi),file(OSGI-INF))</value>
+        </property>
       </activation>
-      <properties>
-        <flatten.pom.type>jar</flatten.pom.type>
-      </properties>
       <build>
         <plugins>
           <plugin>
-            <groupId>com.carrotgarden.maven</groupId>
-            <artifactId>flatten-maven-plugin</artifactId>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
             <executions>
-              <!-- Activate "flatten:flatten" during "prepare-package" -->
               <execution>
+                <id>add-osgi-inf</id>
+                <phase>generate-resources</phase>
                 <goals>
-                  <goal>flatten</goal>
+                  <goal>add-resource</goal>
                 </goals>
                 <configuration>
-                  <!-- Control dependency resolution. -->
-                  <performDependencyResolve>true</performDependencyResolve>
-                  <includeScope>runtime</includeScope>
-                  <excludeTransitive>false</excludeTransitive>
-                  <!-- Remove these pom.xml members. -->
-                  <performRemoveMembers>true</performRemoveMembers>
-                  <memberRemoveList>
-                    <member>parent</member>
-                    <member>properties</member>
-                    <member>distributionManagement</member>
-                    <member>dependencyManagement</member>
-                    <member>repositories</member>
-                    <member>pluginRepositories</member>
-                    <member>build</member>
-                    <member>profiles</member>
-                    <member>reporting</member>
-                  </memberRemoveList>
-                  <!-- Change published artifact identity. -->
-                  <performOverrideIdentity>true</performOverrideIdentity>
-                  <overrideArtifactId>${project.artifactId}</overrideArtifactId>
-                  <!-- Switch project from pom.xml to pom.xml.flatten. -->
-                  <performSwitchPomXml>true</performSwitchPomXml>
-                  <packagingSwitchList>
-                    <packaging>${flatten.pom.type}</packaging>
-                  </packagingSwitchList>
+                  <resources>
+                    <resource>
+                      <directory>OSGI-INF</directory>
+                      <targetPath>OSGI-INF</targetPath>
+                    </resource>
+                  </resources>
                 </configuration>
               </execution>
             </executions>
           </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>bom-profile</id>
-      <activation>
-        <file>
-          <exists>profiles/bom</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
           <plugin>
-            <groupId>com.carrotgarden.maven</groupId>
-            <artifactId>flatten-maven-plugin</artifactId>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>maven-bundle-plugin</artifactId>
             <executions>
-              <!-- Activate "flatten:flatten" during "prepare-package" -->
               <execution>
-                <goals>
-                  <goal>flatten</goal>
-                </goals>
+                <id>bundle-manifest</id>
                 <configuration>
-                  <!-- Control dependency resolution. -->
-                  <performDependencyResolve>true</performDependencyResolve>
-                  <includeScope>runtime</includeScope>
-                  <excludeTransitive>false</excludeTransitive>
-                  <!-- Remove these pom.xml members. -->
-                  <performRemoveMembers>true</performRemoveMembers>
-                  <memberRemoveList>
-                    <member>parent</member>
-                    <member>properties</member>
-                    <member>distributionManagement</member>
-                    <member>repositories</member>
-                    <member>pluginRepositories</member>
-                    <member>build</member>
-                    <member>profiles</member>
-                    <member>reporting</member>
-                  </memberRemoveList>
-                  <!-- Change published artifact identity. -->
-                  <performOverrideIdentity>true</performOverrideIdentity>
-                  <overrideArtifactId>${project.artifactId}</overrideArtifactId>
-                  <!-- Switch project from pom.xml to pom.xml.flatten. -->
-                  <performSwitchPomXml>true</performSwitchPomXml>
-                  <packagingSwitchList>
-                    <packaging>pom</packaging>
-                  </packagingSwitchList>
+                  <instructions>
+                    <Service-Component>OSGI-INF/*.xml</Service-Component>
+                  </instructions>
                 </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>test-jar</id>
-      <activation>
-        <file>
-          <exists>profiles/test-jar</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-jar-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>test-jar</id>
-                <goals>
-                  <goal>test-jar</goal>
-                </goals>
               </execution>
             </executions>
           </plugin>
@@ -805,9 +1157,10 @@
     <profile>
       <id>osgi-pde-target</id>
       <activation>
-        <file>
-          <exists>profiles/osgi-pde-target</exists>
-        </file>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(osgi),file(profiles/osgi-pde-target))</value>
+        </property>
       </activation>
       <properties>
         <!-- This defines the name of the target file. If 'something' is provided here, then the file name will be something.target. -->
@@ -881,42 +1234,14 @@
         </plugins>
       </build>
     </profile>
-    <profile>
-      <id>not-osgi-pde-target</id>
-      <activation>
-        <file>
-          <missing>profiles/osgi-pde-target</missing>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-enforcer-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>enforce-non-pde</id>
-                <goals>
-                  <goal>enforce</goal>
-                </goals>
-                <configuration>
-                  <rules>
-                    <banDuplicatePomDependencyVersions />
-                  </rules>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
     <!-- If there is an OSGi project, then add the maven-bundle-plugin -->
     <profile>
       <id>osgi-project</id>
       <activation>
-        <file>
-          <exists>profiles/osgi</exists>
-        </file>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),type(osgi))</value>
+        </property>
       </activation>
       <properties>
         <!-- The basic list of headers to remove from the generated MANIFEST.MF -->
@@ -959,7 +1284,23 @@
         <osgi.fragment.host />
         <!-- This represents the DynamicImport-Package -->
         <osgi.dynamicimport.package />
+        <!-- The OSGi version -->
+        <osgi.dependency.version>6.0.0</osgi.dependency.version>
       </properties>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi.core</artifactId>
+            <version>${osgi.dependency.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi.cmpn</artifactId>
+            <version>${osgi.dependency.version}</version>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
       <dependencies>
         <dependency>
           <groupId>org.osgi</groupId>
@@ -1072,9 +1413,10 @@
     <profile>
       <id>karaf-feature-profile</id>
       <activation>
-        <file>
-          <exists>profiles/karaf-feature</exists>
-        </file>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(osgi),file(profiles/karaf-feature))</value>
+        </property>
       </activation>
       <properties>
         <!-- The file that is the feature file. By default it's named the same as the artifactId and exists at the root of 
@@ -1111,9 +1453,10 @@
     <profile>
       <id>karaf-generated-feature-profile</id>
       <activation>
-        <file>
-          <exists>profiles/karaf-generated-feature</exists>
-        </file>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(osgi),file(profiles/karaf-generated-feature))</value>
+        </property>
       </activation>
       <properties>
         <!-- Redefine the feature file since it's now generated -->
@@ -1256,327 +1599,49 @@
         </plugins>
       </build>
     </profile>
-    <!-- If we're running in Jenkins, then make sure we always update snapshots -->
+    <!-- ****************************************************************************************************************** 
+      ASCIIDoc based -->
+    <!-- Generate the ASCII Documentation -->
     <profile>
-      <id>cli</id>
+      <id>generate-asciidoc</id>
       <activation>
         <property>
-          <name>jenkins</name>
-          <value>true</value>
-        </property>
-      </activation>
-      <properties>
-        <snapshot.update.policy>always</snapshot.update.policy>
-        <gpg.arg1>--pinentry-mode</gpg.arg1>
-        <gpg.arg2>loopback</gpg.arg2>
-      </properties>
-    </profile>
-    <profile>
-      <id>deploy-self</id>
-      <activation>
-        <property>
-          <name>deploy</name>
-          <value>self</value>
-        </property>
-      </activation>
-      <properties>
-        <scm.project>common-maven</scm.project>
-      </properties>
-      <distributionManagement>
-        <snapshotRepository>
-          <id>ossrh-snap</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-      </distributionManagement>
-    </profile>
-    <!-- Only SIGN if we're running within Jenkins -->
-    <profile>
-      <id>sign</id>
-      <activation>
-        <property>
-          <name>jenkins</name>
-          <value>true</value>
+          <name>[DIAMONDQ]</name>
+          <value>file(src/main/asciidoc)</value>
         </property>
       </activation>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctor-maven-plugin</artifactId>
+            <dependencies>
+              <dependency>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctorj-diagram</artifactId>
+                <version>1.5.8</version>
+              </dependency>
+            </dependencies>
             <executions>
               <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
+                <id>output-html</id>
+                <phase>generate-resources</phase>
                 <goals>
-                  <goal>sign</goal>
+                  <goal>process-asciidoc</goal>
                 </goals>
                 <configuration>
-                  <gpgArguments>
-                    <arg>${gpg.arg1}</arg>
-                    <arg>${gpg.arg2}</arg>
-                  </gpgArguments>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>build-assembly</id>
-      <activation>
-        <file>
-          <exists>profiles/assembly</exists>
-        </file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <configuration>
-              <descriptors>
-                <descriptor>src/assembly/assembly.xml</descriptor>
-              </descriptors>
-            </configuration>
-            <executions>
-              <execution>
-                <id>make-assembly</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>micronaut-dependencies</id>
-      <activation>
-        <file>
-          <exists>profiles/micronaut-dependency</exists>
-        </file>
-      </activation>
-      <properties>
-        <micronaut.version>1.1.3</micronaut.version>
-      </properties>
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-bom</artifactId>
-            <version>${micronaut.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
-      <dependencies>
-        <dependency>
-          <groupId>io.micronaut</groupId>
-          <artifactId>micronaut-inject-java</artifactId>
-          <version>${micronaut.version}</version>
-          <optional>true</optional>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-compile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-inject-java</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-validation</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>io.micronaut.annotation.processing.TypeElementVisitorProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.PackageConfigurationInjectProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.BeanDefinitionInjectProcessor</annotationProcessor>
-                  </annotationProcessors>
-                </configuration>
-              </execution>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-inject-java</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-validation</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>io.micronaut.annotation.processing.TypeElementVisitorProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.PackageConfigurationInjectProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.BeanDefinitionInjectProcessor</annotationProcessor>
-                  </annotationProcessors>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>micronaut-dependencies-optional</id>
-      <activation>
-        <file>
-          <exists>profiles/micronaut-dependency-optional</exists>
-        </file>
-      </activation>
-      <properties>
-        <micronaut.version>1.1.3</micronaut.version>
-      </properties>
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-bom</artifactId>
-            <version>${micronaut.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
-      <dependencies>
-        <dependency>
-          <groupId>io.micronaut</groupId>
-          <artifactId>micronaut-inject</artifactId>
-          <optional>true</optional>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-compile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-inject-java</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-validation</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                </configuration>
-              </execution>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-inject-java</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-validation</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>vertx-annotations</id>
-      <activation>
-        <file>
-          <exists>profiles/vertx-annotations</exists>
-        </file>
-      </activation>
-      <dependencies>
-        <dependency>
-          <groupId>io.vertx</groupId>
-          <artifactId>vertx-codegen</artifactId>
-          <classifier>processor</classifier>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>io.vertx</groupId>
-          <artifactId>vertx-service-proxy</artifactId>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-compile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.vertx</groupId>
-                      <artifactId>vertx-codegen</artifactId>
-                      <classifier>processor</classifier>
-                      <version>3.7.0</version>
-                    </path>
-                    <path>
-                      <groupId>io.vertx</groupId>
-                      <artifactId>vertx-service-proxy</artifactId>
-                      <version>3.7.0</version>
-                    </path>
-                  </annotationProcessorPaths>
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
-                  </annotationProcessors>
-                </configuration>
-              </execution>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.vertx</groupId>
-                      <artifactId>vertx-codegen</artifactId>
-                      <classifier>processor</classifier>
-                      <version>3.7.0</version>
-                    </path>
-                    <path>
-                      <groupId>io.vertx</groupId>
-                      <artifactId>vertx-service-proxy</artifactId>
-                      <version>3.7.0</version>
-                    </path>
-                  </annotationProcessorPaths>
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
-                  </annotationProcessors>
+                  <backend>html</backend>
+                  <preserveDirectories>true</preserveDirectories>
+                  <attributes>
+                    <source-highlighter>coderay</source-highlighter>
+                    <toc>left</toc>
+                    <revnumber>${project.version}</revnumber>
+                    <revdate>${maven.build.timestamp}</revdate>
+                    <organization>${project.organization.name}</organization>
+                  </attributes>
+                  <requires>
+                    <require>asciidoctor-diagram</require>
+                  </requires>
                 </configuration>
               </execution>
             </executions>
@@ -1720,7 +1785,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.0.1</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1796,7 +1861,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jarsigner-plugin</artifactId>
-          <version>1.4</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1831,7 +1896,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-plugin</artifactId>
-          <version>1.11.1</version>
+          <version>1.11.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1892,7 +1957,7 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.2</version>
+          <version>0.8.3</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -1902,7 +1967,7 @@
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
-          <version>4.0.0</version>
+          <version>4.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.sonatype.plugins</groupId>
@@ -1927,7 +1992,7 @@
         <plugin>
           <groupId>org.apache.karaf.tooling</groupId>
           <artifactId>karaf-maven-plugin</artifactId>
-          <version>4.2.2</version>
+          <version>4.2.4</version>
         </plugin>
         <plugin>
           <groupId>org.antlr</groupId>
@@ -2132,7 +2197,7 @@
                   fixed. -->
                 <!-- <requirePluginVersions /> -->
                 <requireMavenVersion>
-                  <version>3.3.9</version>
+                  <version>3.5.2</version>
                 </requireMavenVersion>
               </rules>
             </configuration>
