@@ -548,6 +548,49 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.codehaus.gmavenplus</groupId>
+            <artifactId>gmavenplus-plugin</artifactId>
+            <dependencies>
+              <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>3.0.0-beta-3</version>
+                <type>pom</type>
+                <scope>runtime</scope>
+              </dependency>
+              <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.0.13</version>
+                <scope>runtime</scope>
+              </dependency>
+            </dependencies>
+            <executions>
+              <execution>
+                <id>add-dynamic-properties</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>execute</goal>
+                </goals>
+                <configuration>
+                  <scripts>
+                    <script>
+<![CDATA[
+  argline = ""
+  for(String key : project.properties.keys()) {
+    if (key.startsWith("dq.surefire.argline.")) {
+      argline += project.properties[key] + " "
+    }
+  }
+  project.properties.setProperty('dq.surefire.argline', argline) 
+]]>
+                    </script>
+                  </scripts>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <executions>
@@ -578,6 +621,7 @@
                     <env.maven>true</env.maven>
                   </systemPropertyVariables>
                   <excludedGroups>${javac.skip.test.categories}</excludedGroups>
+                  <argLine>${dq.surefire.argline}</argLine>
                 </configuration>
               </execution>
             </executions>
@@ -594,22 +638,9 @@
           <value>and(type(java),jdk(>=9),file(src/test))</value>
         </property>
       </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-test</id>
-                <configuration>
-                  <argLine>--illegal-access=permit</argLine>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
+      <properties>
+        <dq.surefire.argline.jdk9>--illegal-access=permit</dq.surefire.argline.jdk9>
+      </properties>
     </profile>
     <!-- If there is no test, then make sure that all the default JAR plugins are disabled -->
     <profile>
@@ -658,6 +689,34 @@
                 <configuration>
                   <skip>true</skip>
                 </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>test-with-tools</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/test-with-tools))</value>
+        </property>
+      </activation>
+      <properties>
+        <dq.surefire.argline.tools>"-Xbootclasspath/p:@{javaHome}/lib/tools.jar"</dq.surefire.argline.tools>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.diamondq.maven</groupId>
+            <artifactId>javahome-resolver-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>validate</phase>
+                <goals>
+                  <goal>resolve</goal>
+                </goals>
               </execution>
             </executions>
           </plugin>
@@ -1359,23 +1418,12 @@
                   <niceManifest>true</niceManifest>
                 </configuration>
               </execution>
-              <execution>
-                <id>source-manifest</id>
-                <phase>process-classes</phase>
-                <goals>
-                  <goal>manifest</goal>
-                </goals>
-                <configuration>
-                  <instructions>
-                    <_removeheaders>${osgi.removesrcheaders}</_removeheaders>
-                    <Export-Package />
-                    <Bundle-SymbolicName>$[maven-symbolicname].source</Bundle-SymbolicName>
-                    <Eclipse-SourceBundle>$[maven-symbolicname];version="$[Bundle-Version]";roots:="."</Eclipse-SourceBundle>
-                  </instructions>
-                  <manifestLocation>${project.build.directory}/sources</manifestLocation>
-                  <niceManifest>true</niceManifest>
-                </configuration>
-              </execution>
+              <!-- mmansell - Disabled because the latest version is conflicting in Eclipse. I'm not sure why yet <execution> 
+                <id>source-manifest</id> <phase>process-classes</phase> <goals> <goal>manifest</goal> </goals> <configuration> <instructions> 
+                <_removeheaders>${osgi.removesrcheaders}</_removeheaders> <Export-Package /> <Bundle-SymbolicName>$[maven-symbolicname].source</Bundle-SymbolicName> 
+                <Eclipse-SourceBundle>$[maven-symbolicname];version="$[Bundle-Version]";roots:="."</Eclipse-SourceBundle> </instructions> 
+                <manifestLocation>${project.build.directory}/sources</manifestLocation> <niceManifest>true</niceManifest> </configuration> 
+                </execution> -->
             </executions>
           </plugin>
           <plugin>
@@ -1392,20 +1440,9 @@
             </executions>
           </plugin>
           <!-- Generate sources jar -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <configuration>
-                  <archive>
-                    <manifestFile>${project.build.directory}/sources/MANIFEST.MF</manifestFile>
-                  </archive>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
+          <!-- mmansell - Disabled because source manifest was disabled above <plugin> <groupId>org.apache.maven.plugins</groupId> 
+            <artifactId>maven-source-plugin</artifactId> <executions> <execution> <id>attach-sources</id> <configuration> <archive> <manifestFile>${project.build.directory}/sources/MANIFEST.MF</manifestFile> 
+            </archive> </configuration> </execution> </executions> </plugin> -->
         </plugins>
       </build>
     </profile>
@@ -1911,7 +1948,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-toolchains-plugin</artifactId>
-          <version>1.1</version>
+          <version>3.0.0</version>
         </plugin>
         <!-- Other plugins -->
         <plugin>
@@ -1945,6 +1982,11 @@
           <version>1.6.0</version>
         </plugin>
         <plugin>
+          <groupId>org.codehaus.gmavenplus</groupId>
+          <artifactId>gmavenplus-plugin</artifactId>
+          <version>1.7.1</version>
+        </plugin>
+        <plugin>
           <groupId>com.carrotgarden.maven</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
           <version>1.4.20180402132337</version>
@@ -1967,7 +2009,7 @@
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
-          <version>4.1.0</version>
+          <version>4.2.1</version>
         </plugin>
         <plugin>
           <groupId>org.sonatype.plugins</groupId>
@@ -1977,6 +2019,11 @@
         <plugin>
           <groupId>com.diamondq.maven</groupId>
           <artifactId>osgi-target-maven-plugin</artifactId>
+          <version>1.0.2</version>
+        </plugin>
+        <plugin>
+          <groupId>com.diamondq.maven</groupId>
+          <artifactId>javahome-resolver-maven-plugin</artifactId>
           <version>1.0.2</version>
         </plugin>
         <plugin>
@@ -2092,6 +2139,32 @@
                     <versionRange>[1.0,)</versionRange>
                     <goals>
                       <goal>build-target</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <versionRange>[1.7.1,)</versionRange>
+                    <goals>
+                      <goal>execute</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore></ignore>
+                  </action>
+                </pluginExecution>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>com.diamondq.maven</groupId>
+                    <artifactId>javahome-resolver-maven-plugin</artifactId>
+                    <versionRange>[1.0.0,)</versionRange>
+                    <goals>
+                      <goal>resolve</goal>
                     </goals>
                   </pluginExecutionFilter>
                   <action>
