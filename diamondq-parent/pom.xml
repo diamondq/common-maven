@@ -106,6 +106,7 @@
           <snapshots>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
           </snapshots>
           <releases>
             <enabled>false</enabled>
@@ -114,6 +115,9 @@
         <repository>
           <id>2-dq-release</id>
           <url>https://nexus.diamondq.com/repository/maven-public/</url>
+          <releases>
+            <checksumPolicy>fail</checksumPolicy>
+          </releases>
           <snapshots>
             <enabled>false</enabled>
           </snapshots>
@@ -124,6 +128,7 @@
           <snapshots>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
           </snapshots>
           <releases>
             <enabled>false</enabled>
@@ -137,6 +142,7 @@
           <snapshots>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
           </snapshots>
           <releases>
             <enabled>false</enabled>
@@ -156,6 +162,7 @@
           <snapshots>
             <enabled>true</enabled>
             <updatePolicy>daily</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
           </snapshots>
           <releases>
             <enabled>false</enabled>
@@ -164,6 +171,9 @@
         <repository>
           <id>2-dq-release</id>
           <url>https://nexus.diamondq.com/repository/maven-public/</url>
+          <releases>
+            <checksumPolicy>fail</checksumPolicy>
+          </releases>
           <snapshots>
             <enabled>false</enabled>
           </snapshots>
@@ -174,6 +184,7 @@
           <snapshots>
             <enabled>true</enabled>
             <updatePolicy>daily</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
           </snapshots>
           <releases>
             <enabled>false</enabled>
@@ -187,6 +198,7 @@
           <snapshots>
             <enabled>true</enabled>
             <updatePolicy>daily</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
           </snapshots>
           <releases>
             <enabled>false</enabled>

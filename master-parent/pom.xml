@@ -57,6 +57,7 @@
       <snapshots>
         <enabled>true</enabled>
         <updatePolicy>${snapshot.update.policy}</updatePolicy>
+        <checksumPolicy>fail</checksumPolicy>
       </snapshots>
       <releases>
         <enabled>false</enabled>
@@ -70,6 +71,7 @@
       <snapshots>
         <enabled>true</enabled>
         <updatePolicy>${snapshot.update.policy}</updatePolicy>
+        <checksumPolicy>fail</checksumPolicy>
       </snapshots>
       <releases>
         <enabled>false</enabled>
