@@ -17,6 +17,7 @@
     <slf4j.version>1.7.28</slf4j.version>
     <log4j2.version>2.12.1</log4j2.version>
     <jackson.version>2.9.9</jackson.version>
+    <immutables.version>2.7.4</immutables.version>
     <scm.project />
     <docker.registry>docker-registry.diamondq.com</docker.registry>
   </properties>
@@ -887,7 +888,7 @@
           <dependency>
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>
-            <version>2.7.1</version>
+            <version>${immutables.version}</version>
           </dependency>
           <dependency>
             <groupId>org.javatuples</groupId>

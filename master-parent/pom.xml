@@ -984,6 +984,67 @@
         </plugins>
       </build>
     </profile>
+    <!-- Immutables -->
+    <profile>
+      <id>immutables</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/immutables))</value>
+        </property>
+      </activation>
+      <properties>
+        <immutables.version>2.7.4</immutables.version>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.immutables</groupId>
+          <artifactId>value</artifactId>
+          <version>${immutables.version}</version>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <configuration>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>org.immutables</groupId>
+                      <artifactId>value</artifactId>
+                      <version>${immutables.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor>
+                  </annotationProcessors>
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>org.immutables</groupId>
+                      <artifactId>value</artifactId>
+                      <version>${immutables.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor>
+                  </annotationProcessors>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <!-- Micronaut dependencies -->
     <profile>
       <id>micronaut-injection</id>
