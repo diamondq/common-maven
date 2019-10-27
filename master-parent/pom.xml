@@ -1057,7 +1057,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>1.1.3</micronaut.version>
+        <micronaut.version>1.2.5</micronaut.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1149,6 +1149,70 @@
           <optional>true</optional>
         </dependency>
       </dependencies>
+    </profile>
+    <profile>
+      <id>micronaut-openapi</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/micronaut-openapi))</value>
+        </property>
+      </activation>
+      <properties>
+        <micronaut.version>1.2.5</micronaut.version>
+        <micronaut.openapi.version>1.2.2</micronaut.openapi.version>
+      </properties>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-bom</artifactId>
+            <version>${micronaut.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>io.swagger.core.v3</groupId>
+          <artifactId>swagger-annotations</artifactId>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <configuration>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>io.micronaut.configuration</groupId>
+                      <artifactId>micronaut-openapi</artifactId>
+                      <version>${micronaut.openapi.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>io.micronaut.configuration</groupId>
+                      <artifactId>micronaut-openapi</artifactId>
+                      <version>${micronaut.openapi.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
     <!-- Vert.x support -->
     <profile>
