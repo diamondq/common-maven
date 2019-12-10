@@ -836,6 +836,17 @@
           <value>and(type(java),file(profiles/i18n-enums))</value>
         </property>
       </activation>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>com.diamondq.common</groupId>
+            <artifactId>common-bom</artifactId>
+            <version>0.2.0-SNAPSHOT</version>
+            <scope>import</scope>
+            <type>pom</type>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
       <dependencies>
         <dependency>
           <groupId>com.diamondq.common</groupId>
@@ -1057,7 +1068,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>1.2.5</micronaut.version>
+        <micronaut.version>1.2.6</micronaut.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1159,7 +1170,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>1.2.5</micronaut.version>
+        <micronaut.version>1.2.6</micronaut.version>
         <micronaut.openapi.version>1.2.2</micronaut.openapi.version>
       </properties>
       <dependencyManagement>
@@ -1223,7 +1234,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>1.2.5</micronaut.version>
+        <micronaut.version>1.2.6</micronaut.version>
         <micronaut.security.version>1.2.2</micronaut.security.version>
       </properties>
       <dependencyManagement>
@@ -1269,6 +1280,53 @@
                       <groupId>io.micronaut</groupId>
                       <artifactId>micronaut-security</artifactId>
                       <version>${micronaut.security.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>micronaut-data</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/micronaut-data))</value>
+        </property>
+      </activation>
+      <properties>
+        <micronaut.version>1.2.6</micronaut.version>
+        <micronaut.data.version>1.0.0.M5</micronaut.data.version>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <configuration>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>io.micronaut.data</groupId>
+                      <artifactId>micronaut-data-processor</artifactId>
+                      <version>${micronaut.data.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>io.micronaut.data</groupId>
+                      <artifactId>micronaut-data-processor</artifactId>
+                      <version>${micronaut.data.version}</version>
                     </path>
                   </annotationProcessorPaths>
                 </configuration>
