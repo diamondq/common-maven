@@ -1935,6 +1935,70 @@
         </plugins>
       </build>
     </profile>
+    <!-- Picocli -->
+    <profile>
+      <id>picocli</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/picocli))</value>
+        </property>
+      </activation>
+      <properties>
+        <picocli.version>4.1.2</picocli.version>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>info.picocli</groupId>
+          <artifactId>picocli</artifactId>
+          <version>${picocli.version}</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <configuration>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>info.picocli</groupId>
+                      <artifactId>picocli-codegen</artifactId>
+                      <version>${picocli.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                  <!-- 
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor>
+                  </annotationProcessors>
+                  -->
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <annotationProcessorPaths combine.children="append">
+                    <path>
+                      <groupId>info.picocli</groupId>
+                      <artifactId>picocli-codegen</artifactId>
+                      <version>${picocli.version}</version>
+                    </path>
+                  </annotationProcessorPaths>
+                  <!-- 
+                  <annotationProcessors combine.children="append">
+                    <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor>
+                  </annotationProcessors>
+                   -->
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>default</id>
       <activation>
