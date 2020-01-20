@@ -29,7 +29,7 @@
     <nexus.skip.staging>false</nexus.skip.staging>
     <nexus.skip.local.staging>false</nexus.skip.local.staging>
     <!-- Special version properties -->
-    <plugins.surefire.version>3.0.0-M3</plugins.surefire.version>
+    <plugins.surefire.version>3.0.0-M4</plugins.surefire.version>
   </properties>
   <licenses>
     <license>
@@ -1970,11 +1970,8 @@
                       <version>${picocli.version}</version>
                     </path>
                   </annotationProcessorPaths>
-                  <!-- 
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor>
-                  </annotationProcessors>
-                  -->
+                  <!-- <annotationProcessors combine.children="append"> <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor> 
+                    </annotationProcessors> -->
                 </configuration>
               </execution>
               <execution>
@@ -1987,11 +1984,41 @@
                       <version>${picocli.version}</version>
                     </path>
                   </annotationProcessorPaths>
-                  <!-- 
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor>
-                  </annotationProcessors>
-                   -->
+                  <!-- <annotationProcessors combine.children="append"> <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor> 
+                    </annotationProcessors> -->
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- ****************************************************************************************************************** 
+      GraalVM Support -->
+    <!-- Build Native Image -->
+    <profile>
+      <id>graal-native-image</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/graal-native-image))</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-toolchains-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default</id>
+                <phase>validate</phase>
+                <configuration>
+                  <toolchains>
+                    <jdk>
+                      <vendor>graal</vendor>
+                    </jdk>
+                  </toolchains>
                 </configuration>
               </execution>
             </executions>
