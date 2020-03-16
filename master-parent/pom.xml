@@ -1379,6 +1379,17 @@
           <value>and(type(java),file(profiles/vertx-annotations))</value>
         </property>
       </activation>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-stack-depchain</artifactId>
+            <version>3.8.5</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
       <dependencies>
         <dependency>
           <groupId>io.vertx</groupId>
