@@ -572,6 +572,7 @@
       </activation>
       <properties>
         <javac.skip.test.categories></javac.skip.test.categories>
+        <argLine></argLine>
       </properties>
       <build>
         <plugins>
@@ -649,7 +650,7 @@
                     <env.maven>true</env.maven>
                   </systemPropertyVariables>
                   <excludedGroups>${javac.skip.test.categories}</excludedGroups>
-                  <argLine>${dq.surefire.argline}</argLine>
+                  <argLine>@{argLine} ${dq.surefire.argline}</argLine>
                   <statelessTestsetReporter
                     implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
                     <disable>false</disable>
@@ -2032,6 +2033,32 @@
                   <!-- <annotationProcessors combine.children="append"> <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor> 
                     </annotationProcessors> -->
                 </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- Jacoco -->
+    <profile>
+      <id>jacoco-generate</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/jacoco-generate))</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
               </execution>
             </executions>
           </plugin>
