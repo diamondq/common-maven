@@ -666,6 +666,85 @@
         </plugins>
       </build>
     </profile>
+    <!-- If there is no main code, then make sure that all the default JAR plugins are disabled -->
+    <profile>
+      <id>java-build-skip</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),missing(src/main))</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <phase />
+                <configuration>
+                  <skip>true</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-resources</id>
+                <phase />
+                <configuration>
+                  <skip>true</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-jar</id>
+                <phase />
+                <configuration>
+                  <skip>true</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-install-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-install</id>
+                <phase />
+                <configuration>
+                  <skip>true</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-deploy</id>
+                <phase />
+                <configuration>
+                  <skip>true</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <!-- Setup the Surefire for testing under Java 9 or greater -->
     <profile>
       <id>java-test-jdk9</id>
@@ -799,6 +878,9 @@
         <!-- When generating the i18n enum classes from a messages.properties, this setting allows the enum class to extend 
           a class -->
         <i18n.implementation.class />
+        <!-- When generating the i18n enum classes from a messages.properties, this setting allows the ResourceBundle's ClassLoader 
+          and Control to be provided by another class -->
+        <i18n.resourcebundleloader.class />
         <!-- Defines the directory to store the generated enum class into -->
         <i18n.output.dir>${project.build.directory}/generated-sources/i18n</i18n.output.dir>
         <!-- Defines the separator between package names in the enum key -->
@@ -820,6 +902,7 @@
                   <propsDir>${project.basedir}/src/i18n/resources</propsDir>
                   <outputDir>${i18n.output.dir}</outputDir>
                   <implementsClass>${i18n.implementation.class}</implementsClass>
+                  <resourceBundleLoaderClass>${i18n.resourcebundleloader.class}</resourceBundleLoaderClass>
                   <packageSeparator>${i18n.package.separator}</packageSeparator>
                 </configuration>
               </execution>
@@ -861,7 +944,7 @@
         </plugins>
       </build>
     </profile>
-    <!-- For normal cases, add a dependency to the common-utils.misc project so that the default implementation of I18N class 
+    <!-- For normal cases, add a dependency to the common-utils project so that the default implementation of I18N class 
       can be resolved -->
     <profile>
       <id>generate-i18n-strings-dependencies</id>
@@ -885,7 +968,7 @@
       <dependencies>
         <dependency>
           <groupId>com.diamondq.common</groupId>
-          <artifactId>common-utils.misc</artifactId>
+          <artifactId>common-utils</artifactId>
         </dependency>
       </dependencies>
     </profile>
@@ -2406,7 +2489,7 @@
         <plugin>
           <groupId>com.diamondq.maven</groupId>
           <artifactId>i18n-maven-plugin</artifactId>
-          <version>1.0.1</version>
+          <version>1.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.jacoco</groupId>

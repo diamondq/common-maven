@@ -51,7 +51,8 @@
         </property>
       </activation>
       <properties>
-        <i18n.implementation.class>com.diamondq.common.utils.misc.internationalization.MessagesEnum</i18n.implementation.class>
+        <i18n.implementation.class>com.diamondq.common.i18n.MessagesEnum</i18n.implementation.class>
+        <i18n.resourcebundleloader.class>com.diamondq.common.i18n.I18N</i18n.resourcebundleloader.class>
       </properties>
     </profile>
     <profile>
