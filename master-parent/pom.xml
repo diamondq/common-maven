@@ -279,39 +279,19 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>com.carrotgarden.maven</groupId>
+            <groupId>org.codehaus.mojo</groupId>
             <artifactId>flatten-maven-plugin</artifactId>
             <executions>
-              <!-- Activate "flatten:flatten" during "prepare-package" -->
               <execution>
                 <goals>
                   <goal>flatten</goal>
                 </goals>
+                <phase>prepare-package</phase>
                 <configuration>
-                  <!-- Control dependency resolution. -->
-                  <performDependencyResolve>true</performDependencyResolve>
-                  <includeScope>runtime</includeScope>
-                  <excludeTransitive>false</excludeTransitive>
-                  <!-- Remove these pom.xml members. -->
-                  <performRemoveMembers>true</performRemoveMembers>
-                  <memberRemoveList>
-                    <member>parent</member>
-                    <member>properties</member>
-                    <member>distributionManagement</member>
-                    <member>repositories</member>
-                    <member>pluginRepositories</member>
-                    <member>build</member>
-                    <member>profiles</member>
-                    <member>reporting</member>
-                  </memberRemoveList>
-                  <!-- Change published artifact identity. -->
-                  <performOverrideIdentity>true</performOverrideIdentity>
-                  <overrideArtifactId>${project.artifactId}</overrideArtifactId>
-                  <!-- Switch project from pom.xml to pom.xml.flatten. -->
-                  <performSwitchPomXml>true</performSwitchPomXml>
-                  <packagingSwitchList>
-                    <packaging>pom</packaging>
-                  </packagingSwitchList>
+                  <flattenMode>bom</flattenMode>
+                  <updatePomFile>true</updatePomFile>
+                  <outputDirectory>target/flatten</outputDirectory>
+                  <flattenedPomFilename>pom.xml.flatten</flattenedPomFilename>
                 </configuration>
               </execution>
             </executions>
@@ -2524,6 +2504,11 @@
           <groupId>com.carrotgarden.maven</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
           <version>1.6.20190428102750</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>flatten-maven-plugin</artifactId>
+          <version>1.2.2</version>
         </plugin>
         <plugin>
           <groupId>com.diamondq.maven</groupId>
