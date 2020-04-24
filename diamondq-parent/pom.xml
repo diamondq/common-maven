@@ -208,9 +208,476 @@
         </pluginRepository>
       </pluginRepositories>
     </profile>
+    <profile>
+      <id>general-dependency-management-osgi</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(osgi),file(profiles/osgi-eclipse-dependency-management))</value>
+        </property>
+      </activation>
+      <dependencyManagement>
+        <dependencies>
+          <!-- Equinox -->
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.core.contenttype</artifactId>
+            <version>3.7.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.core.jobs</artifactId>
+            <version>3.10.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.core.runtime</artifactId>
+            <version>3.14.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.cm</artifactId>
+            <version>1.3.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.common</artifactId>
+            <version>3.10.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.console</artifactId>
+            <version>1.3.0</version>
+          </dependency>
+          <!-- Felix Gogo is the underlying implementation for the Equinox console. However, it needs to be locked to 0.10 
+            due to the Equinox Console package dependencies -->
+          <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.gogo.runtime</artifactId>
+            <version>1.0.12</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.gogo.shell</artifactId>
+            <version>1.0.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.gogo.command</artifactId>
+            <version>1.0.2</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.ds</artifactId>
+            <version>1.5.100</version>
+          </dependency>
+          <!-- Felix SCR is the implementation for Equinox DS. However, something is broken in the 2.1.x versions with the 
+            1.5.0 versions of ds, so locking to 2.0.x -->
+          <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.scr</artifactId>
+            <version>2.0.14</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.event</artifactId>
+            <version>1.4.200</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.launcher</artifactId>
+            <version>1.5.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.preferences</artifactId>
+            <version>3.7.100</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.region</artifactId>
+            <version>1.4.100</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.registry</artifactId>
+            <version>3.8.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.supplement</artifactId>
+            <version>1.8.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.transforms.hook</artifactId>
+            <version>1.2.100</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.equinox.weaving.hook</artifactId>
+            <version>1.2.100</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.osgi</artifactId>
+            <version>3.13.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.osgi.compatibility.state</artifactId>
+            <version>1.1.100</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.osgi.services</artifactId>
+            <version>3.7.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.eclipse.platform</groupId>
+            <artifactId>org.eclipse.osgi.util</artifactId>
+            <version>3.5.0</version>
+          </dependency>
+          <!-- ConfigAdmin Felix Gogo commands -->
+          <dependency>
+            <groupId>de.dentrassi.osgi</groupId>
+            <artifactId>net.luminis.cmc</artifactId>
+            <version>0.6.0</version>
+          </dependency>
+          <!-- Logging -->
+          <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-api</artifactId>
+            <version>1.11.5</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-service</artifactId>
+            <version>1.11.5</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-logback</artifactId>
+            <version>1.11.5</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-log4j2</artifactId>
+            <version>1.11.5</version>
+          </dependency>
+          <!-- Apache Felix Fileinstall -->
+          <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.fileinstall</artifactId>
+            <version>3.6.4</version>
+          </dependency>
+          <!-- Apache Aries JNDI -->
+          <dependency>
+            <groupId>org.apache.aries.jndi</groupId>
+            <artifactId>org.apache.aries.jndi.core</artifactId>
+            <version>1.0.2</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.aries.jndi</groupId>
+            <artifactId>org.apache.aries.jndi.url</artifactId>
+            <version>1.1.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.aries.jndi</groupId>
+            <artifactId>org.apache.aries.jndi.api</artifactId>
+            <version>1.1.0</version>
+          </dependency>
+          <!-- Apache Aries SPIFLY -->
+          <dependency>
+            <groupId>org.apache.aries.spifly</groupId>
+            <artifactId>org.apache.aries.spifly.dynamic.bundle</artifactId>
+            <version>1.2.3</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.aries</groupId>
+            <artifactId>org.apache.aries.util</artifactId>
+            <version>1.1.3</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.jdbc</groupId>
+            <artifactId>pax-jdbc-hsqldb</artifactId>
+            <version>1.3.1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.jdbc</groupId>
+            <artifactId>pax-jdbc</artifactId>
+            <version>1.3.1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.jdbc</groupId>
+            <artifactId>pax-jdbc-config</artifactId>
+            <version>1.3.1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.jdbc</groupId>
+            <artifactId>pax-jdbc-spec</artifactId>
+            <version>0.6.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.jdbc</groupId>
+            <artifactId>pax-jdbc-pool-dbcp2</artifactId>
+            <version>1.3.1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.jdbc</groupId>
+            <artifactId>pax-jdbc-pool-c3p0</artifactId>
+            <version>1.3.1</version>
+          </dependency>
+          <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <!-- Limited to 1.2 due to undertow-servlet, due to Pax-web -->
+            <version>1.2</version>
+          </dependency>
+          <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <!-- Limited to ver 3 due to Pax-Web 7.x limitations -->
+            <version>3.1.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.enterprise</artifactId>
+            <version>5.0.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.c3p0</artifactId>
+            <version>0.9.5.4_1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.c3p0</artifactId>
+            <version>0.9.5.4_1</version>
+            <classifier>sources</classifier>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.dnsjava</artifactId>
+            <version>2.1.9_1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.xmlresolver</artifactId>
+            <version>1.2_5</version>
+          </dependency>
+          <!-- Undertow (currently limited to 1.4.x, which is Servlet 3 compliant due to Pax-Web) -->
+          <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-core</artifactId>
+            <version>1.4.27.Final</version>
+          </dependency>
+          <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-servlet</artifactId>
+            <version>1.4.27.Final</version>
+          </dependency>
+          <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-websockets-jsr</artifactId>
+            <version>1.4.27.Final</version>
+          </dependency>
+          <!-- pax-web-core -->
+          <dependency>
+            <groupId>org.ops4j.pax.web</groupId>
+            <artifactId>pax-web-api</artifactId>
+            <version>7.2.3</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.web</groupId>
+            <artifactId>pax-web-spi</artifactId>
+            <version>7.2.3</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>xbean-bundleutils</artifactId>
+            <version>4.14</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>xbean-reflect</artifactId>
+            <version>4.14</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>xbean-finder</artifactId>
+            <version>4.14</version>
+          </dependency>
+          <!-- pax-http-undertow -->
+          <dependency>
+            <groupId>org.ops4j.pax.web</groupId>
+            <artifactId>pax-web-runtime</artifactId>
+            <version>7.2.3</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.web</groupId>
+            <artifactId>pax-web-undertow</artifactId>
+            <version>7.2.3</version>
+          </dependency>
+          <!-- Jersey -->
+          <dependency>
+            <groupId>org.glassfish.hk2</groupId>
+            <artifactId>hk2-utils</artifactId>
+            <version>2.5.0-b61</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.hk2</groupId>
+            <artifactId>hk2-locator</artifactId>
+            <version>2.5.0-b61</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.hk2.external</groupId>
+            <artifactId>asm-all-repackaged</artifactId>
+            <version>2.5.0-b60</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.hk2</groupId>
+            <artifactId>osgi-resource-locator</artifactId>
+            <version>1.0.1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.hk2</groupId>
+            <artifactId>hk2-api</artifactId>
+            <version>2.5.0-b61</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-bean-validation</artifactId>
+            <version>2.29</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.29</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jersey.bundles</groupId>
+            <artifactId>jaxrs-ri</artifactId>
+            <version>2.29</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.29</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>2.29</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-common</artifactId>
+            <version>2.29</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>2.29</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>2.29</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet-core</artifactId>
+            <version>2.29</version>
+          </dependency>
+          <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>2.29</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.servicemix.bundles</groupId>
+            <artifactId>org.apache.servicemix.bundles.javax-inject</artifactId>
+            <version>1_3</version>
+          </dependency>
+          <dependency>
+            <groupId>org.ops4j.pax.tipi</groupId>
+            <artifactId>org.ops4j.pax.tipi.junit</artifactId>
+            <version>4.12.0.1</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.sling</groupId>
+            <artifactId>org.apache.sling.testing.osgi-mock.junit4</artifactId>
+            <version>2.4.10</version>
+            <scope>test</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+    </profile>
     <!-- If this isn't a BOM then load all the dependencies -->
     <profile>
-      <id>general-dependency-management</id>
+      <id>general-dependency-management-non-osgi</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(not(type(osgi)),missing(profiles/bom))</value>
+        </property>
+      </activation>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+          </dependency>
+          <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+          </dependency>
+          <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-core</artifactId>
+            <version>2.1.0.Final</version>
+          </dependency>
+          <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-servlet</artifactId>
+            <version>2.1.0.Final</version>
+          </dependency>
+          <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-websockets-jsr</artifactId>
+            <version>2.1.0.Final</version>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+    </profile>
+    <profile>
+      <id>dependency-management-vaadin</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(not(type(osgi)),type(vaadin),missing(profiles/bom))</value>
+        </property>
+      </activation>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-bom</artifactId>
+            <type>pom</type>
+            <scope>import</scope>
+            <version>15.0.2</version>
+          </dependency>
+          <!-- <dependency> <groupId>com.github.mcollovati.vertx</groupId> <artifactId>vaadin-flow-sockjs</artifactId> <version>13.0.0DQ-SNAPSHOT</version> 
+            <classifier>vaadin-13.0.9</classifier> </dependency> <dependency> <groupId>com.github.mcollovati.vertx</groupId> <artifactId>vertx-vaadin-flow</artifactId> 
+            <version>13.0.0DQ-SNAPSHOT</version> </dependency> -->
+        </dependencies>
+      </dependencyManagement>
+    </profile>
+    <profile>
+      <id>general-dependency-management-common</id>
       <activation>
         <property>
           <name>[DIAMONDQ]</name>
@@ -229,16 +696,6 @@
             <scope>import</scope>
             <type>pom</type>
           </dependency>
-          <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-bom</artifactId>
-            <type>pom</type>
-            <scope>import</scope>
-            <version>15.0.2</version>
-          </dependency>
-          <!-- <dependency> <groupId>com.github.mcollovati.vertx</groupId> <artifactId>vaadin-flow-sockjs</artifactId> <version>13.0.0DQ-SNAPSHOT</version> 
-            <classifier>vaadin-13.0.9</classifier> </dependency> <dependency> <groupId>com.github.mcollovati.vertx</groupId> <artifactId>vertx-vaadin-flow</artifactId> 
-            <version>13.0.0DQ-SNAPSHOT</version> </dependency> -->
           <dependency>
             <groupId>com.github.zafarkhaja</groupId>
             <artifactId>java-semver</artifactId>
@@ -614,186 +1071,6 @@
             <artifactId>jackson-module-paranamer</artifactId>
             <version>${jackson.version}</version>
           </dependency>
-          <!-- Equinox -->
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.core.contenttype</artifactId>
-            <version>3.7.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.core.jobs</artifactId>
-            <version>3.10.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.core.runtime</artifactId>
-            <version>3.14.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.cm</artifactId>
-            <version>1.3.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.common</artifactId>
-            <version>3.10.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.console</artifactId>
-            <version>1.3.0</version>
-          </dependency>
-          <!-- Felix Gogo is the underlying implementation for the Equinox console. However, it needs to be locked to 0.10 
-            due to the Equinox Console package dependencies -->
-          <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.gogo.runtime</artifactId>
-            <version>1.0.12</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.gogo.shell</artifactId>
-            <version>1.0.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.gogo.command</artifactId>
-            <version>1.0.2</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.ds</artifactId>
-            <version>1.5.100</version>
-          </dependency>
-          <!-- Felix SCR is the implementation for Equinox DS. However, something is broken in the 2.1.x versions with the 
-            1.5.0 versions of ds, so locking to 2.0.x -->
-          <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.scr</artifactId>
-            <version>2.0.14</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.event</artifactId>
-            <version>1.4.200</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.launcher</artifactId>
-            <version>1.5.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.preferences</artifactId>
-            <version>3.7.100</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.region</artifactId>
-            <version>1.4.100</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.registry</artifactId>
-            <version>3.8.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.supplement</artifactId>
-            <version>1.8.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.transforms.hook</artifactId>
-            <version>1.2.100</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.equinox.weaving.hook</artifactId>
-            <version>1.2.100</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.osgi</artifactId>
-            <version>3.13.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.osgi.compatibility.state</artifactId>
-            <version>1.1.100</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.osgi.services</artifactId>
-            <version>3.7.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.eclipse.platform</groupId>
-            <artifactId>org.eclipse.osgi.util</artifactId>
-            <version>3.5.0</version>
-          </dependency>
-          <!-- ConfigAdmin Felix Gogo commands -->
-          <dependency>
-            <groupId>de.dentrassi.osgi</groupId>
-            <artifactId>net.luminis.cmc</artifactId>
-            <version>0.6.0</version>
-          </dependency>
-          <!-- Logging -->
-          <dependency>
-            <groupId>org.ops4j.pax.logging</groupId>
-            <artifactId>pax-logging-api</artifactId>
-            <version>1.11.5</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.logging</groupId>
-            <artifactId>pax-logging-service</artifactId>
-            <version>1.11.5</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.logging</groupId>
-            <artifactId>pax-logging-logback</artifactId>
-            <version>1.11.5</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.logging</groupId>
-            <artifactId>pax-logging-log4j2</artifactId>
-            <version>1.11.5</version>
-          </dependency>
-          <!-- Apache Felix Fileinstall -->
-          <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.fileinstall</artifactId>
-            <version>3.6.4</version>
-          </dependency>
-          <!-- Apache Aries JNDI -->
-          <dependency>
-            <groupId>org.apache.aries.jndi</groupId>
-            <artifactId>org.apache.aries.jndi.core</artifactId>
-            <version>1.0.2</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.aries.jndi</groupId>
-            <artifactId>org.apache.aries.jndi.url</artifactId>
-            <version>1.1.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.aries.jndi</groupId>
-            <artifactId>org.apache.aries.jndi.api</artifactId>
-            <version>1.1.0</version>
-          </dependency>
-          <!-- Apache Aries SPIFLY -->
-          <dependency>
-            <groupId>org.apache.aries.spifly</groupId>
-            <artifactId>org.apache.aries.spifly.dynamic.bundle</artifactId>
-            <version>1.2.3</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.aries</groupId>
-            <artifactId>org.apache.aries.util</artifactId>
-            <version>1.1.3</version>
-          </dependency>
           <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
@@ -819,36 +1096,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.jdbc</groupId>
-            <artifactId>pax-jdbc-hsqldb</artifactId>
-            <version>1.3.1</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.jdbc</groupId>
-            <artifactId>pax-jdbc</artifactId>
-            <version>1.3.1</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.jdbc</groupId>
-            <artifactId>pax-jdbc-config</artifactId>
-            <version>1.3.1</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.jdbc</groupId>
-            <artifactId>pax-jdbc-spec</artifactId>
-            <version>0.6.0</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.jdbc</groupId>
-            <artifactId>pax-jdbc-pool-dbcp2</artifactId>
-            <version>1.3.1</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.jdbc</groupId>
-            <artifactId>pax-jdbc-pool-c3p0</artifactId>
-            <version>1.3.1</version>
           </dependency>
           <!-- Bouncy Castle -->
           <dependency>
@@ -916,18 +1163,6 @@
             <groupId>org.javatuples</groupId>
             <artifactId>javatuples</artifactId>
             <version>1.3-SNAPSHOT</version>
-          </dependency>
-          <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <!-- Limited to 1.2 due to undertow-servlet, due to Pax-web -->
-            <version>1.2</version>
-          </dependency>
-          <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <!-- Limited to ver 3 due to Pax-Web 7.x limitations -->
-            <version>3.1.0</version>
           </dependency>
           <dependency>
             <groupId>javax.websocket</groupId>
@@ -1018,11 +1253,6 @@
             <optional>true</optional>
           </dependency>
           <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.enterprise</artifactId>
-            <version>5.0.0</version>
-          </dependency>
-          <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>javax.ws.rs-api</artifactId>
             <version>2.1.1</version>
@@ -1032,17 +1262,6 @@
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>2.3.2</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.servicemix.bundles</groupId>
-            <artifactId>org.apache.servicemix.bundles.c3p0</artifactId>
-            <version>0.9.5.4_1</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.servicemix.bundles</groupId>
-            <artifactId>org.apache.servicemix.bundles.c3p0</artifactId>
-            <version>0.9.5.4_1</version>
-            <classifier>sources</classifier>
           </dependency>
           <!-- Babbler XMPP Libraries -->
           <dependency>
@@ -1111,16 +1330,6 @@
             <classifier>sources</classifier>
             <version>0.8.0-DQ-SNAPSHOT</version>
           </dependency>
-          <dependency>
-            <groupId>org.apache.servicemix.bundles</groupId>
-            <artifactId>org.apache.servicemix.bundles.dnsjava</artifactId>
-            <version>2.1.9_1</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.servicemix.bundles</groupId>
-            <artifactId>org.apache.servicemix.bundles.xmlresolver</artifactId>
-            <version>1.2_5</version>
-          </dependency>
           <!-- HTTP -->
           <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -1142,156 +1351,11 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
           </dependency>
-          <!-- Undertow (currently limited to 1.4.x, which is Servlet 3 compliant due to Pax-Web) -->
-          <dependency>
-            <groupId>io.undertow</groupId>
-            <artifactId>undertow-core</artifactId>
-            <version>1.4.27.Final</version>
-          </dependency>
-          <dependency>
-            <groupId>io.undertow</groupId>
-            <artifactId>undertow-servlet</artifactId>
-            <version>1.4.27.Final</version>
-          </dependency>
-          <dependency>
-            <groupId>io.undertow</groupId>
-            <artifactId>undertow-websockets-jsr</artifactId>
-            <version>1.4.27.Final</version>
-          </dependency>
-          <!-- pax-web-core -->
-          <dependency>
-            <groupId>org.ops4j.pax.web</groupId>
-            <artifactId>pax-web-api</artifactId>
-            <version>7.2.3</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.web</groupId>
-            <artifactId>pax-web-spi</artifactId>
-            <version>7.2.3</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.xbean</groupId>
-            <artifactId>xbean-bundleutils</artifactId>
-            <version>4.14</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.xbean</groupId>
-            <artifactId>xbean-reflect</artifactId>
-            <version>4.14</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.xbean</groupId>
-            <artifactId>xbean-finder</artifactId>
-            <version>4.14</version>
-          </dependency>
-          <!-- pax-http-undertow -->
-          <dependency>
-            <groupId>org.ops4j.pax.web</groupId>
-            <artifactId>pax-web-runtime</artifactId>
-            <version>7.2.3</version>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.web</groupId>
-            <artifactId>pax-web-undertow</artifactId>
-            <version>7.2.3</version>
-          </dependency>
-          <!-- Jersey -->
-          <dependency>
-            <groupId>org.glassfish.hk2</groupId>
-            <artifactId>hk2-utils</artifactId>
-            <version>2.5.0-b61</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.hk2</groupId>
-            <artifactId>hk2-locator</artifactId>
-            <version>2.5.0-b61</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.hk2.external</groupId>
-            <artifactId>asm-all-repackaged</artifactId>
-            <version>2.5.0-b60</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.hk2</groupId>
-            <artifactId>osgi-resource-locator</artifactId>
-            <version>1.0.1</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.hk2</groupId>
-            <artifactId>hk2-api</artifactId>
-            <version>2.5.0-b61</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.jersey.ext</groupId>
-            <artifactId>jersey-bean-validation</artifactId>
-            <version>2.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-multipart</artifactId>
-            <version>2.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.jersey.bundles</groupId>
-            <artifactId>jaxrs-ri</artifactId>
-            <version>2.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.jersey.inject</groupId>
-            <artifactId>jersey-hk2</artifactId>
-            <version>2.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-common</artifactId>
-            <version>2.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>2.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>2.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet-core</artifactId>
-            <version>2.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet</artifactId>
-            <version>2.29</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.servicemix.bundles</groupId>
-            <artifactId>org.apache.servicemix.bundles.javax-inject</artifactId>
-            <version>1_3</version>
-          </dependency>
           <!-- Testing -->
           <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13</version>
-            <scope>test</scope>
-          </dependency>
-          <dependency>
-            <groupId>org.ops4j.pax.tipi</groupId>
-            <artifactId>org.ops4j.pax.tipi.junit</artifactId>
-            <version>4.12.0.1</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.sling</groupId>
-            <artifactId>org.apache.sling.testing.osgi-mock.junit4</artifactId>
-            <version>2.4.10</version>
             <scope>test</scope>
           </dependency>
           <dependency>
@@ -1489,6 +1553,35 @@
       <properties>
         <docker.registry>docker-registry.diamondq.com</docker.registry>
       </properties>
+    </profile>
+    <profile>
+      <id>jandex-all-projects</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>type(java)</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jboss.jandex</groupId>
+            <artifactId>jandex-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>make-index</id>
+                <phase>process-classes</phase>
+                <goals>
+                  <goal>jandex</goal>
+                </goals>
+                <configuration>
+                  <processDefaultFileSet>true</processDefaultFileSet>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
   <build>
