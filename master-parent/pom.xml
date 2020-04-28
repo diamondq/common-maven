@@ -543,11 +543,47 @@
       </dependencies>
     </profile>
     <profile>
-      <id>java-test</id>
+      <id>java-build-tests</id>
       <activation>
         <property>
           <name>[DIAMONDQ]</name>
           <value>and(type(java),file(src/test))</value>
+        </property>
+      </activation>
+      <properties>
+        <javac.skip.test.categories></javac.skip.test.categories>
+        <argLine></argLine>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <debug>${javac.debug}</debug>
+                  <debuglevel>lines,vars,source</debuglevel>
+                  <optimize>${javac.optimize}</optimize>
+                  <parameters>true</parameters>
+                  <showDeprecation>true</showDeprecation>
+                  <showWarnings>true</showWarnings>
+                  <source>${javac.source.version}</source>
+                  <target>${javac.target.version}</target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>java-run-tests-base</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),or(file(src/test),and(file(src/main),file(profiles/tests-only))))</value>
         </property>
       </activation>
       <properties>
@@ -599,25 +635,19 @@
               </execution>
             </executions>
           </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <debug>${javac.debug}</debug>
-                  <debuglevel>lines,vars,source</debuglevel>
-                  <optimize>${javac.optimize}</optimize>
-                  <parameters>true</parameters>
-                  <showDeprecation>true</showDeprecation>
-                  <showWarnings>true</showWarnings>
-                  <source>${javac.source.version}</source>
-                  <target>${javac.target.version}</target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>java-run-tests-normal</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(src/test))</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
@@ -629,6 +659,46 @@
                     <env.eclipse>${environment.eclipse}</env.eclipse>
                     <env.maven>true</env.maven>
                   </systemPropertyVariables>
+                  <excludedGroups>${javac.skip.test.categories}</excludedGroups>
+                  <argLine>@{argLine} ${dq.surefire.argline}</argLine>
+                  <statelessTestsetReporter
+                    implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
+                    <disable>false</disable>
+                    <usePhrasedFileName>false</usePhrasedFileName>
+                    <usePhrasedTestSuiteClassName>true</usePhrasedTestSuiteClassName>
+                    <usePhrasedTestCaseClassName>true</usePhrasedTestCaseClassName>
+                    <usePhrasedTestCaseMethodName>true</usePhrasedTestCaseMethodName>
+                  </statelessTestsetReporter>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>java-run-tests-only</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(src/main),file(profiles/tests-only))</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-test</id>
+                <configuration>
+                  <systemPropertyVariables>
+                    <env.eclipse>${environment.eclipse}</env.eclipse>
+                    <env.maven>true</env.maven>
+                  </systemPropertyVariables>
+                  <testSourceDirectory>${project.build.sourceDirectory}</testSourceDirectory>
+                  <testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
                   <excludedGroups>${javac.skip.test.categories}</excludedGroups>
                   <argLine>@{argLine} ${dq.surefire.argline}</argLine>
                   <statelessTestsetReporter
@@ -691,7 +761,7 @@
                 <id>default-jar</id>
                 <phase />
                 <configuration>
-                  <skip>true</skip>
+                  <skipIfEmpty>true</skipIfEmpty>
                 </configuration>
               </execution>
             </executions>
@@ -770,7 +840,7 @@
       <activation>
         <property>
           <name>[DIAMONDQ]</name>
-          <value>and(type(java),jdk(>=9),file(src/test))</value>
+          <value>and(type(java),jdk(>=9))</value>
         </property>
       </activation>
       <properties>
@@ -779,7 +849,7 @@
     </profile>
     <!-- If there is no test, then make sure that all the default JAR plugins are disabled -->
     <profile>
-      <id>java-test-skip</id>
+      <id>java-build-test-skip</id>
       <activation>
         <property>
           <name>[DIAMONDQ]</name>
@@ -814,6 +884,19 @@
               </execution>
             </executions>
           </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>java-run-test-skip</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),missing(src/test),missing(profiles/tests-only))</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
