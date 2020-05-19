@@ -1288,7 +1288,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>1.3.3</micronaut.version>
+        <micronaut.version>1.3.5</micronaut.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1391,8 +1391,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>1.3.3</micronaut.version>
-        <micronaut.openapi.version>1.4.1</micronaut.openapi.version>
+        <micronaut.version>1.3.5</micronaut.version>
+        <micronaut.openapi.version>1.5.0</micronaut.openapi.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1456,8 +1456,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>1.3.3</micronaut.version>
-        <micronaut.security.version>1.3.1</micronaut.security.version>
+        <micronaut.version>1.3.5</micronaut.version>
+        <micronaut.security.version>1.4.0</micronaut.security.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1521,8 +1521,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>1.3.3</micronaut.version>
-        <micronaut.data.version>1.0.0</micronaut.data.version>
+        <micronaut.version>1.3.5</micronaut.version>
+        <micronaut.data.version>1.0.2</micronaut.data.version>
       </properties>
       <build>
         <plugins>
