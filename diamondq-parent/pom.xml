@@ -1571,6 +1571,7 @@
                 </goals>
                 <configuration>
                   <processDefaultFileSet>true</processDefaultFileSet>
+                  <skip>${jandex.skip}</skip>
                 </configuration>
               </execution>
             </executions>
