@@ -1288,8 +1288,14 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.0.0</micronaut.version>
+        <micronaut.version>2.0.1</micronaut.version>
       </properties>
+      <repositories>
+        <repository>
+          <id>jcenter.bintray.com</id>
+          <url>https://jcenter.bintray.com</url>
+        </repository>
+      </repositories>
       <dependencyManagement>
         <dependencies>
           <dependency>
@@ -1311,7 +1317,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.0.0</micronaut.version>
+        <micronaut.version>2.0.1</micronaut.version>
       </properties>
       <dependencies>
         <dependency>
@@ -1341,13 +1347,6 @@
                       <version>${micronaut.version}</version>
                     </path>
                   </annotationProcessorPaths>
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>io.micronaut.annotation.processing.TypeElementVisitorProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.AggregatingTypeElementVisitorProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.PackageConfigurationInjectProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.BeanDefinitionInjectProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.ServiceDescriptionProcessor</annotationProcessor>
-                  </annotationProcessors>
                 </configuration>
               </execution>
               <execution>
@@ -1365,13 +1364,6 @@
                       <version>${micronaut.version}</version>
                     </path>
                   </annotationProcessorPaths>
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>io.micronaut.annotation.processing.TypeElementVisitorProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.AggregatingTypeElementVisitorProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.PackageConfigurationInjectProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.BeanDefinitionInjectProcessor</annotationProcessor>
-                    <annotationProcessor>io.micronaut.annotation.processing.ServiceDescriptionProcessor</annotationProcessor>
-                  </annotationProcessors>
                 </configuration>
               </execution>
             </executions>
@@ -1407,9 +1399,15 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.0.0</micronaut.version>
+        <micronaut.version>2.0.1</micronaut.version>
         <micronaut.openapi.version>1.5.2</micronaut.openapi.version>
       </properties>
+      <repositories>
+        <repository>
+          <id>jcenter.bintray.com</id>
+          <url>https://jcenter.bintray.com</url>
+        </repository>
+      </repositories>
       <dependencyManagement>
         <dependencies>
           <dependency>
@@ -1472,9 +1470,15 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.0.0</micronaut.version>
+        <micronaut.version>2.0.1</micronaut.version>
         <micronaut.security.version>2.0.0</micronaut.security.version>
       </properties>
+      <repositories>
+        <repository>
+          <id>jcenter.bintray.com</id>
+          <url>https://jcenter.bintray.com</url>
+        </repository>
+      </repositories>
       <dependencyManagement>
         <dependencies>
           <dependency>
@@ -1537,7 +1541,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.0.0</micronaut.version>
+        <micronaut.version>2.0.1</micronaut.version>
         <micronaut.data.version>1.1.3</micronaut.data.version>
       </properties>
       <dependencyManagement>
