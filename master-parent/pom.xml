@@ -1508,7 +1508,7 @@
                   <annotationProcessorPaths combine.children="append">
                     <path>
                       <groupId>io.micronaut.security</groupId>
-                      <artifactId>micronaut-security</artifactId>
+                      <artifactId>micronaut-security-annotations</artifactId>
                       <version>${micronaut.security.version}</version>
                     </path>
                   </annotationProcessorPaths>
@@ -1520,7 +1520,7 @@
                   <annotationProcessorPaths combine.children="append">
                     <path>
                       <groupId>io.micronaut.security</groupId>
-                      <artifactId>micronaut-security</artifactId>
+                      <artifactId>micronaut-security-annotations</artifactId>
                       <version>${micronaut.security.version}</version>
                     </path>
                   </annotationProcessorPaths>
