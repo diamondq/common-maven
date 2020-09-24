@@ -29,7 +29,7 @@
     <nexus.skip.staging>false</nexus.skip.staging>
     <nexus.skip.local.staging>false</nexus.skip.local.staging>
     <!-- Special version properties -->
-    <plugins.surefire.version>3.0.0-M4</plugins.surefire.version>
+    <plugins.surefire.version>3.0.0-M5</plugins.surefire.version>
   </properties>
   <licenses>
     <license>
