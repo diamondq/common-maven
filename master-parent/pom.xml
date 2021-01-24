@@ -30,6 +30,7 @@
     <nexus.skip.local.staging>false</nexus.skip.local.staging>
     <!-- Special version properties -->
     <plugins.surefire.version>3.0.0-M5</plugins.surefire.version>
+    <flatten.pom.type>pom</flatten.pom.type>
   </properties>
   <licenses>
     <license>
@@ -143,12 +144,9 @@
       <activation>
         <property>
           <name>[DIAMONDQ]</name>
-          <value>or(file(src/main),file(src/test))</value>
+          <value>or(file(src/main),file(src/test),type(dockerfile))</value>
         </property>
       </activation>
-      <properties>
-        <flatten.pom.type>jar</flatten.pom.type>
-      </properties>
       <build>
         <plugins>
           <plugin>
@@ -436,6 +434,35 @@
     <!-- ****************************************************************************************************************** 
       Java based -->
     <!-- Java based project using Java 8 as a target -->
+    <profile>
+      <id>java-project</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>type(java)</value>
+        </property>
+      </activation>
+      <properties>
+        <flatten.pom.type>jar</flatten.pom.type>
+      </properties>
+      <build>
+        <plugins>
+          <!-- Generate sources jar -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>java-8</id>
       <activation>
@@ -1304,7 +1331,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.2.0</micronaut.version>
+        <micronaut.version>2.2.3</micronaut.version>
       </properties>
       <repositories>
         <repository>
@@ -1333,7 +1360,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.2.0</micronaut.version>
+        <micronaut.version>2.2.3</micronaut.version>
       </properties>
       <dependencies>
         <dependency>
@@ -1415,7 +1442,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.2.0</micronaut.version>
+        <micronaut.version>2.2.3</micronaut.version>
         <micronaut.openapi.version>1.5.3</micronaut.openapi.version>
       </properties>
       <repositories>
@@ -1486,8 +1513,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.2.0</micronaut.version>
-        <micronaut.security.version>2.2.0</micronaut.security.version>
+        <micronaut.version>2.2.3</micronaut.version>
+        <micronaut.security.version>2.2.1</micronaut.security.version>
       </properties>
       <repositories>
         <repository>
@@ -1557,8 +1584,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.2.0</micronaut.version>
-        <micronaut.data.version>2.2.0</micronaut.data.version>
+        <micronaut.version>2.2.3</micronaut.version>
+        <micronaut.data.version>2.2.3</micronaut.data.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -3051,19 +3078,6 @@
               <source>${javac.source.version}</source>
               <target>${javac.target.version}</target>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- Generate sources jar -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>attach-sources</id>
-            <goals>
-              <goal>jar-no-fork</goal>
-            </goals>
           </execution>
         </executions>
       </plugin>
