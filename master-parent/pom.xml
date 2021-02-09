@@ -1331,7 +1331,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.2.3</micronaut.version>
+        <micronaut.version>2.3.1</micronaut.version>
       </properties>
       <repositories>
         <repository>
@@ -1360,7 +1360,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.2.3</micronaut.version>
+        <micronaut.version>2.3.1</micronaut.version>
       </properties>
       <dependencies>
         <dependency>
@@ -1442,7 +1442,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.2.3</micronaut.version>
+        <micronaut.version>2.3.1</micronaut.version>
         <micronaut.openapi.version>1.5.3</micronaut.openapi.version>
       </properties>
       <repositories>
@@ -1513,8 +1513,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.2.3</micronaut.version>
-        <micronaut.security.version>2.2.1</micronaut.security.version>
+        <micronaut.version>2.3.1</micronaut.version>
+        <micronaut.security.version>2.3.0</micronaut.security.version>
       </properties>
       <repositories>
         <repository>
@@ -1584,8 +1584,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.2.3</micronaut.version>
-        <micronaut.data.version>2.2.3</micronaut.data.version>
+        <micronaut.version>2.3.1</micronaut.version>
+        <micronaut.data.version>2.2.4</micronaut.data.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -2557,7 +2557,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>3.2.2</version>
+          <version>3.2.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
