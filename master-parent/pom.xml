@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.3.0-SNAPSHOT</version>
+  <version>6.3.1</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -23,8 +23,6 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     <snapshot.update.policy>daily</snapshot.update.policy>
-    <nexus.serverId>ossrh</nexus.serverId>
-    <nexus.url>https://oss.sonatype.org</nexus.url>
     <nexus.auto.release>true</nexus.auto.release>
     <nexus.skip.staging>false</nexus.skip.staging>
     <nexus.skip.local.staging>false</nexus.skip.local.staging>
@@ -256,24 +254,43 @@
     <!-- Due to interactions between normal profiles and a master, special overrides if we're deploying ourselves as opposed 
       to be used to deploy a child artifact -->
     <profile>
-      <id>deploy-self</id>
+      <id>deploy-self-to-ossrh</id>
       <activation>
         <property>
-          <name>deploy</name>
-          <value>self</value>
+          <name>[DIAMONDQ]</name>
+          <value>and(property(deploy=self),property(deployossrh=true))</value>
         </property>
       </activation>
       <properties>
+        <nexus.serverId>ossrh</nexus.serverId>
+        <nexus.url>https://oss.sonatype.org</nexus.url>
         <scm.project>common-maven</scm.project>
       </properties>
       <distributionManagement>
-        <snapshotRepository>
-          <id>dq-snap</id>
-          <url>https://nexus.diamondq.com/repository/maven-public-snapshots/</url>
-        </snapshotRepository>
         <repository>
           <id>ossrh</id>
           <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+    <profile>
+      <id>deploy-self-to-dq</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(property(deploy=self),not(property(deployossrh=true)))</value>
+        </property>
+      </activation>
+      <properties>
+        <nexus.serverId>dq-release</nexus.serverId>
+        <nexus.url>https://nexus.diamondq.com/repository/maven-public-releases</nexus.url>
+        <nexus.skip.staging>true</nexus.skip.staging>
+        <scm.project>common-maven</scm.project>
+      </properties>
+      <distributionManagement>
+        <repository>
+          <id>dq-release</id>
+          <url>https://nexus.diamondq.com/repository/maven-public-releases/</url>
         </repository>
       </distributionManagement>
     </profile>
@@ -444,7 +461,7 @@
       </build>
     </profile>
     <!-- ****************************************************************************************************************** 
-      Java based -->
+	 Java based -->
     <!-- Java based project using Java 8 as a target -->
     <profile>
       <id>java-project</id>
