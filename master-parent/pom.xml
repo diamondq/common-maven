@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.2.0-SNAPSHOT</version>
+  <version>6.3.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -55,6 +55,18 @@
     <repository>
       <id>dq-snap</id>
       <url>https://nexus.diamondq.com/repository/maven-public-snapshots/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>${snapshot.update.policy}</updatePolicy>
+        <checksumPolicy>fail</checksumPolicy>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>ossrh-snap</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
       <snapshots>
         <enabled>true</enabled>
         <updatePolicy>${snapshot.update.policy}</updatePolicy>
