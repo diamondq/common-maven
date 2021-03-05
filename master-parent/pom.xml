@@ -53,8 +53,8 @@
   </scm>
   <repositories>
     <repository>
-      <id>ossrh-snap</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>dq-snap</id>
+      <url>https://nexus.diamondq.com/repository/maven-public-snapshots/</url>
       <snapshots>
         <enabled>true</enabled>
         <updatePolicy>${snapshot.update.policy}</updatePolicy>
@@ -256,8 +256,8 @@
       </properties>
       <distributionManagement>
         <snapshotRepository>
-          <id>ossrh-snap</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+          <id>dq-snap</id>
+          <url>https://nexus.diamondq.com/repository/maven-public-snapshots/</url>
         </snapshotRepository>
         <repository>
           <id>ossrh</id>
@@ -1099,17 +1099,6 @@
           <value>and(type(java),file(profiles/i18n-enums))</value>
         </property>
       </activation>
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>com.diamondq.common</groupId>
-            <artifactId>common-bom</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
-            <scope>import</scope>
-            <type>pom</type>
-          </dependency>
-        </dependencies>
-      </dependencyManagement>
       <dependencies>
         <dependency>
           <groupId>com.diamondq.common</groupId>
