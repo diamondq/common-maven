@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.3.1</version>
+  <version>6.3.2</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -1351,12 +1351,6 @@
       <properties>
         <micronaut.version>2.3.1</micronaut.version>
       </properties>
-      <repositories>
-        <repository>
-          <id>jcenter.bintray.com</id>
-          <url>https://jcenter.bintray.com</url>
-        </repository>
-      </repositories>
       <dependencyManagement>
         <dependencies>
           <dependency>
@@ -1463,12 +1457,6 @@
         <micronaut.version>2.3.1</micronaut.version>
         <micronaut.openapi.version>1.5.3</micronaut.openapi.version>
       </properties>
-      <repositories>
-        <repository>
-          <id>jcenter.bintray.com</id>
-          <url>https://jcenter.bintray.com</url>
-        </repository>
-      </repositories>
       <dependencyManagement>
         <dependencies>
           <dependency>
@@ -1534,12 +1522,6 @@
         <micronaut.version>2.3.1</micronaut.version>
         <micronaut.security.version>2.3.0</micronaut.security.version>
       </properties>
-      <repositories>
-        <repository>
-          <id>jcenter.bintray.com</id>
-          <url>https://jcenter.bintray.com</url>
-        </repository>
-      </repositories>
       <dependencyManagement>
         <dependencies>
           <dependency>
@@ -2231,7 +2213,7 @@
               <dependency>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctorj-diagram</artifactId>
-                <version>1.5.8</version>
+                <version>2.1.0</version>
               </dependency>
             </dependencies>
             <executions>
@@ -2753,7 +2735,7 @@
         <plugin>
           <groupId>org.asciidoctor</groupId>
           <artifactId>asciidoctor-maven-plugin</artifactId>
-          <version>1.6.0</version>
+          <version>2.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -2793,7 +2775,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
-          <version>1.2.2</version>
+          <version>1.2.5</version>
         </plugin>
         <plugin>
           <groupId>com.diamondq.maven</groupId>
