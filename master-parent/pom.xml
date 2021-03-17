@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.3.2</version>
+  <version>6.3.4</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -462,7 +462,6 @@
     </profile>
     <!-- ****************************************************************************************************************** 
 	 Java based -->
-    <!-- Java based project using Java 8 as a target -->
     <profile>
       <id>java-project</id>
       <activation>
@@ -476,6 +475,58 @@
       </properties>
       <build>
         <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-toolchains-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default</id>
+                <goals>
+                  <goal>toolchain</goal>
+                </goals>
+                <phase>validate</phase>
+                <configuration>
+                  <toolchains>
+                    <jdk>
+                      <version>${java.toolchain.version}</version>
+                    </jdk>
+                  </toolchains>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-compile</id>
+                <configuration>
+                  <debug>${javac.debug}</debug>
+                  <debuglevel>lines,vars,source</debuglevel>
+                  <optimize>${javac.optimize}</optimize>
+                  <parameters>true</parameters>
+                  <showDeprecation>true</showDeprecation>
+                  <showWarnings>true</showWarnings>
+                  <source>${javac.source.version}</source>
+                  <target>${javac.target.version}</target>
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-testCompile</id>
+                <configuration>
+                  <debug>${javac.debug}</debug>
+                  <debuglevel>lines,vars,source</debuglevel>
+                  <optimize>${javac.optimize}</optimize>
+                  <parameters>true</parameters>
+                  <showDeprecation>true</showDeprecation>
+                  <showWarnings>true</showWarnings>
+                  <source>${javac.source.version}</source>
+                  <target>${javac.target.version}</target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
           <!-- Generate sources jar -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -492,6 +543,7 @@
         </plugins>
       </build>
     </profile>
+    <!-- Java based project using Java 8 as a target -->
     <profile>
       <id>java-8</id>
       <activation>
@@ -587,6 +639,22 @@
         <java.toolchain.version>15</java.toolchain.version>
       </properties>
     </profile>
+    <!-- Java based project using Java 16 as a target -->
+    <profile>
+      <id>java-16</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>jdk(16)</value>
+        </property>
+      </activation>
+      <properties>
+        <javac.source.version>16</javac.source.version>
+        <javac.target.version>16</javac.target.version>
+        <javac.release.version>16</javac.release.version>
+        <java.toolchain.version>16</java.toolchain.version>
+      </properties>
+    </profile>    
     <!-- Setup the compilation of the test code -->
     <profile>
       <id>java-junit-test</id>
@@ -3029,58 +3097,6 @@
       </plugins>
     </pluginManagement>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-toolchains-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default</id>
-            <goals>
-              <goal>toolchain</goal>
-            </goals>
-            <phase>validate</phase>
-            <configuration>
-              <toolchains>
-                <jdk>
-                  <version>${java.toolchain.version}</version>
-                </jdk>
-              </toolchains>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>default-compile</id>
-            <configuration>
-              <debug>${javac.debug}</debug>
-              <debuglevel>lines,vars,source</debuglevel>
-              <optimize>${javac.optimize}</optimize>
-              <parameters>true</parameters>
-              <showDeprecation>true</showDeprecation>
-              <showWarnings>true</showWarnings>
-              <source>${javac.source.version}</source>
-              <target>${javac.target.version}</target>
-            </configuration>
-          </execution>
-          <execution>
-            <id>default-testCompile</id>
-            <configuration>
-              <debug>${javac.debug}</debug>
-              <debuglevel>lines,vars,source</debuglevel>
-              <optimize>${javac.optimize}</optimize>
-              <parameters>true</parameters>
-              <showDeprecation>true</showDeprecation>
-              <showWarnings>true</showWarnings>
-              <source>${javac.source.version}</source>
-              <target>${javac.target.version}</target>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
