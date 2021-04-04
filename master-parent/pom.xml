@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.3.5</version>
+  <version>6.3.6</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -654,6 +654,90 @@
         <javac.release.version>16</javac.release.version>
         <java.toolchain.version>16</java.toolchain.version>
       </properties>
+    </profile>
+    <profile>
+      <id>java-automatic-module-name</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>file(profiles/automatic-module-name)</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.gmavenplus</groupId>
+            <artifactId>gmavenplus-plugin</artifactId>
+            <dependencies>
+              <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>3.0.7</version>
+                <type>pom</type>
+                <scope>runtime</scope>
+              </dependency>
+              <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.3</version>
+                <scope>runtime</scope>
+              </dependency>
+            </dependencies>
+            <executions>
+              <execution>
+                <id>add-automatic-module-properties</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>execute</goal>
+                </goals>
+                <configuration>
+                  <scripts>
+                    <script>
+<![CDATA[
+  String prop = project.properties.get('automatic.module.name');
+  if (prop == null) {
+    groupId = project.getGroupId();
+    artifactId = project.getArtifactId();
+    artifactId = artifactId.replace('-', '.').replace('_', '.');
+    int lastOffset = groupId.lastIndexOf('.');
+    if (lastOffset != -1) {
+      String lastPart = groupId.substring(lastOffset + 1);
+      int firstPartOffset = artifactId.indexOf('.');
+      String firstPart;
+      if (firstPartOffset != -1)
+        firstPart = artifactId.substring(0, firstPartOffset);
+      else
+        firstPart = artifactId;
+      if (lastPart.equals(firstPart))
+        groupId = groupId.substring(0, lastOffset);
+    }
+    String name = groupId + "." + artifactId;
+    project.properties.setProperty('automatic.module.name', name);
+  } 
+]]>
+                    </script>
+                  </scripts>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-jar-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>default-jar</id>
+                <configuration>
+                  <archive>
+                    <manifestEntries>
+                      <Automatic-Module-Name>${automatic.module.name}</Automatic-Module-Name>
+                    </manifestEntries>
+                  </archive>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
     <!-- Setup the compilation of the test code -->
     <profile>
