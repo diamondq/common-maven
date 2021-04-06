@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.3.6</version>
+  <version>6.3.7</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -1504,11 +1504,11 @@
     </profile>
     <!-- Micronaut dependencies -->
     <profile>
-      <id>micronaut-injection</id>
+      <id>micronaut-dependencies</id>
       <activation>
         <property>
           <name>[DIAMONDQ]</name>
-          <value>and(type(java),or(file(profiles/micronaut-dependency-optional),file(profiles/micronaut-dependency)))</value>
+          <value>or(file(profiles/micronaut-dependency-optional),file(profiles/micronaut-dependency))</value>
         </property>
       </activation>
       <properties>
@@ -1608,6 +1608,15 @@
           </dependency>
         </dependencies>
       </dependencyManagement>
+    </profile>
+    <profile>
+      <id>micronaut-annotation-compiler</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),or(file(profiles/micronaut-dependency-optional),file(profiles/micronaut-dependency)))</value>
+        </property>
+      </activation>
       <dependencies>
         <dependency>
           <groupId>io.micronaut</groupId>
@@ -1659,27 +1668,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <!-- Add extra dependencies for non-optional micronaut -->
-    <profile>
-      <id>micronaut-injection-dependencies</id>
-      <activation>
-        <property>
-          <name>[DIAMONDQ]</name>
-          <value>and(type(java),file(profiles/micronaut-dependency))</value>
-        </property>
-      </activation>
-      <properties>
-        <micronaut.version>2.4.2</micronaut.version>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>io.micronaut</groupId>
-          <artifactId>micronaut-inject-java</artifactId>
-          <version>${micronaut.version}</version>
-          <optional>true</optional>
-        </dependency>
-      </dependencies>
     </profile>
     <!-- Micronaut OpenAPI -->
     <profile>
@@ -1813,11 +1801,11 @@
     </profile>
     <!-- Micronaut Data -->
     <profile>
-      <id>micronaut-data</id>
+      <id>micronaut-data-dependencies</id>
       <activation>
         <property>
           <name>[DIAMONDQ]</name>
-          <value>and(type(java),file(profiles/micronaut-data))</value>
+          <value>file(profiles/micronaut-data)</value>
         </property>
       </activation>
       <properties>
@@ -1835,6 +1823,15 @@
           </dependency>
         </dependencies>
       </dependencyManagement>
+    </profile>
+    <profile>
+      <id>micronaut-data-compiler-annotations</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>and(type(java),file(profiles/micronaut-data))</value>
+        </property>
+      </activation>
       <build>
         <plugins>
           <plugin>
