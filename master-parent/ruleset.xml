@@ -4,9 +4,10 @@
   <!-- Used with mvn versions:display-dependency-updates -Dmaven.version.rules=file:///e:/DQGitHub/common-maven/master-parent/ruleset.xml -->
   <ignoreVersions>
     <ignoreVersion type="regex">(?i).*[-_\.]M[0-9\.]*</ignoreVersion>
-    <ignoreVersion type="regex">(?i).*[-_\.]CR[0-9\.]*</ignoreVersion>
-    <ignoreVersion type="regex">(?i).*[-_\.]rc[0-9\.]*</ignoreVersion>
+    <ignoreVersion type="regex">(?i).*[-_\.]CR[0-9\.-]*</ignoreVersion>
+    <ignoreVersion type="regex">(?i).*[-_\.]rc[0-9\.-]*</ignoreVersion>
     <ignoreVersion type="regex">(?i).*[-_\.]beta[0-9\.-]*</ignoreVersion>
+    <ignoreVersion type="regex">(?i).*[-_\.]b[0-9\.-]*</ignoreVersion>
     <ignoreVersion type="regex">(?i).*[-_\.]alpha[0-9\.-]*</ignoreVersion>
     <ignoreVersion type="regex">(?i).*[-_\.]nightly[0-9\.]*</ignoreVersion>
     <ignoreVersion type="regex">(?i).*[-_\.]jboss[0-9\.]*</ignoreVersion>
