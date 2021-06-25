@@ -4,16 +4,16 @@
   <parent>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>6.3.8</version>
+    <version>6.3.9</version>
   </parent>
   <artifactId>diamondq-parent</artifactId>
-  <version>6.3.7</version>
+  <version>6.3.8</version>
   <packaging>pom</packaging>
   <name>DiamondQ: DiamondQ Parent</name>
   <description>A common POM for parents of DiamondQ projects.</description>
   <url>https://github.com/diamondq/common-maven/tree/master</url>
   <properties>
-    <slf4j.version>1.7.30</slf4j.version>
+    <slf4j.version>1.7.31</slf4j.version>
     <log4j2.version>2.14.1</log4j2.version>
     <jackson.version>2.12.3</jackson.version>
     <immutables.version>2.8.9-ea-1</immutables.version>
@@ -682,7 +682,7 @@
           <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>flow-bom</artifactId>
-            <version>7.0.1</version>
+            <version>7.0.3</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
@@ -691,7 +691,7 @@
             <artifactId>vaadin-bom</artifactId>
             <type>pom</type>
             <scope>import</scope>
-            <version>20.0.1</version>
+            <version>20.0.3</version>
           </dependency>
           <!-- <dependency> <groupId>com.github.mcollovati.vertx</groupId> <artifactId>vaadin-flow-sockjs</artifactId> <version>13.0.0DQ-SNAPSHOT</version> 
             <classifier>vaadin-13.0.9</classifier> </dependency> <dependency> <groupId>com.github.mcollovati.vertx</groupId> <artifactId>vertx-vaadin-flow</artifactId> 
@@ -727,7 +727,7 @@
           <dependency>
             <groupId>org.casbin</groupId>
             <artifactId>jcasbin</artifactId>
-            <version>1.10.0</version>
+            <version>1.12.0</version>
           </dependency>
           <dependency>
             <groupId>com.google.auto.service</groupId>
@@ -759,17 +759,17 @@
           <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
-            <version>1.7.0</version>
+            <version>1.7.1</version>
           </dependency>
           <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-influx</artifactId>
-            <version>1.7.0</version>
+            <version>1.7.1</version>
           </dependency>
           <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-graphite</artifactId>
-            <version>1.7.0</version>
+            <version>1.7.1</version>
           </dependency>
           <dependency>
             <groupId>com.diamondq.common</groupId>
@@ -1113,7 +1113,7 @@
           <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.20</version>
+            <version>42.2.22</version>
           </dependency>
           <dependency>
             <groupId>com.h2database</groupId>
@@ -1124,58 +1124,58 @@
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.68</version>
+            <version>1.69</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-debug-jdk15on</artifactId>
-            <version>1.68</version>
+            <version>1.69</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpkix-jdk15on</artifactId>
-            <version>1.68</version>
+            <version>1.69</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcmail-jdk15on</artifactId>
-            <version>1.68</version>
+            <version>1.69</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpg-jdk15on</artifactId>
-            <version>1.68</version>
+            <version>1.69</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-ext-jdk15on</artifactId>
-            <version>1.68</version>
+            <version>1.69</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-ext-debug-jdk15on</artifactId>
-            <version>1.68</version>
+            <version>1.69</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bctls-jdk15on</artifactId>
-            <version>1.68</version>
+            <version>1.69</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15to18</artifactId>
-            <version>1.68</version>
+            <version>1.69</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-debug-jdk15to18</artifactId>
-            <version>1.68</version>
+            <version>1.69</version>
           </dependency>
           <!-- Misc -->
           <dependency>
             <groupId>org.bitbucket.b_c</groupId>
             <artifactId>jose4j</artifactId>
-            <version>0.7.7</version>
+            <version>0.7.8</version>
           </dependency>
           <dependency>
             <groupId>org.immutables</groupId>
@@ -1250,13 +1250,13 @@
           <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker</artifactId>
-            <version>3.14.0</version>
+            <version>3.15.0</version>
             <optional>true</optional>
           </dependency>
           <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker-qual</artifactId>
-            <version>3.14.0</version>
+            <version>3.15.0</version>
             <optional>true</optional>
           </dependency>
           <dependency>
@@ -1374,7 +1374,7 @@
           <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.11.0</version>
+            <version>3.11.2</version>
             <scope>test</scope>
           </dependency>
           <dependency>
