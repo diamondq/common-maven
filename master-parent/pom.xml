@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.3.9</version>
+  <version>6.3.10</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -185,6 +185,54 @@
                     <member>build</member>
                     <member>profiles</member>
                     <member>reporting</member>
+                  </memberRemoveList>
+                  <!-- Change published artifact identity. -->
+                  <performOverrideIdentity>true</performOverrideIdentity>
+                  <overrideArtifactId>${project.artifactId}</overrideArtifactId>
+                  <!-- Switch project from pom.xml to pom.xml.flatten. -->
+                  <performSwitchPomXml>true</performSwitchPomXml>
+                  <packagingSwitchList>
+                    <packaging>${flatten.pom.type}</packaging>
+                  </packagingSwitchList>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- A leaf project should have it's POM flattened. This allows for interpolation within the version as well as just 
+      increasing the cleanliness of the result. -->
+    <profile>
+      <id>pom-project</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>type(pom)</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.carrotgarden.maven</groupId>
+            <artifactId>flatten-maven-plugin</artifactId>
+            <executions>
+              <!-- Activate "flatten:flatten" during "prepare-package" -->
+              <execution>
+                <goals>
+                  <goal>flatten</goal>
+                </goals>
+                <configuration>
+                  <!-- Control dependency resolution. -->
+                  <performDependencyResolve>true</performDependencyResolve>
+                  <includeScope>runtime</includeScope>
+                  <excludeTransitive>false</excludeTransitive>
+                  <!-- Remove these pom.xml members. -->
+                  <performRemoveMembers>true</performRemoveMembers>
+                  <memberRemoveList>
+                    <member>distributionManagement</member>
+                    <member>build</member>
+                    <member>properties</member>
                   </memberRemoveList>
                   <!-- Change published artifact identity. -->
                   <performOverrideIdentity>true</performOverrideIdentity>
