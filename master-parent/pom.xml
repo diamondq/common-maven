@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.3.14</version>
+  <version>6.3.15</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -743,7 +743,7 @@
               <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.2.6</version>
+                <version>1.2.7</version>
                 <scope>runtime</scope>
               </dependency>
             </dependencies>
@@ -817,7 +817,7 @@
           <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
-            <version>5.8.0</version>
+            <version>5.8.2</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
@@ -905,7 +905,7 @@
               <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.2.6</version>
+                <version>1.2.7</version>
                 <scope>runtime</scope>
               </dependency>
             </dependencies>
@@ -1583,19 +1583,19 @@
           <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.6</version>
+            <version>1.2.7</version>
           </dependency>
           <dependency>
             <groupId>com.fasterxml.jackson</groupId>
             <artifactId>jackson-bom</artifactId>
-            <version>2.12.5</version>
+            <version>2.13.0</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
           <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-datatype-jsr353</artifactId>
-            <version>2.12.5</version>
+            <version>2.13.0</version>
           </dependency>
           <dependency>
             <groupId>com.oracle.oci.sdk</groupId>
@@ -1612,21 +1612,21 @@
           <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-bom</artifactId>
-            <version>1.40.1</version>
+            <version>1.42.2</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
           <dependency>
             <groupId>io.ktor</groupId>
             <artifactId>ktor-bom</artifactId>
-            <version>1.6.3</version>
+            <version>1.6.7</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
           <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-bom</artifactId>
-            <version>1.7.4</version>
+            <version>1.8.1</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
@@ -1645,7 +1645,7 @@
           <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-bom</artifactId>
-            <version>4.1.68.Final</version>
+            <version>4.1.71.Final</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
@@ -1960,14 +1960,14 @@
           <dependency>
             <groupId>com.fasterxml.jackson</groupId>
             <artifactId>jackson-bom</artifactId>
-            <version>2.12.5</version>
+            <version>2.13.0</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
           <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-bom</artifactId>
-            <version>4.1.68.Final</version>
+            <version>4.1.71.Final</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
@@ -2581,7 +2581,7 @@
         </property>
       </activation>
       <properties>
-        <picocli.version>4.6.1</picocli.version>
+        <picocli.version>4.6.2</picocli.version>
       </properties>
       <dependencies>
         <dependency>
