@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.3.16</version>
+  <version>6.3.17</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -1644,8 +1644,14 @@
           </dependency>
           <dependency>
             <groupId>io.netty</groupId>
+            <artifactId>netty-tcnative-classes</artifactId>
+            <version>2.0.46.Final</version>
+          </dependency>
+          <dependency>
+            <groupId>io.netty</groupId>
             <artifactId>netty-bom</artifactId>
             <version>4.1.71.Final</version>
+			<!-- IMPORTANT NOTE: Keep the above dependency override for netty-tcnative-classes up-to-date. It's currently present because the current netty-bom includes an invalid version -->
             <type>pom</type>
             <scope>import</scope>
           </dependency>
