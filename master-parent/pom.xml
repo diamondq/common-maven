@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.3.18</version>
+  <version>6.3.19</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -1530,38 +1530,18 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-compile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>org.immutables</groupId>
-                      <artifactId>value</artifactId>
-                      <version>${immutables.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor>
-                  </annotationProcessors>
-                </configuration>
-              </execution>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>org.immutables</groupId>
-                      <artifactId>value</artifactId>
-                      <version>${immutables.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor>
-                  </annotationProcessors>
-                </configuration>
-              </execution>
-            </executions>
+			<configuration>
+			  <annotationProcessorPaths combine.children="append">
+				<path>
+				  <groupId>org.immutables</groupId>
+				  <artifactId>value</artifactId>
+				  <version>${immutables.version}</version>
+				</path>
+			  </annotationProcessorPaths>
+			  <annotationProcessors combine.children="append">
+				<annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor>
+			  </annotationProcessors>
+			</configuration>
           </plugin>
         </plugins>
       </build>
@@ -1715,42 +1695,20 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-compile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-inject-java</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-validation</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                </configuration>
-              </execution>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-inject-java</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                    <path>
-                      <groupId>io.micronaut</groupId>
-                      <artifactId>micronaut-validation</artifactId>
-                      <version>${micronaut.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                </configuration>
-              </execution>
-            </executions>
+			<configuration>
+			  <annotationProcessorPaths combine.children="append">
+				<path>
+				  <groupId>io.micronaut</groupId>
+				  <artifactId>micronaut-inject-java</artifactId>
+				  <version>${micronaut.version}</version>
+				</path>
+				<path>
+				  <groupId>io.micronaut</groupId>
+				  <artifactId>micronaut-validation</artifactId>
+				  <version>${micronaut.version}</version>
+				</path>
+			  </annotationProcessorPaths>
+			</configuration>
           </plugin>
         </plugins>
       </build>
@@ -1790,32 +1748,15 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-compile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut.configuration</groupId>
-                      <artifactId>micronaut-openapi</artifactId>
-                      <version>${micronaut.openapi.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                </configuration>
-              </execution>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut.configuration</groupId>
-                      <artifactId>micronaut-openapi</artifactId>
-                      <version>${micronaut.openapi.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                </configuration>
-              </execution>
-            </executions>
+			<configuration>
+			  <annotationProcessorPaths combine.children="append">
+				<path>
+				  <groupId>io.micronaut.configuration</groupId>
+				  <artifactId>micronaut-openapi</artifactId>
+				  <version>${micronaut.openapi.version}</version>
+				</path>
+			  </annotationProcessorPaths>
+			</configuration>
           </plugin>
         </plugins>
       </build>
@@ -1855,32 +1796,15 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-compile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut.security</groupId>
-                      <artifactId>micronaut-security-annotations</artifactId>
-                      <version>${micronaut.security.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                </configuration>
-              </execution>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut.security</groupId>
-                      <artifactId>micronaut-security-annotations</artifactId>
-                      <version>${micronaut.security.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                </configuration>
-              </execution>
-            </executions>
+			<configuration>
+			  <annotationProcessorPaths combine.children="append">
+				<path>
+				  <groupId>io.micronaut.security</groupId>
+				  <artifactId>micronaut-security-annotations</artifactId>
+				  <version>${micronaut.security.version}</version>
+				</path>
+			  </annotationProcessorPaths>
+			</configuration>
           </plugin>
         </plugins>
       </build>
@@ -1923,32 +1847,15 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-compile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut.data</groupId>
-                      <artifactId>micronaut-data-processor</artifactId>
-                      <version>${micronaut.data.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                </configuration>
-              </execution>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.micronaut.data</groupId>
-                      <artifactId>micronaut-data-processor</artifactId>
-                      <version>${micronaut.data.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                </configuration>
-              </execution>
-            </executions>
+			<configuration>
+			  <annotationProcessorPaths combine.children="append">
+				<path>
+				  <groupId>io.micronaut.data</groupId>
+				  <artifactId>micronaut-data-processor</artifactId>
+				  <version>${micronaut.data.version}</version>
+				</path>
+			  </annotationProcessorPaths>
+			</configuration>
           </plugin>
         </plugins>
       </build>
@@ -2011,50 +1918,24 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-compile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.vertx</groupId>
-                      <artifactId>vertx-codegen</artifactId>
-                      <classifier>processor</classifier>
-                      <version>4.1.4</version>
-                    </path>
-                    <path>
-                      <groupId>io.vertx</groupId>
-                      <artifactId>vertx-service-proxy</artifactId>
-                      <version>4.1.4</version>
-                    </path>
-                  </annotationProcessorPaths>
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
-                  </annotationProcessors>
-                </configuration>
-              </execution>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>io.vertx</groupId>
-                      <artifactId>vertx-codegen</artifactId>
-                      <classifier>processor</classifier>
-                      <version>4.1.4</version>
-                    </path>
-                    <path>
-                      <groupId>io.vertx</groupId>
-                      <artifactId>vertx-service-proxy</artifactId>
-                      <version>4.1.4</version>
-                    </path>
-                  </annotationProcessorPaths>
-                  <annotationProcessors combine.children="append">
-                    <annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
-                  </annotationProcessors>
-                </configuration>
-              </execution>
-            </executions>
+			<configuration>
+			  <annotationProcessorPaths combine.children="append">
+				<path>
+				  <groupId>io.vertx</groupId>
+				  <artifactId>vertx-codegen</artifactId>
+				  <classifier>processor</classifier>
+				  <version>4.1.4</version>
+				</path>
+				<path>
+				  <groupId>io.vertx</groupId>
+				  <artifactId>vertx-service-proxy</artifactId>
+				  <version>4.1.4</version>
+				</path>
+			  </annotationProcessorPaths>
+			  <annotationProcessors combine.children="append">
+				<annotationProcessor>io.vertx.codegen.CodeGenProcessor</annotationProcessor>
+			  </annotationProcessors>
+			</configuration>
           </plugin>
         </plugins>
       </build>
@@ -2609,36 +2490,15 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>default-compile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>info.picocli</groupId>
-                      <artifactId>picocli-codegen</artifactId>
-                      <version>${picocli.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                  <!-- <annotationProcessors combine.children="append"> <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor> 
-                    </annotationProcessors> -->
-                </configuration>
-              </execution>
-              <execution>
-                <id>default-testCompile</id>
-                <configuration>
-                  <annotationProcessorPaths combine.children="append">
-                    <path>
-                      <groupId>info.picocli</groupId>
-                      <artifactId>picocli-codegen</artifactId>
-                      <version>${picocli.version}</version>
-                    </path>
-                  </annotationProcessorPaths>
-                  <!-- <annotationProcessors combine.children="append"> <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor> 
-                    </annotationProcessors> -->
-                </configuration>
-              </execution>
-            </executions>
+			<configuration>
+			  <annotationProcessorPaths combine.children="append">
+				<path>
+				  <groupId>info.picocli</groupId>
+				  <artifactId>picocli-codegen</artifactId>
+				  <version>${picocli.version}</version>
+				</path>
+			  </annotationProcessorPaths>
+			</configuration>
           </plugin>
         </plugins>
       </build>
