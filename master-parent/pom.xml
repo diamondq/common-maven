@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>6.3.22</version>
+  <version>7.0.0</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -720,6 +720,22 @@
         <javac.target.version>17</javac.target.version>
         <javac.release.version>17</javac.release.version>
         <java.toolchain.version>17</java.toolchain.version>
+      </properties>
+    </profile>
+    <!-- Java based project using Java 18 as a target -->
+    <profile>
+      <id>java-18</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>jdk(18)</value>
+        </property>
+      </activation>
+      <properties>
+        <javac.source.version>18</javac.source.version>
+        <javac.target.version>18</javac.target.version>
+        <javac.release.version>18</javac.release.version>
+        <java.toolchain.version>18</java.toolchain.version>
       </properties>
     </profile>
     <profile>
@@ -1559,114 +1575,10 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.5.13</micronaut.version>
+        <micronaut.version>3.3.4</micronaut.version>
       </properties>
       <dependencyManagement>
         <dependencies>
-          <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.11</version>
-          </dependency>
-          <dependency>
-            <groupId>com.fasterxml.jackson</groupId>
-            <artifactId>jackson-bom</artifactId>
-            <version>2.13.2</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-datatype-jsr353</artifactId>
-            <version>2.13.2</version>
-          </dependency>
-          <dependency>
-            <groupId>com.oracle.oci.sdk</groupId>
-            <artifactId>oci-java-sdk-bom</artifactId>
-            <version>1.37.2</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
-          </dependency>
-          <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-bom</artifactId>
-            <version>1.42.1</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-bom</artifactId>
-            <version>1.6.7</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-bom</artifactId>
-            <version>1.8.3</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>io.micronaut.aws</groupId>
-            <artifactId>micronaut-aws-bom</artifactId>
-            <version>2.8.0</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>io.micronaut.liquibase</groupId>
-            <artifactId>micronaut-liquibase</artifactId>
-            <version>3.4.1</version>
-          </dependency>
-          <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-tcnative-classes</artifactId>
-            <version>2.0.50.Final</version>
-          </dependency>
-          <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-bom</artifactId>
-            <version>4.1.74.Final</version>
-            <!-- IMPORTANT NOTE: Keep the above dependency override for netty-tcnative-classes up-to-date. It's currently 
-              present because the current netty-bom includes an invalid version -->
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-bom</artifactId>
-            <version>3.0.10</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-bom</artifactId>
-            <version>1.5.31</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>org.spockframework</groupId>
-            <artifactId>spock-bom</artifactId>
-            <version>2.0-groovy-3.0</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
-          <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-framework-bom</artifactId>
-            <version>5.3.10</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
           <!-- Actual dependency. Everything above is tweaks to bring the micronaut-bom deps up to later versions -->
           <dependency>
             <groupId>io.micronaut</groupId>
@@ -1691,6 +1603,11 @@
           <groupId>io.micronaut</groupId>
           <artifactId>micronaut-inject</artifactId>
           <optional>true</optional>
+        </dependency>
+        <dependency>
+          <groupId>com.google.code.findbugs</groupId>
+          <artifactId>jsr305</artifactId>
+          <scope>compile</scope>
         </dependency>
       </dependencies>
       <build>
@@ -1726,8 +1643,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.5.13</micronaut.version>
-        <micronaut.openapi.version>1.5.3</micronaut.openapi.version>
+        <micronaut.version>3.3.4</micronaut.version>
+        <micronaut.openapi.version>4.0.0</micronaut.openapi.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1754,7 +1671,7 @@
 			<configuration>
 			  <annotationProcessorPaths combine.children="append">
 				<path>
-				  <groupId>io.micronaut.configuration</groupId>
+				  <groupId>io.micronaut.openapi</groupId>
 				  <artifactId>micronaut-openapi</artifactId>
 				  <version>${micronaut.openapi.version}</version>
 				</path>
@@ -1774,8 +1691,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.5.13</micronaut.version>
-        <micronaut.security.version>2.5.0</micronaut.security.version>
+        <micronaut.version>3.3.4</micronaut.version>
+        <micronaut.security.version>3.5.0</micronaut.security.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1822,8 +1739,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>2.5.13</micronaut.version>
-        <micronaut.data.version>2.5.0</micronaut.data.version>
+        <micronaut.version>3.3.4</micronaut.version>
+        <micronaut.data.version>3.3.0</micronaut.data.version>
       </properties>
       <dependencyManagement>
         <dependencies>
