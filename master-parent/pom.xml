@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>7.0.0</version>
+  <version>7.0.1</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -1575,7 +1575,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.3.4</micronaut.version>
+        <micronaut.version>3.4.3</micronaut.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1643,8 +1643,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.3.4</micronaut.version>
-        <micronaut.openapi.version>4.0.0</micronaut.openapi.version>
+        <micronaut.version>3.4.3</micronaut.version>
+        <micronaut.openapi.version>4.0.1</micronaut.openapi.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1691,7 +1691,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.3.4</micronaut.version>
+        <micronaut.version>3.4.3</micronaut.version>
         <micronaut.security.version>3.5.0</micronaut.security.version>
       </properties>
       <dependencyManagement>
@@ -1739,7 +1739,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.3.4</micronaut.version>
+        <micronaut.version>3.4.3</micronaut.version>
         <micronaut.data.version>3.3.0</micronaut.data.version>
       </properties>
       <dependencyManagement>
