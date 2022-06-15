@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>7.0.1</version>
+  <version>7.0.6</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -561,6 +561,7 @@
                   <showWarnings>true</showWarnings>
                   <source>${javac.source.version}</source>
                   <target>${javac.target.version}</target>
+				  <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
               </execution>
               <execution>
@@ -574,6 +575,7 @@
                   <showWarnings>true</showWarnings>
                   <source>${javac.source.version}</source>
                   <target>${javac.target.version}</target>
+				  <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
               </execution>
             </executions>
@@ -753,9 +755,9 @@
             <artifactId>gmavenplus-plugin</artifactId>
             <dependencies>
               <dependency>
-                <groupId>org.codehaus.groovy</groupId>
+                <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>3.0.10</version>
+                <version>4.0.3</version>
                 <type>pom</type>
                 <scope>runtime</scope>
               </dependency>
@@ -889,6 +891,7 @@
                   <showWarnings>true</showWarnings>
                   <source>${javac.source.version}</source>
                   <target>${javac.target.version}</target>
+				  <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
               </execution>
             </executions>
@@ -915,9 +918,9 @@
             <artifactId>gmavenplus-plugin</artifactId>
             <dependencies>
               <dependency>
-                <groupId>org.codehaus.groovy</groupId>
+                <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>3.0.10</version>
+                <version>4.0.3</version>
                 <type>pom</type>
                 <scope>runtime</scope>
               </dependency>
@@ -1791,13 +1794,6 @@
       </activation>
       <dependencyManagement>
         <dependencies>
-          <dependency>
-            <groupId>com.fasterxml.jackson</groupId>
-            <artifactId>jackson-bom</artifactId>
-            <version>2.13.2</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
           <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-tcnative-classes</artifactId>
