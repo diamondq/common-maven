@@ -4,18 +4,18 @@
   <parent>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.7</version>
+    <version>7.0.9</version>
   </parent>
   <artifactId>diamondq-parent</artifactId>
-  <version>7.0.2</version>
+  <version>7.0.3</version>
   <packaging>pom</packaging>
   <name>DiamondQ: DiamondQ Parent</name>
   <description>A common POM for parents of DiamondQ projects.</description>
   <url>https://github.com/diamondq/common-maven/tree/master</url>
   <properties>
-    <slf4j.version>1.7.36</slf4j.version>
-    <log4j2.version>2.18.0</log4j2.version>
-    <jackson.version>2.13.4</jackson.version>
+    <slf4j.version>2.0.4</slf4j.version>
+    <log4j2.version>2.19.0</log4j2.version>
+    <jackson.version>2.14.1</jackson.version>
     <immutables.version>2.8.9-ea-1</immutables.version>
     <docker.registry>docker-registry.diamondq.com</docker.registry>
   </properties>
@@ -647,9 +647,9 @@
             <version>1.3.2</version>
           </dependency>
           <dependency>
-            <groupId>org.jboss</groupId>
+            <groupId>io.smallrye</groupId>
             <artifactId>jandex</artifactId>
-            <version>2.4.3.Final</version>
+            <version>3.0.3</version>
           </dependency>
           <dependency>
             <groupId>javax.servlet</groupId>
@@ -674,7 +674,7 @@
           <dependency>
             <groupId>org.codehaus.janino</groupId>
             <artifactId>janino</artifactId>
-            <version>3.1.8</version>
+            <version>3.1.9</version>
           </dependency>
         </dependencies>
       </dependencyManagement>
@@ -725,7 +725,7 @@
           <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
-            <version>5.9.0</version>
+            <version>5.9.1</version>
             <scope>import</scope>
             <type>pom</type>
           </dependency>
@@ -769,17 +769,17 @@
           <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
-            <version>1.9.3</version>
+            <version>1.10.1</version>
           </dependency>
           <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-influx</artifactId>
-            <version>1.9.3</version>
+            <version>1.10.1</version>
           </dependency>
           <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-graphite</artifactId>
-            <version>1.9.3</version>
+            <version>1.10.1</version>
           </dependency>
           <dependency>
             <groupId>com.diamondq.common</groupId>
@@ -1107,17 +1107,17 @@
           <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>9.3</version>
+            <version>9.4</version>
           </dependency>
           <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm-commons</artifactId>
-            <version>9.3</version>
+            <version>9.4</version>
           </dependency>
           <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm-util</artifactId>
-            <version>9.3</version>
+            <version>9.4</version>
           </dependency>
           <!-- JDBC -->
           <dependency>
@@ -1260,13 +1260,13 @@
           <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker</artifactId>
-            <version>3.25.0</version>
+            <version>3.27.0</version>
             <optional>true</optional>
           </dependency>
           <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker-qual</artifactId>
-            <version>3.25.0</version>
+            <version>3.27.0</version>
             <optional>true</optional>
           </dependency>
           <dependency>
@@ -1456,12 +1456,12 @@
           <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.11</version>
+            <version>1.4.5</version>
           </dependency>
           <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.2.11</version>
+            <version>1.4.5</version>
           </dependency>
           <dependency>
             <groupId>ch.qos.logback.contrib</groupId>
@@ -1592,15 +1592,15 @@
         <pluginManagement>
           <plugins>
             <plugin>
-              <groupId>org.jboss.jandex</groupId>
+              <groupId>io.smallrye</groupId>
               <artifactId>jandex-maven-plugin</artifactId>
-              <version>1.2.1</version>
+              <version>3.0.3</version>
             </plugin>
           </plugins>
         </pluginManagement>
         <plugins>
           <plugin>
-            <groupId>org.jboss.jandex</groupId>
+            <groupId>io.smallrye</groupId>
             <artifactId>jandex-maven-plugin</artifactId>
             <executions>
               <execution>
