@@ -7,7 +7,7 @@
     <version>7.0.9</version>
   </parent>
   <artifactId>diamondq-parent</artifactId>
-  <version>7.0.3</version>
+  <version>7.0.4</version>
   <packaging>pom</packaging>
   <name>DiamondQ: DiamondQ Parent</name>
   <description>A common POM for parents of DiamondQ projects.</description>
@@ -860,7 +860,7 @@
           </dependency>
           <dependency>
             <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
             <version>${log4j2.version}</version>
           </dependency>
           <dependency>
