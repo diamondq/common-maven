@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="25f0e093-b593-45f5-ba34-770ccc60b83c" name="Changes" comment="">
+    <list default="true" id="25f0e093-b593-45f5-ba34-770ccc60b83c" name="Changes" comment="Updated versions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diamondq-parent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/diamondq-parent/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/master-parent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/master-parent/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -26,18 +25,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/DQGitHub/common-maven",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/DQGitHub/common-maven&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -52,7 +52,9 @@
       <workItem from="1647889699292" duration="614000" />
       <workItem from="1647964984263" duration="621000" />
       <workItem from="1655334464915" duration="891000" />
-      <workItem from="1662861205487" duration="1529000" />
+      <workItem from="1662861205487" duration="1717000" />
+      <workItem from="1664142175068" duration="708000" />
+      <workItem from="1664145878640" duration="2000" />
     </task>
     <task id="LOCAL-00001" summary="Rolled back Micronaut to 3.3.4 due to Micronaut Data bugs around multiple data sources.">
       <created>1655335083349</created>
@@ -61,7 +63,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655335083349</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Fixed a few settings">
+      <created>1662863056728</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1662863056728</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updated versions">
+      <created>1662863073227</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1662863073227</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -91,6 +107,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Rolled back Micronaut to 3.3.4 due to Micronaut Data bugs around multiple data sources." />
-    <option name="LAST_COMMIT_MESSAGE" value="Rolled back Micronaut to 3.3.4 due to Micronaut Data bugs around multiple data sources." />
+    <MESSAGE value="Fixed a few settings" />
+    <MESSAGE value="Updated versions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated versions" />
   </component>
 </project>

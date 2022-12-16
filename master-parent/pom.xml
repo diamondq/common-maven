@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>7.0.9</version>
+  <version>7.0.11</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -1593,7 +1593,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.7.0</micronaut.version>
+        <micronaut.version>3.7.4</micronaut.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1607,6 +1607,20 @@
           </dependency>
         </dependencies>
       </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>javax.inject</groupId>
+          <artifactId>javax.inject</artifactId>
+          <version>1</version>
+          <optional>true</optional>
+        </dependency>
+        <dependency>
+          <groupId>jakarta.inject</groupId>
+          <artifactId>jakarta.inject-api</artifactId>
+          <version>2.0.1</version>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
     </profile>
     <profile>
       <id>micronaut-annotation-compiler</id>
@@ -1661,8 +1675,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.7.0</micronaut.version>
-        <micronaut.openapi.version>4.5.2</micronaut.openapi.version>
+        <micronaut.version>3.7.4</micronaut.version>
+        <micronaut.openapi.version>4.8.0</micronaut.openapi.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1709,8 +1723,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.7.0</micronaut.version>
-        <micronaut.security.version>3.8.0</micronaut.security.version>
+        <micronaut.version>3.7.4</micronaut.version>
+        <micronaut.security.version>3.8.3</micronaut.security.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1757,8 +1771,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.7.0</micronaut.version>
-        <micronaut.data.version>3.8.0</micronaut.data.version>
+        <micronaut.version>3.7.4</micronaut.version>
+        <micronaut.data.version>3.9.0</micronaut.data.version>
       </properties>
       <dependencyManagement>
         <dependencies>
