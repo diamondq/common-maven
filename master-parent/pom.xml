@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>7.0.13</version>
+  <version>7.0.14</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -18,7 +18,6 @@
     <javac.release.version>8</javac.release.version>
     <java.toolchain.version>8</java.toolchain.version>
     <javac.debug>true</javac.debug>
-    <javac.optimize>false</javac.optimize>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
@@ -27,7 +26,7 @@
     <nexus.skip.staging>false</nexus.skip.staging>
     <nexus.skip.local.staging>false</nexus.skip.local.staging>
     <!-- Special version properties -->
-    <plugins.surefire.version>3.0.0-M7</plugins.surefire.version>
+    <plugins.surefire.version>3.1.0</plugins.surefire.version>
     <flatten.pom.type>pom</flatten.pom.type>
   </properties>
   <licenses>
@@ -555,7 +554,6 @@
                 <configuration>
                   <debug>${javac.debug}</debug>
                   <debuglevel>lines,vars,source</debuglevel>
-                  <optimize>${javac.optimize}</optimize>
                   <parameters>true</parameters>
                   <showDeprecation>true</showDeprecation>
                   <showWarnings>true</showWarnings>
@@ -571,7 +569,6 @@
                 <configuration>
                   <debug>${javac.debug}</debug>
                   <debuglevel>lines,vars,source</debuglevel>
-                  <optimize>${javac.optimize}</optimize>
                   <parameters>true</parameters>
                   <showDeprecation>true</showDeprecation>
                   <showWarnings>true</showWarnings>
@@ -761,7 +758,7 @@
               <dependency>
                 <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>4.0.3</version>
+                <version>4.0.12</version>
                 <type>pom</type>
                 <scope>runtime</scope>
               </dependency>
@@ -842,7 +839,7 @@
           <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
-            <version>5.8.2</version>
+            <version>5.9.3</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
@@ -875,8 +872,8 @@
         </property>
       </activation>
       <properties>
-        <javac.skip.test.categories></javac.skip.test.categories>
-        <argLine></argLine>
+        <javac.skip.test.categories/>
+        <argLine/>
       </properties>
       <build>
         <plugins>
@@ -889,7 +886,6 @@
                 <configuration>
                   <debug>${javac.debug}</debug>
                   <debuglevel>lines,vars,source</debuglevel>
-                  <optimize>${javac.optimize}</optimize>
                   <parameters>true</parameters>
                   <showDeprecation>true</showDeprecation>
                   <showWarnings>true</showWarnings>
@@ -914,8 +910,8 @@
         </property>
       </activation>
       <properties>
-        <javac.skip.test.categories></javac.skip.test.categories>
-        <argLine></argLine>
+        <javac.skip.test.categories/>
+        <argLine/>
       </properties>
       <build>
         <plugins>
@@ -926,7 +922,7 @@
               <dependency>
                 <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>4.0.3</version>
+                <version>4.0.12</version>
                 <type>pom</type>
                 <scope>runtime</scope>
               </dependency>
@@ -1060,9 +1056,8 @@
             <executions>
               <execution>
                 <id>default-compile</id>
-                <phase />
                 <configuration>
-                  <skip>true</skip>
+                  <skipMain>true</skipMain>
                 </configuration>
               </execution>
             </executions>
@@ -1073,7 +1068,6 @@
             <executions>
               <execution>
                 <id>default-resources</id>
-                <phase />
                 <configuration>
                   <skip>true</skip>
                 </configuration>
@@ -1086,7 +1080,6 @@
             <executions>
               <execution>
                 <id>default-jar</id>
-                <phase />
                 <configuration>
                   <skipIfEmpty>true</skipIfEmpty>
                 </configuration>
@@ -1099,7 +1092,6 @@
             <executions>
               <execution>
                 <id>default-install</id>
-                <phase />
                 <configuration>
                   <skip>true</skip>
                 </configuration>
@@ -1112,7 +1104,6 @@
             <executions>
               <execution>
                 <id>default-deploy</id>
-                <phase />
                 <configuration>
                   <skip>true</skip>
                 </configuration>
@@ -1125,7 +1116,6 @@
             <executions>
               <execution>
                 <id>sign-artifacts</id>
-                <phase />
                 <configuration>
                   <skip>true</skip>
                 </configuration>
@@ -1138,7 +1128,6 @@
             <executions>
               <execution>
                 <id>attach-sources</id>
-                <phase />
                 <configuration>
                   <skip>true</skip>
                 </configuration>
@@ -1151,7 +1140,6 @@
             <executions>
               <execution>
                 <id>injected-nexus-deploy</id>
-                <phase />
                 <configuration>
                   <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
                 </configuration>
@@ -1191,7 +1179,6 @@
             <executions>
               <execution>
                 <id>default-testCompile</id>
-                <phase />
                 <configuration>
                   <skip>true</skip>
                 </configuration>
@@ -1204,7 +1191,6 @@
             <executions>
               <execution>
                 <id>default-testResources</id>
-                <phase />
                 <configuration>
                   <skip>true</skip>
                 </configuration>
@@ -1230,7 +1216,6 @@
             <executions>
               <execution>
                 <id>default-test</id>
-                <phase />
                 <configuration>
                   <skip>true</skip>
                 </configuration>
@@ -1338,7 +1323,7 @@
                 </goals>
                 <configuration>
                   <propsDir>${project.basedir}/src/i18n/resources</propsDir>
-                  <outputDir>${i18n.output.dir}</outputDir>
+                  <outputDirectory>${i18n.output.dir}</outputDirectory>
                   <implementsClass>${i18n.implementation.class}</implementsClass>
                   <resourceBundleLoaderClass>${i18n.resourcebundleloader.class}</resourceBundleLoaderClass>
                   <packageSeparator>${i18n.package.separator}</packageSeparator>
@@ -1372,7 +1357,7 @@
                   <resources>
                     <resource>
                       <directory>src/i18n/resources</directory>
-                      <targetPath></targetPath>
+                      <targetPath/>
                     </resource>
                   </resources>
                 </configuration>
@@ -1593,7 +1578,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.9.0</micronaut.version>
+        <micronaut.version>3.9.1</micronaut.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1675,8 +1660,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.9.0</micronaut.version>
-        <micronaut.openapi.version>4.8.5</micronaut.openapi.version>
+        <micronaut.version>3.9.1</micronaut.version>
+        <micronaut.openapi.version>4.8.7</micronaut.openapi.version>
       </properties>
       <dependencyManagement>
         <dependencies>
@@ -1723,7 +1708,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.9.0</micronaut.version>
+        <micronaut.version>3.9.1</micronaut.version>
         <micronaut.security.version>3.11.0</micronaut.security.version>
       </properties>
       <dependencyManagement>
@@ -1771,7 +1756,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>3.9.0</micronaut.version>
+        <micronaut.version>3.9.1</micronaut.version>
         <micronaut.data.version>3.10.0</micronaut.data.version>
       </properties>
       <dependencyManagement>
@@ -1949,7 +1934,7 @@
         <!-- This defines the name of the target file. If 'something' is provided here, then the file name will be something.target. -->
         <osgi.pde.target.name>${project.artifactId}</osgi.pde.target.name>
         <!-- Allow extra dependencies to be defined. Format is groupId:artifactId:version:type:classifer,... -->
-        <osgi.pde.target.extra.deps></osgi.pde.target.extra.deps>
+        <osgi.pde.target.extra.deps/>
       </properties>
       <build>
         <plugins>
@@ -1961,7 +1946,6 @@
             <executions>
               <execution>
                 <id>default-deploy</id>
-                <phase />
               </execution>
             </executions>
           </plugin>
@@ -1971,7 +1955,6 @@
             <executions>
               <execution>
                 <id>injected-nexus-deploy</id>
-                <phase />
                 <configuration>
                   <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
                 </configuration>
@@ -1983,7 +1966,6 @@
             <executions>
               <execution>
                 <id>default-install</id>
-                <phase />
               </execution>
             </executions>
           </plugin>
@@ -2226,7 +2208,7 @@
         <karaf.feature.file>${project.build.directory}/generated-fmpp/${project.artifactId}.xml</karaf.feature.file>
         <!-- The list of projects that should not be locked (groupId:artifactId:type:version format). This is what should 
           be overridden by child projects -->
-        <karaf.dont.lock.snapshots></karaf.dont.lock.snapshots>
+        <karaf.dont.lock.snapshots/>
         <!-- The combination of the karaf.dont.lock.snapshots and an explicit not locking of ourselves -->
         <karaf.dont.lock.snapshots.final>${karaf.dont.lock.snapshots}${project.groupId}:${project.artifactId}:jar:${project.version}</karaf.dont.lock.snapshots.final>
         <!-- The file containing the library scripts needed to generate the karaf feature -->
@@ -2382,7 +2364,7 @@
               <dependency>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctorj-diagram</artifactId>
-                <version>2.2.1</version>
+                <version>2.2.8</version>
               </dependency>
             </dependencies>
             <executions>
@@ -2422,7 +2404,7 @@
         </property>
       </activation>
       <properties>
-        <picocli.version>4.6.3</picocli.version>
+        <picocli.version>4.7.3</picocli.version>
       </properties>
       <dependencies>
         <dependency>
@@ -2519,7 +2501,7 @@
       </activation>
       <properties>
         <build-paths-projectdir>${project.basedir}/..</build-paths-projectdir>
-        <build-paths-groupId></build-paths-groupId>
+        <build-paths-groupId/>
       </properties>
       <dependencies>
         <dependency>
@@ -2634,32 +2616,32 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.10.1</version>
+          <version>3.11.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.0.0-M2</version>
+          <version>3.1.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>3.0.0-M7</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
-          <version>3.0.0-M1</version>
+          <version>3.1.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>4.0.0-M2</version>
+          <version>4.0.0-M8</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2675,7 +2657,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-ear-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2685,12 +2667,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.2.2</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-rar-plugin</artifactId>
-          <version>2.4</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2705,7 +2687,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.4.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2736,7 +2718,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.2.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2751,7 +2733,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.5.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2761,7 +2743,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jxr-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2771,24 +2753,19 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.17.0</version>
+          <version>3.21.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.4.3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-report-plugin</artifactId>
-          <version>3.0.0-M7</version>
+          <version>3.1.0</version>
         </plugin>
         <!-- Tool plugins -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-ant-plugin</artifactId>
-          <version>2.4</version>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
@@ -2796,33 +2773,43 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
+          <artifactId>maven-artifact-plugin</artifactId>
           <version>3.4.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-archetype-plugin</artifactId>
+          <version>3.2.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.6.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.5.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-enforcer-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>3.0.1</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-help-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.4.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-invoker-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.5.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2842,32 +2829,32 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pdf-plugin</artifactId>
-          <version>1.6.0</version>
+          <version>1.6.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-plugin-plugin</artifactId>
+          <version>3.9.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
-          <version>3.0.0-M6</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-remote-resources-plugin</artifactId>
-          <version>1.7.0</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-repository-plugin</artifactId>
-          <version>2.4</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-plugin</artifactId>
-          <version>2.0.0-M1</version>
+          <version>2.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-scm-publish-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.2.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2878,6 +2865,11 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-toolchains-plugin</artifactId>
           <version>3.1.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-wrapper-plugin</artifactId>
+          <version>3.2.0</version>
         </plugin>
         <!-- Other plugins -->
         <plugin>
@@ -2898,12 +2890,12 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>buildnumber-maven-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.4.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -2913,7 +2905,7 @@
         <plugin>
           <groupId>org.codehaus.gmavenplus</groupId>
           <artifactId>gmavenplus-plugin</artifactId>
-          <version>1.13.1</version>
+          <version>2.1.0</version>
         </plugin>
         <plugin>
           <groupId>com.carrotgarden.maven</groupId>
@@ -2923,7 +2915,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
-          <version>1.2.7</version>
+          <version>1.5.0</version>
         </plugin>
         <plugin>
           <groupId>com.diamondq.maven</groupId>
@@ -3007,7 +2999,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -3022,7 +3014,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -3035,7 +3027,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -3048,7 +3040,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -3062,7 +3054,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -3075,7 +3067,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -3088,7 +3080,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -3101,7 +3093,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -3114,7 +3106,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -3127,7 +3119,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
                 <pluginExecution>
@@ -3167,7 +3159,7 @@
                     </goals>
                   </pluginExecutionFilter>
                   <action>
-                    <ignore></ignore>
+                    <ignore/>
                   </action>
                 </pluginExecution>
               </pluginExecutions>
