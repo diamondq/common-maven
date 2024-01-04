@@ -5,6 +5,7 @@
   <ignoreVersions>
     <ignoreVersion type="regex">(?i).*[-_\.]M[0-9\.]*</ignoreVersion>
     <ignoreVersion type="regex">(?i).*[-_\.]CR[0-9\.-]*</ignoreVersion>
+    <ignoreVersion type="regex">(?i).*[-_\.]MR[0-9\.-]*</ignoreVersion>
     <ignoreVersion type="regex">(?i).*[-_\.]rc[0-9\.-]*</ignoreVersion>
     <ignoreVersion type="regex">(?i).*[-_\.]beta[0-9\.-]*</ignoreVersion>
     <ignoreVersion type="regex">(?i).*[-_\.]b[0-9\.-]*</ignoreVersion>
