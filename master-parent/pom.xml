@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>7.0.15</version>
+  <version>7.0.18</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -1578,14 +1578,15 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>4.4.2</micronaut.version>
+        <micronaut.version>4.2.2</micronaut.version>
+        <micronaut.validation.version>4.2.0</micronaut.validation.version>
       </properties>
       <dependencyManagement>
         <dependencies>
           <!-- Actual dependency. Everything above is tweaks to bring the micronaut-bom deps up to later versions -->
           <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-bom</artifactId>
+            <groupId>io.micronaut.platform</groupId>
+            <artifactId>micronaut-platform</artifactId>
             <version>${micronaut.version}</version>
             <type>pom</type>
             <scope>import</scope>
@@ -1593,12 +1594,6 @@
         </dependencies>
       </dependencyManagement>
       <dependencies>
-        <dependency>
-          <groupId>javax.inject</groupId>
-          <artifactId>javax.inject</artifactId>
-          <version>1</version>
-          <optional>true</optional>
-        </dependency>
         <dependency>
           <groupId>jakarta.inject</groupId>
           <artifactId>jakarta.inject-api</artifactId>
@@ -1640,9 +1635,9 @@
                   <version>${micronaut.version}</version>
                 </path>
                 <path>
-                  <groupId>io.micronaut</groupId>
+                  <groupId>io.micronaut.validation</groupId>
                   <artifactId>micronaut-validation</artifactId>
-                  <version>${micronaut.version}</version>
+                  <version>${micronaut.validation.version}</version>
                 </path>
               </annotationProcessorPaths>
             </configuration>
@@ -1660,14 +1655,14 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>4.4.2</micronaut.version>
+        <micronaut.version>4.2.2</micronaut.version>
         <micronaut.openapi.version>6.3.0</micronaut.openapi.version>
       </properties>
       <dependencyManagement>
         <dependencies>
           <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-bom</artifactId>
+            <groupId>io.micronaut.platform</groupId>
+            <artifactId>micronaut-platform</artifactId>
             <version>${micronaut.version}</version>
             <type>pom</type>
             <scope>import</scope>
@@ -1708,14 +1703,14 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>4.4.2</micronaut.version>
+        <micronaut.version>4.2.2</micronaut.version>
         <micronaut.security.version>4.4.0</micronaut.security.version>
       </properties>
       <dependencyManagement>
         <dependencies>
           <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-bom</artifactId>
+            <groupId>io.micronaut.platform</groupId>
+            <artifactId>micronaut-platform</artifactId>
             <version>${micronaut.version}</version>
             <type>pom</type>
             <scope>import</scope>
@@ -1756,7 +1751,7 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>4.4.2</micronaut.version>
+        <micronaut.version>4.2.2</micronaut.version>
         <micronaut.data.version>4.4.1</micronaut.data.version>
       </properties>
       <dependencyManagement>
@@ -2980,7 +2975,7 @@
         <plugin>
           <groupId>org.openapitools</groupId>
           <artifactId>openapi-generator-maven-plugin</artifactId>
-          <version>5.2.1</version>
+          <version>7.2.0</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
