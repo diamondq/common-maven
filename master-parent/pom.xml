@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>7.0.18</version>
+  <version>7.0.19</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -1578,11 +1578,18 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>4.2.2</micronaut.version>
-        <micronaut.validation.version>4.2.0</micronaut.validation.version>
+        <micronaut.version>4.2.3</micronaut.version>
+        <micronaut.validation.version>4.3.0</micronaut.validation.version>
       </properties>
       <dependencyManagement>
         <dependencies>
+          <dependency>
+            <groupId>io.micronaut.validation</groupId>
+            <artifactId>micronaut-validation-bom</artifactId>
+            <version>${micronaut.validation.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
           <!-- Actual dependency. Everything above is tweaks to bring the micronaut-bom deps up to later versions -->
           <dependency>
             <groupId>io.micronaut.platform</groupId>
@@ -1636,7 +1643,7 @@
                 </path>
                 <path>
                   <groupId>io.micronaut.validation</groupId>
-                  <artifactId>micronaut-validation</artifactId>
+                  <artifactId>micronaut-validation-processor</artifactId>
                   <version>${micronaut.validation.version}</version>
                 </path>
               </annotationProcessorPaths>
@@ -1655,11 +1662,18 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>4.2.2</micronaut.version>
-        <micronaut.openapi.version>6.3.0</micronaut.openapi.version>
+        <micronaut.version>4.2.3</micronaut.version>
+        <micronaut.openapi.version>6.4.0</micronaut.openapi.version>
       </properties>
       <dependencyManagement>
         <dependencies>
+          <dependency>
+            <groupId>io.micronaut.openapi</groupId>
+            <artifactId>micronaut-openapi-bom</artifactId>
+            <version>${micronaut.openapi.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
           <dependency>
             <groupId>io.micronaut.platform</groupId>
             <artifactId>micronaut-platform</artifactId>
@@ -1703,11 +1717,18 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>4.2.2</micronaut.version>
-        <micronaut.security.version>4.4.0</micronaut.security.version>
+        <micronaut.version>4.2.3</micronaut.version>
+        <micronaut.security.version>4.5.0</micronaut.security.version>
       </properties>
       <dependencyManagement>
         <dependencies>
+          <dependency>
+            <groupId>io.micronaut.security</groupId>
+            <artifactId>micronaut-security-bom</artifactId>
+            <version>${micronaut.security.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
           <dependency>
             <groupId>io.micronaut.platform</groupId>
             <artifactId>micronaut-platform</artifactId>
@@ -1751,8 +1772,8 @@
         </property>
       </activation>
       <properties>
-        <micronaut.version>4.2.2</micronaut.version>
-        <micronaut.data.version>4.4.1</micronaut.data.version>
+        <micronaut.version>4.2.3</micronaut.version>
+        <micronaut.data.version>4.5.0</micronaut.data.version>
       </properties>
       <dependencyManagement>
         <dependencies>
