@@ -4,10 +4,10 @@
   <parent>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.19</version>
+    <version>7.0.22</version>
   </parent>
   <artifactId>diamondq-parent</artifactId>
-  <version>7.0.15</version>
+  <version>7.0.16</version>
   <packaging>pom</packaging>
   <name>DiamondQ: DiamondQ Parent</name>
   <description>A common POM for parents of DiamondQ projects.</description>
@@ -17,7 +17,8 @@
     <log4j2.version>2.22.1</log4j2.version>
     <jackson.version>2.16.1</jackson.version>
     <immutables.version>2.10.0</immutables.version>
-    <docker.registry>docker-registry.diamondq.com</docker.registry>
+    <docker.registry>docker-group-registry.diamondq.com</docker.registry>
+    <dockerbuild.registry>docker-registry.diamondq.com</dockerbuild.registry>
   </properties>
   <licenses>
     <license>
@@ -1572,18 +1573,6 @@
           <optional>true</optional>
         </dependency>
       </dependencies>
-    </profile>
-    <profile>
-      <id>diamondq-build-dockerfile</id>
-      <activation>
-        <property>
-          <name>[DIAMONDQ]</name>
-          <value>type(dockerfile)</value>
-        </property>
-      </activation>
-      <properties>
-        <docker.registry>docker-registry.diamondq.com</docker.registry>
-      </properties>
     </profile>
     <profile>
       <id>jandex-all-projects</id>

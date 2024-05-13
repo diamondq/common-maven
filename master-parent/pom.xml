@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>7.0.19</version>
+  <version>7.0.22</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -448,8 +448,9 @@
       </activation>
       <properties>
         <docker.registry>registry.hub.docker.com</docker.registry>
+        <dockerbuild.registry>registry.hub.docker.com</dockerbuild.registry>
         <dockerbuild.image>${project.artifactId}</dockerbuild.image>
-        <dockerbuild.repository>${docker.registry}/${dockerbuild.image}</dockerbuild.repository>
+        <dockerbuild.repository>${dockerbuild.registry}/${dockerbuild.image}</dockerbuild.repository>
       </properties>
       <build>
         <pluginManagement>
@@ -1641,11 +1642,6 @@
                   <artifactId>micronaut-inject-java</artifactId>
                   <version>${micronaut.version}</version>
                 </path>
-                <path>
-                  <groupId>io.micronaut.validation</groupId>
-                  <artifactId>micronaut-validation-processor</artifactId>
-                  <version>${micronaut.validation.version}</version>
-                </path>
               </annotationProcessorPaths>
             </configuration>
           </plugin>
@@ -1742,6 +1738,12 @@
         <dependency>
           <groupId>io.micronaut.security</groupId>
           <artifactId>micronaut-security</artifactId>
+          <exclusions>
+            <exclusion>
+              <groupId>io.micronaut.validation</groupId>
+              <artifactId>micronaut-validation</artifactId>
+            </exclusion>
+          </exclusions>
         </dependency>
       </dependencies>
       <build>
