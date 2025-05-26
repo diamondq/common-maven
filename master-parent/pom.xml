@@ -3,13 +3,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>7.0.23</version>
+  <version>7.0.25</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
   <url>https://github.com/diamondq/common-maven/tree/master</url>
   <properties>
-    <!-- If you are using the Eclipse External Annotations https://wiki.eclipse.org/JDT_Core/Null_Analysis/External_Annotations 
+    <!-- If you are using the Eclipse External Annotations https://wiki.eclipse.org/JDT_Core/Null_Analysis/External_Annotations
       then define the location of the folder. NOTE: Mostly commonly this will be defined in the .settings.xml -->
     <eclipse.external.annotations />
     <!-- For use for Java builds -->
@@ -26,7 +26,7 @@
     <nexus.skip.staging>false</nexus.skip.staging>
     <nexus.skip.local.staging>false</nexus.skip.local.staging>
     <!-- Special version properties -->
-    <plugins.surefire.version>3.3.1</plugins.surefire.version>
+    <plugins.surefire.version>3.5.3</plugins.surefire.version>
     <flatten.pom.type>pom</flatten.pom.type>
   </properties>
   <licenses>
@@ -92,7 +92,7 @@
     </pluginRepository>
   </pluginRepositories>
   <profiles>
-    <!-- Make sure that the DiamondQ Maven Profile Activator Extension is present and running. Otherwise, the complex profile 
+    <!-- Make sure that the DiamondQ Maven Profile Activator Extension is present and running. Otherwise, the complex profile
       rules won't work properly. -->
     <profile>
       <id>fail-if-extension-missing</id>
@@ -301,7 +301,7 @@
         </plugins>
       </build>
     </profile>
-    <!-- Due to interactions between normal profiles and a master, special overrides if we're deploying ourselves as opposed 
+    <!-- Due to interactions between normal profiles and a master, special overrides if we're deploying ourselves as opposed
       to be used to deploy a child artifact -->
     <profile>
       <id>deploy-self-to-ossrh</id>
@@ -511,7 +511,7 @@
         </plugins>
       </build>
     </profile>
-    <!-- ****************************************************************************************************************** 
+    <!-- ******************************************************************************************************************
       Java based -->
     <profile>
       <id>java-project</id>
@@ -742,6 +742,22 @@
         <java.toolchain.version>21</java.toolchain.version>
       </properties>
     </profile>
+    <!-- Java based project using Java 25 as a target -->
+    <profile>
+      <id>java-25</id>
+      <activation>
+        <property>
+          <name>[DIAMONDQ]</name>
+          <value>jdk(25)</value>
+        </property>
+      </activation>
+      <properties>
+        <javac.source.version>25</javac.source.version>
+        <javac.target.version>25</javac.target.version>
+        <javac.release.version>25</javac.release.version>
+        <java.toolchain.version>25</java.toolchain.version>
+      </properties>
+    </profile>
     <profile>
       <id>java-automatic-module-name</id>
       <activation>
@@ -759,14 +775,14 @@
               <dependency>
                 <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>4.0.22</version>
+                <version>4.0.26</version>
                 <type>pom</type>
                 <scope>runtime</scope>
               </dependency>
               <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.5.6</version>
+                <version>1.5.18</version>
                 <scope>runtime</scope>
               </dependency>
             </dependencies>
@@ -800,7 +816,7 @@
     }
     String name = groupId + "." + artifactId;
     project.properties.setProperty('automatic.module.name', name);
-  } 
+  }
 ]]>
                     </script>
                   </scripts>
@@ -840,7 +856,7 @@
           <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
-            <version>5.10.3</version>
+            <version>5.12.2</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
@@ -923,14 +939,14 @@
               <dependency>
                 <groupId>org.apache.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>4.0.22</version>
+                <version>4.0.26</version>
                 <type>pom</type>
                 <scope>runtime</scope>
               </dependency>
               <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.5.6</version>
+                <version>1.5.18</version>
                 <scope>runtime</scope>
               </dependency>
             </dependencies>
@@ -951,7 +967,7 @@
       argline += project.properties[key] + " "
     }
   }
-  project.properties.setProperty('dq.surefire.argline', argline) 
+  project.properties.setProperty('dq.surefire.argline', argline)
 ]]>
                     </script>
                   </scripts>
@@ -1299,10 +1315,10 @@
       </activation>
       <properties>
         <osgi.dont.export.i18n>!${osgi.base.package}.*.i18n,</osgi.dont.export.i18n>
-        <!-- When generating the i18n enum classes from a messages.properties, this setting allows the enum class to extend 
+        <!-- When generating the i18n enum classes from a messages.properties, this setting allows the enum class to extend
           a class -->
         <i18n.implementation.class />
-        <!-- When generating the i18n enum classes from a messages.properties, this setting allows the ResourceBundle's ClassLoader 
+        <!-- When generating the i18n enum classes from a messages.properties, this setting allows the ResourceBundle's ClassLoader
           and Control to be provided by another class -->
         <i18n.resourcebundleloader.class />
         <!-- Defines the directory to store the generated enum class into -->
@@ -1368,7 +1384,7 @@
         </plugins>
       </build>
     </profile>
-    <!-- For normal cases, add a dependency to the common-utils project so that the default implementation of I18N class 
+    <!-- For normal cases, add a dependency to the common-utils project so that the default implementation of I18N class
       can be resolved -->
     <profile>
       <id>generate-i18n-strings-dependencies</id>
@@ -1476,12 +1492,12 @@
           <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
-            <version>1.9.22.1</version>
+            <version>1.9.24</version>
           </dependency>
           <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjtools</artifactId>
-            <version>1.9.22.1</version>
+            <version>1.9.24</version>
           </dependency>
         </dependencies>
       </dependencyManagement>
@@ -1516,12 +1532,12 @@
               <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjrt</artifactId>
-                <version>1.9.21</version>
+                <version>1.9.24</version>
               </dependency>
               <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjtools</artifactId>
-                <version>1.9.21</version>
+                <version>1.9.24</version>
               </dependency>
             </dependencies>
           </plugin>
@@ -1829,13 +1845,13 @@
           <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-tcnative-classes</artifactId>
-            <version>2.0.65.Final</version>
+            <version>2.0.70.Final</version>
           </dependency>
           <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-bom</artifactId>
-            <version>4.1.112.Final</version>
-            <!-- IMPORTANT NOTE: Keep the above dependency override for netty-tcnative-classes up-to-date. It's currently 
+            <version>4.2.0.Final</version>
+            <!-- IMPORTANT NOTE: Keep the above dependency override for netty-tcnative-classes up-to-date. It's currently
               present because the current netty-bom includes an invalid version -->
             <type>pom</type>
             <scope>import</scope>
@@ -1843,7 +1859,7 @@
           <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-stack-depchain</artifactId>
-            <version>4.5.9</version>
+            <version>4.5.14</version>
             <type>pom</type>
             <scope>import</scope>
           </dependency>
@@ -1888,7 +1904,7 @@
         </plugins>
       </build>
     </profile>
-    <!-- ****************************************************************************************************************** 
+    <!-- ******************************************************************************************************************
       Java OSGi based -->
     <!-- If there is an OSGI-INF directory, then add it as a resource and make sure that the Manifest includes the XML files -->
     <profile>
@@ -1957,7 +1973,7 @@
       <build>
         <plugins>
           <!-- Since the target contains absolute paths, we don't want to deploy it to a permanent/remote repository -->
-          <!-- However, since it's only used for the build process, as long as it gets deployed to the local repository, 
+          <!-- However, since it's only used for the build process, as long as it gets deployed to the local repository,
             we're fine. -->
           <plugin>
             <artifactId>maven-deploy-plugin</artifactId>
@@ -2009,7 +2025,7 @@
               <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.7.1</version>
+                <version>3.8.1</version>
                 <type>maven-plugin</type>
               </dependency>
             </dependencies>
@@ -2029,19 +2045,19 @@
       <properties>
         <!-- The basic list of headers to remove from the generated MANIFEST.MF -->
         <osgi.base.removeheaders>Tool, Originally-Created-By, Bnd-LastModified, Private-Package, Include-Resource,
-          Embed-Transitive, Embed-Dependency</osgi.base.removeheaders>
+          Embed-Transitive, Embed-Dependency, DiamondQ, JAVA_POST_PROCESS_FILE</osgi.base.removeheaders>
         <!-- The basic list of headers to remove from the source JAR generated MANIFEST.MF -->
         <osgi.base.removesrcheaders>Tool, Originally-Created-By, Bnd-LastModified, Private-Package, Include-Resource,
-          Import-Package, Export-Package, Require-Capability, Provide-Capability</osgi.base.removesrcheaders>
-        <!-- To make it easier to extend the list, override this property with your own settings, potentially including the 
+          Import-Package, Export-Package, Require-Capability, Provide-Capability, DiamondQ, JAVA_POST_PROCESS_FILE</osgi.base.removesrcheaders>
+        <!-- To make it easier to extend the list, override this property with your own settings, potentially including the
           osgi.base.removeheaders -->
         <osgi.removeheaders>${osgi.base.removeheaders}</osgi.removeheaders>
-        <!-- To make it easier to extend the list, override this property with your own settings, potentially including the 
+        <!-- To make it easier to extend the list, override this property with your own settings, potentially including the
           osgi.base.removesrcheaders -->
         <osgi.removesrcheaders>${osgi.base.removesrcheaders}</osgi.removesrcheaders>
         <!-- The base package to always export. NOTE: This must be defined in a child project -->
         <osgi.base.package />
-        <!-- A placeholder to inject a DON'T export for i18n. Automatically added by the i18n profile. This is expected to 
+        <!-- A placeholder to inject a DON'T export for i18n. Automatically added by the i18n profile. This is expected to
           end in a comma to allow chaining. -->
         <osgi.dont.export.i18n />
         <!-- The standard to not Export any package ending in impl. This is expected to end in a comma to allow chaining. -->
@@ -2051,14 +2067,14 @@
         <osgi.extra.dont.export.packages />
         <!-- The list of packages that won't be exported. NOTE: This list requires the exclamation point (!) to be already added. -->
         <osgi.dont.export.packages>${osgi.dont.export.i18n}${osgi.dont.export.impl}${osgi.extra.dont.export.packages}</osgi.dont.export.packages>
-        <!-- Override this property to inject extra Export-Package commands. This is expected to end in a comma to allow 
+        <!-- Override this property to inject extra Export-Package commands. This is expected to end in a comma to allow
           chaining. -->
         <osgi.extra.export.packages />
         <!-- The base package that is always exported -->
         <osgi.export.base.package>${osgi.base.package}.*</osgi.export.base.package>
         <!-- This is the Export-Package. Generally override one of the component properties -->
         <osgi.export.packages>${osgi.dont.export.packages}${osgi.extra.export.packages}${osgi.export.base.package}</osgi.export.packages>
-        <!-- Override this property to inject extra Import-Package elements. NOTE: The osgi.import.packages property expects 
+        <!-- Override this property to inject extra Import-Package elements. NOTE: The osgi.import.packages property expects
           this property to end with a comma to support chaining -->
         <osgi.extra.import.packages />
         <!-- This represents the packages to import. The default is * -->
@@ -2067,6 +2083,14 @@
         <osgi.fragment.host />
         <!-- This represents the DynamicImport-Package -->
         <osgi.dynamicimport.package />
+        <!-- This represents the BND DS Annotations -->
+        <osgi.annotations.ds>*</osgi.annotations.ds>
+        <!-- This represents the BND Meta Type Annotations -->
+        <osgi.annotations.metatype>*</osgi.annotations.metatype>
+        <!-- This represents the path to the META-INF folder -->
+        <osgi.manifest.directory>${project.basedir}/META-INF</osgi.manifest.directory>
+        <!-- This represents the path to the OSGI-INF folder -->
+        <osgi.osgi.directory>${project.basedir}/OSGI-INF</osgi.osgi.directory>
         <!-- The OSGi version -->
         <osgi.core.version>8.0.0</osgi.core.version>
         <osgi.cmpn.version>7.0.0</osgi.cmpn.version>
@@ -2134,23 +2158,57 @@
                 <configuration>
                   <instructions>
                     <_removeheaders>${osgi.removeheaders}</_removeheaders>
+                    <_sorted>true</_sorted>
+                    <_dsannotations>${osgi.annotations.ds}</_dsannotations>
+                    <_metatypeannotations>${osgi.annotations.metatype}</_metatypeannotations>
                     <Import-Package>${osgi.import.packages}</Import-Package>
                     <Export-Package>${osgi.export.packages}</Export-Package>
                     <Fragment-Host>${osgi.fragment.host}</Fragment-Host>
                     <DynamicImport-Package>${osgi.dynamicimport.package}</DynamicImport-Package>
                   </instructions>
-                  <manifestLocation>${project.basedir}/META-INF</manifestLocation>
+                  <manifestLocation>${osgi.manifest.directory}</manifestLocation>
+                  <supportIncrementalBuild>true</supportIncrementalBuild>
                   <niceManifest>true</niceManifest>
                 </configuration>
               </execution>
-              <!-- mmansell - Disabled because the latest version is conflicting in Eclipse. I'm not sure why yet <execution> 
-                <id>source-manifest</id> <phase>process-classes</phase> <goals> <goal>manifest</goal> </goals> <configuration> <instructions> 
-                <_removeheaders>${osgi.removesrcheaders}</_removeheaders> <Export-Package /> <Bundle-SymbolicName>$[maven-symbolicname].source</Bundle-SymbolicName> 
-                <Eclipse-SourceBundle>$[maven-symbolicname];version="$[Bundle-Version]";roots:="."</Eclipse-SourceBundle> </instructions> 
-                <manifestLocation>${project.build.directory}/sources</manifestLocation> <niceManifest>true</niceManifest> </configuration> 
+              <!-- mmansell - Disabled because the latest version is conflicting in Eclipse. I'm not sure why yet <execution>
+                <id>source-manifest</id> <phase>process-classes</phase> <goals> <goal>manifest</goal> </goals> <configuration> <instructions>
+                <_removeheaders>${osgi.removesrcheaders}</_removeheaders> <Export-Package /> <Bundle-SymbolicName>$[maven-symbolicname].source</Bundle-SymbolicName>
+                <Eclipse-SourceBundle>$[maven-symbolicname];version="$[Bundle-Version]";roots:="."</Eclipse-SourceBundle> </instructions>
+                <manifestLocation>${project.build.directory}/sources</manifestLocation> <niceManifest>true</niceManifest> </configuration>
                 </execution> -->
             </executions>
           </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <id>delete-manifest</id>
+                    <phase>process-resources</phase>
+                    <goals>
+                      <goal>run</goal>
+                    </goals>
+                    <configuration>
+                      <target>
+                        <delete file="${osgi.manifest.directory}/MANIFEST.MF" quiet="true"/>
+                      </target>
+                    </configuration>
+                  </execution>
+                    <execution>
+                        <id>fixcrlf-manifest</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <fixcrlf file="${osgi.manifest.directory}/MANIFEST.MF" eol="lf" eof="remove"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
           <plugin>
             <artifactId>maven-jar-plugin</artifactId>
             <executions>
@@ -2158,15 +2216,15 @@
                 <id>default-jar</id>
                 <configuration>
                   <archive>
-                    <manifestFile>${project.basedir}/META-INF/MANIFEST.MF</manifestFile>
+                    <manifestFile>${osgi.manifest.directory}/MANIFEST.MF</manifestFile>
                   </archive>
                 </configuration>
               </execution>
             </executions>
           </plugin>
           <!-- Generate sources jar -->
-          <!-- mmansell - Disabled because source manifest was disabled above <plugin> <groupId>org.apache.maven.plugins</groupId> 
-            <artifactId>maven-source-plugin</artifactId> <executions> <execution> <id>attach-sources</id> <configuration> <archive> <manifestFile>${project.build.directory}/sources/MANIFEST.MF</manifestFile> 
+          <!-- mmansell - Disabled because source manifest was disabled above <plugin> <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId> <executions> <execution> <id>attach-sources</id> <configuration> <archive> <manifestFile>${project.build.directory}/sources/MANIFEST.MF</manifestFile>
             </archive> </configuration> </execution> </executions> </plugin> -->
         </plugins>
       </build>
@@ -2224,7 +2282,7 @@
       <properties>
         <!-- Redefine the feature file since it's now generated -->
         <karaf.feature.file>${project.build.directory}/generated-fmpp/${project.artifactId}.xml</karaf.feature.file>
-        <!-- The list of projects that should not be locked (groupId:artifactId:type:version format). This is what should 
+        <!-- The list of projects that should not be locked (groupId:artifactId:type:version format). This is what should
           be overridden by child projects -->
         <karaf.dont.lock.snapshots/>
         <!-- The combination of the karaf.dont.lock.snapshots and an explicit not locking of ourselves -->
@@ -2350,7 +2408,7 @@
               <dependency>
                 <groupId>org.freemarker</groupId>
                 <artifactId>freemarker</artifactId>
-                <version>2.3.33</version>
+                <version>2.3.34</version>
               </dependency>
               <dependency>
                 <groupId>net.sourceforge.fmpp</groupId>
@@ -2362,7 +2420,7 @@
         </plugins>
       </build>
     </profile>
-    <!-- ****************************************************************************************************************** 
+    <!-- ******************************************************************************************************************
       ASCIIDoc based -->
     <!-- Generate the ASCII Documentation -->
     <profile>
@@ -2382,7 +2440,7 @@
               <dependency>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctorj-diagram</artifactId>
-                <version>2.3.1</version>
+                <version>2.3.2</version>
               </dependency>
             </dependencies>
             <executions>
@@ -2422,7 +2480,7 @@
         </property>
       </activation>
       <properties>
-        <picocli.version>4.7.6</picocli.version>
+        <picocli.version>4.7.7</picocli.version>
       </properties>
       <dependencies>
         <dependency>
@@ -2475,7 +2533,7 @@
         </plugins>
       </build>
     </profile>
-    <!-- ****************************************************************************************************************** 
+    <!-- ******************************************************************************************************************
       GraalVM Support -->
     <!-- Build Native Image -->
     <profile>
@@ -2629,27 +2687,27 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.4.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.13.0</version>
+          <version>3.14.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.1.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>3.3.1</version>
+          <version>3.5.3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-install-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.1.4</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2736,7 +2794,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2751,7 +2809,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.8.0</version>
+          <version>3.11.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2761,7 +2819,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jxr-plugin</artifactId>
-          <version>3.4.0</version>
+          <version>3.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2771,17 +2829,17 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.24.0</version>
+          <version>3.26.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.6.2</version>
+          <version>3.9.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-report-plugin</artifactId>
-          <version>3.3.1</version>
+          <version>3.5.3</version>
         </plugin>
         <!-- Tool plugins -->
         <plugin>
@@ -2792,12 +2850,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-artifact-plugin</artifactId>
-          <version>3.5.1</version>
+          <version>3.6.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-archetype-plugin</artifactId>
-          <version>3.2.1</version>
+          <version>3.3.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2807,7 +2865,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-dependency-plugin</artifactId>
-          <version>3.7.1</version>
+          <version>3.8.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2817,22 +2875,22 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>3.2.4</version>
+          <version>3.2.7</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-help-plugin</artifactId>
-          <version>3.4.1</version>
+          <version>3.5.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-invoker-plugin</artifactId>
-          <version>3.7.0</version>
+          <version>3.9.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jarsigner-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.1.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2842,17 +2900,17 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-patch-plugin</artifactId>
-          <version>1.2</version>
+          <version>1.3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-pdf-plugin</artifactId>
-          <version>1.6.1</version>
+          <version>1.6.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
-          <version>3.13.1</version>
+          <version>3.15.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2862,7 +2920,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-remote-resources-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -2893,7 +2951,7 @@
         <plugin>
           <groupId>org.asciidoctor</groupId>
           <artifactId>asciidoctor-maven-plugin</artifactId>
-          <version>3.0.0</version>
+          <version>3.2.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -2908,7 +2966,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>buildnumber-maven-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.2.1</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -2918,12 +2976,12 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.5.0</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.gmavenplus</groupId>
           <artifactId>gmavenplus-plugin</artifactId>
-          <version>3.0.2</version>
+          <version>4.1.1</version>
         </plugin>
         <plugin>
           <groupId>com.carrotgarden.maven</groupId>
@@ -2933,7 +2991,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
-          <version>1.6.0</version>
+          <version>1.7.0</version>
         </plugin>
         <plugin>
           <groupId>com.diamondq.maven</groupId>
@@ -2943,7 +3001,7 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.12</version>
+          <version>0.8.13</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -2953,7 +3011,7 @@
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
-          <version>5.1.9</version>
+          <version>6.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.sonatype.plugins</groupId>
@@ -2973,7 +3031,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
-          <version>2.17.1</version>
+          <version>2.18.0</version>
         </plugin>
         <plugin>
           <groupId>com.googlecode.fmpp-maven-plugin</groupId>
@@ -2983,7 +3041,7 @@
         <plugin>
           <groupId>org.apache.karaf.tooling</groupId>
           <artifactId>karaf-maven-plugin</artifactId>
-          <version>4.4.6</version>
+          <version>4.4.7</version>
         </plugin>
         <plugin>
           <groupId>org.antlr</groupId>
@@ -2998,7 +3056,7 @@
         <plugin>
           <groupId>org.openapitools</groupId>
           <artifactId>openapi-generator-maven-plugin</artifactId>
-          <version>7.7.0</version>
+          <version>7.12.0</version>
         </plugin>
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
@@ -3210,11 +3268,11 @@
             </goals>
             <configuration>
               <rules>
-                <!-- The enforcer plugin 3.0.0-M2 regresses on requirePluginVersions (see MENFORCER-306). Disabling until 
+                <!-- The enforcer plugin 3.0.0-M2 regresses on requirePluginVersions (see MENFORCER-306). Disabling until
                   fixed. -->
                 <!-- <requirePluginVersions /> -->
                 <requireMavenVersion>
-                  <version>3.8.5</version>
+                  <version>3.8.8</version>
                 </requireMavenVersion>
               </rules>
             </configuration>
