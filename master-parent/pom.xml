@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.diamondq</groupId>
   <artifactId>master-parent</artifactId>
-  <version>7.0.25</version>
+  <version>7.0.26</version>
   <packaging>pom</packaging>
   <name>DiamondQ: Master Parent</name>
   <description>A common root-level POM for parents. Reusable by any</description>
@@ -1333,7 +1333,7 @@
             <artifactId>i18n-maven-plugin</artifactId>
             <executions>
               <execution>
-                <id>generate-i18n-enums</id>
+                <id>default-cli</id>
                 <phase>generate-sources</phase>
                 <goals>
                   <goal>generateEnums</goal>
@@ -2148,6 +2148,18 @@
             <groupId>org.apache.felix</groupId>
             <artifactId>maven-bundle-plugin</artifactId>
             <extensions>true</extensions>
+            <configuration>
+              <instructions>
+                <_removeheaders>${osgi.removeheaders}</_removeheaders>
+                <_sorted>true</_sorted>
+                <_dsannotations>${osgi.annotations.ds}</_dsannotations>
+                <_metatypeannotations>${osgi.annotations.metatype}</_metatypeannotations>
+                <Import-Package>${osgi.import.packages}</Import-Package>
+                <Export-Package>${osgi.export.packages}</Export-Package>
+                <Fragment-Host>${osgi.fragment.host}</Fragment-Host>
+                <DynamicImport-Package>${osgi.dynamicimport.package}</DynamicImport-Package>
+              </instructions>
+            </configuration>
             <executions>
               <execution>
                 <id>bundle-manifest</id>
@@ -2156,19 +2168,26 @@
                   <goal>manifest</goal>
                 </goals>
                 <configuration>
-                  <instructions>
-                    <_removeheaders>${osgi.removeheaders}</_removeheaders>
-                    <_sorted>true</_sorted>
-                    <_dsannotations>${osgi.annotations.ds}</_dsannotations>
-                    <_metatypeannotations>${osgi.annotations.metatype}</_metatypeannotations>
-                    <Import-Package>${osgi.import.packages}</Import-Package>
-                    <Export-Package>${osgi.export.packages}</Export-Package>
-                    <Fragment-Host>${osgi.fragment.host}</Fragment-Host>
-                    <DynamicImport-Package>${osgi.dynamicimport.package}</DynamicImport-Package>
-                  </instructions>
                   <manifestLocation>${osgi.manifest.directory}</manifestLocation>
                   <supportIncrementalBuild>true</supportIncrementalBuild>
                   <niceManifest>true</niceManifest>
+                  <exportScr>true</exportScr>
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-bundle</id>
+                <configuration>
+                  <manifestLocation>${osgi.manifest.directory}</manifestLocation>
+                  <niceManifest>true</niceManifest>
+                  <exportScr>true</exportScr>
+                </configuration>
+              </execution>
+              <execution>
+                <id>default-cli</id>
+                <configuration>
+                  <manifestLocation>${osgi.manifest.directory}</manifestLocation>
+                  <niceManifest>true</niceManifest>
+                  <exportScr>true</exportScr>
                 </configuration>
               </execution>
               <!-- mmansell - Disabled because the latest version is conflicting in Eclipse. I'm not sure why yet <execution>
