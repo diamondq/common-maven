@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="25f0e093-b593-45f5-ba34-770ccc60b83c" name="Changes" comment="Updated versions">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diamondq-parent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/diamondq-parent/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/master-parent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/master-parent/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -16,9 +21,31 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;diamondq&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/diamondq/common-maven.git&quot;,
+    &quot;accountId&quot;: &quot;c8aaf9f2-6dba-499b-9540-034d512aa161&quot;
+  }
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="25cdmbhvF1eUllXHJxMq83rSigi" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
@@ -29,15 +56,37 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/DQGitHub/common-maven&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/DQGitHub/dq-common-java&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
   }
 }</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.27812.49" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.27812.49" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -55,6 +104,34 @@
       <workItem from="1662861205487" duration="1717000" />
       <workItem from="1664142175068" duration="708000" />
       <workItem from="1664145878640" duration="2000" />
+      <workItem from="1682192676043" duration="831000" />
+      <workItem from="1682526243102" duration="255000" />
+      <workItem from="1684199772337" duration="29000" />
+      <workItem from="1684288957344" duration="4226000" />
+      <workItem from="1684348058381" duration="23000" />
+      <workItem from="1685507167997" duration="1636000" />
+      <workItem from="1704376575753" duration="4084000" />
+      <workItem from="1704400379245" duration="55000" />
+      <workItem from="1705718169356" duration="750000" />
+      <workItem from="1705779392756" duration="700000" />
+      <workItem from="1705853141107" duration="1385000" />
+      <workItem from="1705970685304" duration="8000" />
+      <workItem from="1705977366075" duration="616000" />
+      <workItem from="1706028563514" duration="5000" />
+      <workItem from="1706053494880" duration="995000" />
+      <workItem from="1706056865695" duration="3951000" />
+      <workItem from="1706131535272" duration="9000" />
+      <workItem from="1706729059052" duration="922000" />
+      <workItem from="1715635275481" duration="1232000" />
+      <workItem from="1722874833203" duration="5684000" />
+      <workItem from="1732843735769" duration="642000" />
+      <workItem from="1733850254801" duration="20000" />
+      <workItem from="1745360482642" duration="649000" />
+      <workItem from="1745693233370" duration="3352000" />
+      <workItem from="1748279104877" duration="5115000" />
+      <workItem from="1748303380241" duration="799000" />
+      <workItem from="1753571171897" duration="1970000" />
+      <workItem from="1753581212882" duration="238000" />
     </task>
     <task id="LOCAL-00001" summary="Rolled back Micronaut to 3.3.4 due to Micronaut Data bugs around multiple data sources.">
       <created>1655335083349</created>
@@ -77,7 +154,97 @@
       <option name="project" value="LOCAL" />
       <updated>1662863073227</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Updated Micronaut version">
+      <created>1682202100144</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1682202100144</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Bumped up the DiamondQ Parent to point to the latest master parent.">
+      <created>1682526333962</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1682526333962</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Replaced the Checkerframework">
+      <created>1684199790131</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1684199790131</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Bumped versions">
+      <created>1684348070047</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1684348070047</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Bumped master version">
+      <created>1685507540580</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1685507540580</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Updated versions">
+      <created>1685508191691</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1685508191691</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Updated third-party library versions">
+      <option name="closed" value="true" />
+      <created>1704390271527</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1704390271527</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Version bumps&#10;Including removal of javax.inject">
+      <option name="closed" value="true" />
+      <created>1705719743976</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1705719743976</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Bumped Micronaut versions">
+      <option name="closed" value="true" />
+      <created>1706112249251</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1706112249251</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Updated to have separate docker.registry and dockerbuild.registry">
+      <option name="closed" value="true" />
+      <created>1715638018571</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1715638018571</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Updated versions and added JDK-21">
+      <option name="closed" value="true" />
+      <created>1722878360341</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1722878360341</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Updated versions">
+      <option name="closed" value="true" />
+      <created>1748302566648</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1748302566648</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,8 +273,19 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="Rolled back Micronaut to 3.3.4 due to Micronaut Data bugs around multiple data sources." />
     <MESSAGE value="Fixed a few settings" />
+    <MESSAGE value="Updated Micronaut version" />
+    <MESSAGE value="Bumped up the DiamondQ Parent to point to the latest master parent." />
+    <MESSAGE value="Replaced the Checkerframework" />
+    <MESSAGE value="Bumped versions" />
+    <MESSAGE value="Bumped master version" />
+    <MESSAGE value="Updated third-party library versions" />
+    <MESSAGE value="Version bumps&#10;Including removal of javax.inject" />
+    <MESSAGE value="Bumped Micronaut versions" />
+    <MESSAGE value="Updated to have separate docker.registry and dockerbuild.registry" />
+    <MESSAGE value="Updated versions and added JDK-21" />
     <MESSAGE value="Updated versions" />
     <option name="LAST_COMMIT_MESSAGE" value="Updated versions" />
   </component>
