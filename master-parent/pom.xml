@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.29</version>
+    <version>7.0.35</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -2111,39 +2111,12 @@
                 <osgi.osgi.directory>${project.basedir}/OSGI-INF</osgi.osgi.directory>
                 <!-- This represents whether to export the SCR to the OSGI-INF folder -->
                 <osgi.export.scr>false</osgi.export.scr>
-                <!-- The OSGi version -->
-                <osgi.core.version>8.0.0</osgi.core.version>
-                <osgi.cmpn.version>7.0.0</osgi.cmpn.version>
                 <flatten.pom.type2>bundle</flatten.pom.type2>
                 <!-- Defines any dependencies to embed -->
                 <osgi.embed.dependency/>
+                <osgi.embed.transitive>false</osgi.embed.transitive>
+                <osgi.unpack.bundle>false</osgi.unpack.bundle>
             </properties>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.osgi</groupId>
-                        <artifactId>osgi.core</artifactId>
-                        <version>${osgi.core.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.osgi</groupId>
-                        <artifactId>osgi.cmpn</artifactId>
-                        <version>${osgi.cmpn.version}</version>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-            <dependencies>
-                <dependency>
-                    <groupId>org.osgi</groupId>
-                    <artifactId>osgi.core</artifactId>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.osgi</groupId>
-                    <artifactId>osgi.cmpn</artifactId>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
             <build>
                 <plugins>
                     <plugin>
@@ -2183,7 +2156,9 @@
                                 <Fragment-Host>${osgi.fragment.host}</Fragment-Host>
                                 <DynamicImport-Package>${osgi.dynamicimport.package}</DynamicImport-Package>
                                 <Embed-Dependency>${osgi.embed.dependency}</Embed-Dependency>
+                                <Embed-Transitive>${osgi.embed.transitive}</Embed-Transitive>
                             </instructions>
+                            <unpackBundle>${osgi.unpack.bundle}</unpackBundle>
                         </configuration>
                         <executions>
                             <execution>
@@ -2255,6 +2230,21 @@ if (Files.exists(fileToDelete)) {
                                 </configuration>
                             </execution>
                         </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.groovy</groupId>
+                                <artifactId>groovy-all</artifactId>
+                                <version>4.0.26</version>
+                                <type>pom</type>
+                                <scope>runtime</scope>
+                            </dependency>
+                            <dependency>
+                                <groupId>ch.qos.logback</groupId>
+                                <artifactId>logback-classic</artifactId>
+                                <version>1.5.18</version>
+                                <scope>runtime</scope>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -2292,6 +2282,189 @@ if (Files.exists(fileToDelete)) {
             </archive> </configuration> </execution> </executions> </plugin> -->
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>felix-dependencies-profile</id>
+            <activation>
+                <property>
+                    <name>[DIAMONDQ]</name>
+                    <value>and(type(osgi),file(profiles/felix-deps))</value>
+                </property>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <!-- Felix Framework -->
+                    <dependency>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>org.apache.felix.main</artifactId>
+                        <version>7.0.5</version>
+                    </dependency>
+                    <!-- Which effectively includes the following dependencies -->
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.dto</artifactId>
+                        <version>1.1.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.framework</artifactId>
+                        <version>1.10.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.resource</artifactId>
+                        <!-- NOTE:
+                        Technically, Felix provides 1.2,
+                        but there doesn't appear to be a good Maven artifact
+                        that is published with 1.2. The latest is 1.0.1 -->
+                        <version>1.0.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.condition</artifactId>
+                        <version>1.0.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.packageadmin</artifactId>
+                        <version>1.2.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.resolver</artifactId>
+                        <version>1.1.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.startlevel</artifactId>
+                        <version>1.1.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.url</artifactId>
+                        <version>1.0.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.util.tracker</artifactId>
+                        <version>1.5.3</version>
+                    </dependency>
+                    <!-- Felix Log -->
+                    <dependency>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>org.apache.felix.log</artifactId>
+                        <version>1.3.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.log</artifactId>
+                        <version>1.5.0</version>
+                    </dependency>
+                    <!-- Felix CM -->
+                    <dependency>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>org.apache.felix.configadmin</artifactId>
+                        <version>1.9.26</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.cm</artifactId>
+                        <version>1.6.0</version>
+                    </dependency>
+                    <!-- Felix Event Admin -->
+                    <dependency>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>org.apache.felix.eventadmin</artifactId>
+                        <version>1.6.4</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.event</artifactId>
+                        <version>1.4.0</version>
+                    </dependency>
+                    <!-- Felix SCR -->
+                    <dependency>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>org.apache.felix.scr</artifactId>
+                        <version>2.2.12</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.component</artifactId>
+                        <version>1.5.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.component.annotations</artifactId>
+                        <version>1.5.1</version>
+                    </dependency>
+                    <!-- Felix Jetty -->
+                    <dependency>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>org.apache.felix.http.jetty</artifactId>
+                        <version>5.1.34</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>org.apache.felix.http.whiteboard</artifactId>
+                        <version>4.0.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.http</artifactId>
+                        <version>1.2.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.http.whiteboard</artifactId>
+                        <version>1.1.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.servlet</artifactId>
+                        <version>2.0.0</version>
+                    </dependency>
+                    <!-- Felix Metatype -->
+                    <dependency>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>org.apache.felix.metatype</artifactId>
+                        <version>1.2.4</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.metatype</artifactId>
+                        <version>1.4.0</version>
+                    </dependency>
+                    <!-- Felix Prefs -->
+                    <dependency>
+                        <groupId>org.apache.felix</groupId>
+                        <artifactId>org.apache.felix.prefs</artifactId>
+                        <version>1.1.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.service.prefs</artifactId>
+                        <version>1.1.1</version>
+                    </dependency>
+                    <!-- Other OSGi Util dependencies -->
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.util.function</artifactId>
+                        <version>1.2.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.osgi</groupId>
+                        <artifactId>org.osgi.util.promise</artifactId>
+                        <version>1.3.0</version>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+            <dependencies>
+                <dependency>
+                    <groupId>org.osgi</groupId>
+                    <artifactId>org.osgi.service.component.annotations</artifactId>
+                </dependency>
+            </dependencies>
         </profile>
         <!-- Add support for a karaf-feature project. This is a simple POM with a single feature.xml file. -->
         <profile>
