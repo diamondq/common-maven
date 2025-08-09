@@ -7,7 +7,7 @@
     <version>7.0.35</version>
   </parent>
   <artifactId>diamondq-parent</artifactId>
-  <version>7.0.30</version>
+  <version>7.0.32</version>
   <packaging>pom</packaging>
   <name>DiamondQ: DiamondQ Parent</name>
   <description>A common POM for parents of DiamondQ projects.</description>
@@ -58,7 +58,7 @@
       <activation>
         <property>
           <name>[DIAMONDQ]</name>
-          <value>type(osgi)</value>
+          <value>and(type(osgi),file(uses-pax-logging))</value>
         </property>
       </activation>
       <properties>
@@ -610,13 +610,6 @@
             <artifactId>org.apache.sling.testing.osgi-mock.junit4</artifactId>
             <version>2.4.10</version>
             <scope>test</scope>
-          </dependency>
-          <dependency>
-            <groupId>org.codehaus.janino</groupId>
-            <artifactId>janino</artifactId>
-            <!-- NOTE: Version 3.0.1 is the last version with OSGi headers until version 3.0.8, where the Bundle-SymbolicName 
-              changed breaking the logback-janino-fragment. Keeping it at 3.0.1 for now -->
-            <version>3.0.1</version>
           </dependency>
         </dependencies>
       </dependencyManagement>
@@ -1468,11 +1461,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>1.5.18</version>
-          </dependency>
-          <dependency>
-            <groupId>ch.qos.logback.contrib</groupId>
-            <artifactId>logback-janino-fragment</artifactId>
-            <version>0.1.5</version>
           </dependency>
           <dependency>
             <groupId>org.apache.commons</groupId>
