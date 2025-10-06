@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.36</version>
+    <version>7.0.37</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -22,9 +22,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
         <snapshot.update.policy>daily</snapshot.update.policy>
-        <nexus.auto.release>true</nexus.auto.release>
-        <nexus.skip.staging>false</nexus.skip.staging>
-        <nexus.skip.local.staging>false</nexus.skip.local.staging>
         <!-- Special version properties -->
         <plugins.surefire.version>3.5.3</plugins.surefire.version>
         <flatten.pom.type>pom</flatten.pom.type>
@@ -1288,7 +1285,7 @@
             <activation>
                 <property>
                     <name>[DIAMONDQ]</name>
-                    <value>and(type(java),file(profiles/ship-tests))</value>
+                    <value>and(type(java),profile(ship-tests))</value>
                 </property>
             </activation>
             <build>
@@ -2921,6 +2918,36 @@ if (Files.exists(fileToDelete)) {
                 </plugins>
             </build>
         </profile>
+      <profile>
+        <id>nexus-deployment</id>
+        <activation>
+          <property>
+            <name>[DIAMONDQ]</name>
+            <value>profile(nexus-deploy)</value>
+          </property>
+        </activation>
+        <properties >
+          <nexus.auto.release>true</nexus.auto.release>
+          <nexus.skip.staging>false</nexus.skip.staging>
+          <nexus.skip.local.staging>false</nexus.skip.local.staging>
+        </properties>
+        <build>
+          <plugins>
+            <plugin>
+              <groupId>org.sonatype.plugins</groupId>
+              <artifactId>nexus-staging-maven-plugin</artifactId>
+              <extensions>true</extensions>
+              <configuration>
+                <autoReleaseAfterClose>${nexus.auto.release}</autoReleaseAfterClose>
+                <skipLocalStaging>${nexus.skip.local.staging}</skipLocalStaging>
+                <skipStaging>${nexus.skip.staging}</skipStaging>
+                <serverId>${nexus.serverId}</serverId>
+                <nexusUrl>${nexus.url}</nexusUrl>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
         <profile>
             <id>default</id>
             <activation>
@@ -2950,7 +2977,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.5.3</version>
+                    <version>3.5.4</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -3011,7 +3038,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
-                    <version>3.6.0</version>
+                    <version>3.6.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -3057,7 +3084,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.11.3</version>
+                    <version>3.12.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -3087,7 +3114,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-report-plugin</artifactId>
-                    <version>3.5.3</version>
+                    <version>3.5.4</version>
                 </plugin>
                 <!-- Tool plugins -->
                 <plugin>
@@ -3098,7 +3125,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-artifact-plugin</artifactId>
-                    <version>3.6.0</version>
+                    <version>3.6.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -3113,12 +3140,12 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.8.1</version>
+                    <version>3.9.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.6.1</version>
+                    <version>3.6.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -3173,7 +3200,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-scm-plugin</artifactId>
-                    <version>2.1.0</version>
+                    <version>2.2.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -3193,7 +3220,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-wrapper-plugin</artifactId>
-                    <version>3.3.3</version>
+                    <version>3.3.4</version>
                 </plugin>
                 <!-- Other plugins -->
                 <plugin>
@@ -3224,7 +3251,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
-                    <version>3.5.1</version>
+                    <version>3.6.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.gmavenplus</groupId>
@@ -3239,7 +3266,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
-                    <version>1.7.2</version>
+                    <version>1.7.3</version>
                 </plugin>
                 <plugin>
                     <groupId>com.diamondq.maven</groupId>
@@ -3279,7 +3306,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.19.0</version>
+                    <version>2.19.1</version>
                 </plugin>
                 <plugin>
                     <groupId>com.googlecode.fmpp-maven-plugin</groupId>
@@ -3493,18 +3520,6 @@ if (Files.exists(fileToDelete)) {
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <autoReleaseAfterClose>${nexus.auto.release}</autoReleaseAfterClose>
-                    <skipLocalStaging>${nexus.skip.local.staging}</skipLocalStaging>
-                    <skipStaging>${nexus.skip.staging}</skipStaging>
-                    <serverId>${nexus.serverId}</serverId>
-                    <nexusUrl>${nexus.url}</nexusUrl>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
