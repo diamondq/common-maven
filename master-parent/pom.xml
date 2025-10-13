@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.38</version>
+    <version>7.0.39</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -1314,12 +1314,11 @@
                 </property>
             </activation>
             <properties>
-                <osgi.dont.export.i18n>!${osgi.base.package}.*.i18n,</osgi.dont.export.i18n>
-                <!-- When generating the i18n enum classes from a messages.properties, this setting allows the enum class to extend
-          a class -->
+                <!-- When generating the i18n enum classes from a messages.properties, this setting allows the
+                enum class to extend a class -->
                 <i18n.implementation.class/>
-                <!-- When generating the i18n enum classes from a messages.properties, this setting allows the ResourceBundle's ClassLoader
-          and Control to be provided by another class -->
+                <!-- When generating the i18n enum classes from a messages.properties, this setting allows the
+                ResourceBundle's ClassLoader and Control to be provided by another class -->
                 <i18n.resourcebundleloader.class/>
                 <!-- Defines the directory to store the generated enum class into -->
                 <i18n.output.dir>${project.build.directory}/generated-sources/i18n</i18n.output.dir>
@@ -2063,44 +2062,33 @@
                 <osgi.removesrcheaders>${osgi.base.removesrcheaders}</osgi.removesrcheaders>
                 <!-- The base package to always export. NOTE: This must be defined in a child project -->
                 <osgi.base.package/>
-                <!-- A placeholder to inject a DON'T export for i18n. Automatically added by the i18n profile.
-                This is expected to end in a comma to allow chaining. -->
+                <!-- A placeholder to inject a DON'T export for i18n. Automatically added by the i18n profile. -->
                 <osgi.dont.export.i18n/>
-                <!-- The standard is to not Export any package ending in impl.
-                This is expected to end in a comma to allow chaining. -->
+                <!-- The standard is to not Export any package ending in impl. -->
                 <osgi.dont.export.impl>
-                    !{osgi.base.package}.impl,!${osgi.base.package}.impl.*,!${osgi.base.package}.*.impl,!${osgi.base.package}.*.impl.*,
+                    !${osgi.base.package}.impl,!${osgi.base.package}.impl.*,!${osgi.base.package}.*.impl,!${osgi.base.package}.*.impl.*
                 </osgi.dont.export.impl>
-                <!-- Override this property to inject extra packages to not export.
-                This is expected to end in a comma to allow chaining. -->
+                <!-- Override this property to inject extra packages to not export. -->
                 <osgi.extra.dont.export.packages/>
-                <!-- The list of packages that won't be exported.
-                NOTE: This list requires the exclamation point (!) to be already added. -->
-                <osgi.dont.export.packages>
-                    ${osgi.dont.export.i18n}${osgi.dont.export.impl}${osgi.extra.dont.export.packages}
-                </osgi.dont.export.packages>
-                <!-- Override this property to inject extra Export-Package commands.
-                This is expected to end in a comma to allow chaining. -->
+                <!-- Override this property to inject extra Export-Package commands. -->
                 <osgi.extra.export.packages/>
                 <!-- The base package that is always exported -->
-                <osgi.export.base.package>${osgi.base.package},${osgi.base.package}.*</osgi.export.base.package>
+                <osgi.export.base.package>${osgi.base.package}.*</osgi.export.base.package>
                 <!-- This is the Export-Package. Generally override one of the component properties -->
                 <osgi.export.packages>
-                    ${osgi.dont.export.packages}${osgi.extra.export.packages}${osgi.export.base.package}
+                    $[sjoin;,;${osgi.dont.export.i18n};${osgi.dont.export.impl};${osgi.extra.dont.export.packages};${osgi.extra.export.packages};${osgi.export.base.package}]
                 </osgi.export.packages>
-                <!-- Override this property to inject extra Import-Package elements.
-                NOTE: The osgi.import.packages property expects this property to end with a comma to support chaining -->
+                <!-- Override this property to inject extra Import-Package elements. -->
                 <osgi.extra.import.packages/>
                 <!-- This represents the packages to import. The default is * -->
-                <osgi.import.packages>${osgi.extra.import.packages}*</osgi.import.packages>
+                <osgi.import.packages>$[sjoin;,;${osgi.extra.import.packages};*]</osgi.import.packages>
                 <!-- This represents the Fragment-Host -->
                 <osgi.fragment.host/>
-                <!-- Override this property to inject extra DynamicImport elements.
-                NOTE: The osgi.dynamicimport.extra property expects this property to end with a comma to support chaining -->
+                <!-- Override this property to inject extra DynamicImport elements. -->
                 <osgi.dynamicimport.extra/>
                 <osgi.dynamicimport.basepackage/>
                 <!-- This represents the DynamicImport-Package -->
-                <osgi.dynamicimport.package>${osgi.dynamicimport.extra}${osgi.dynamicimport.basepackage}
+                <osgi.dynamicimport.package>$[sjoin;,;${osgi.dynamicimport.extra};${osgi.dynamicimport.basepackage}]
                 </osgi.dynamicimport.package>
                 <!-- This represents the BND DS Annotations -->
                 <osgi.annotations.ds>*</osgi.annotations.ds>
@@ -2664,6 +2652,20 @@ if (Files.exists(fileToDelete)) {
                 </plugins>
             </build>
         </profile>
+        <!-- Generate I18N strings -->
+        <profile>
+            <id>generate-i18n-strings-osgi</id>
+            <activation>
+                <property>
+                    <name>[DIAMONDQ]</name>
+                    <value>and(type(java),type(osgi),or(file(profiles/internal-i18n-enums),file(profiles/i18n-enums)))</value>
+                </property>
+            </activation>
+            <properties>
+                <osgi.dont.export.i18n>!${osgi.base.package}.i18n,!${osgi.base.package}.*.i18n</osgi.dont.export.i18n>
+            </properties>
+        </profile>
+
         <!-- ******************************************************************************************************************
       ASCIIDoc based -->
         <!-- Generate the ASCII Documentation -->
