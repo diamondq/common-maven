@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.37</version>
+    <version>7.0.38</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -2048,14 +2048,12 @@
             <properties>
                 <!-- The basic list of headers to remove from the generated MANIFEST.MF -->
                 <osgi.base.removeheaders>Tool, Originally-Created-By, Bnd-LastModified, Private-Package,
-                    Include-Resource,
-                    Embed-Transitive, Embed-Dependency, DiamondQ, JAVA_POST_PROCESS_FILE
+                    Include-Resource, Embed-Transitive, Embed-Dependency, DiamondQ, JAVA_POST_PROCESS_FILE
                 </osgi.base.removeheaders>
                 <!-- The basic list of headers to remove from the source JAR generated MANIFEST.MF -->
                 <osgi.base.removesrcheaders>Tool, Originally-Created-By, Bnd-LastModified, Private-Package,
-                    Include-Resource,
-                    Import-Package, Export-Package, Require-Capability, Provide-Capability, DiamondQ,
-                    JAVA_POST_PROCESS_FILE
+                    Include-Resource, Import-Package, Export-Package, Require-Capability, Provide-Capability,
+                    DiamondQ, JAVA_POST_PROCESS_FILE
                 </osgi.base.removesrcheaders>
                 <!-- To make it easier to extend the list, override this property with your own settings,
                 potentially including the osgi.base.removeheaders -->
@@ -2068,9 +2066,10 @@
                 <!-- A placeholder to inject a DON'T export for i18n. Automatically added by the i18n profile.
                 This is expected to end in a comma to allow chaining. -->
                 <osgi.dont.export.i18n/>
-                <!-- The standard to not Export any package ending in impl.
+                <!-- The standard is to not Export any package ending in impl.
                 This is expected to end in a comma to allow chaining. -->
-                <osgi.dont.export.impl>!${osgi.base.package}.*.impl,!${osgi.base.package}.*.impl.*,
+                <osgi.dont.export.impl>
+                    !{osgi.base.package}.impl,!${osgi.base.package}.impl.*,!${osgi.base.package}.*.impl,!${osgi.base.package}.*.impl.*,
                 </osgi.dont.export.impl>
                 <!-- Override this property to inject extra packages to not export.
                 This is expected to end in a comma to allow chaining. -->
@@ -2084,7 +2083,7 @@
                 This is expected to end in a comma to allow chaining. -->
                 <osgi.extra.export.packages/>
                 <!-- The base package that is always exported -->
-                <osgi.export.base.package>${osgi.base.package}.*</osgi.export.base.package>
+                <osgi.export.base.package>${osgi.base.package},${osgi.base.package}.*</osgi.export.base.package>
                 <!-- This is the Export-Package. Generally override one of the component properties -->
                 <osgi.export.packages>
                     ${osgi.dont.export.packages}${osgi.extra.export.packages}${osgi.export.base.package}
@@ -2096,10 +2095,17 @@
                 <osgi.import.packages>${osgi.extra.import.packages}*</osgi.import.packages>
                 <!-- This represents the Fragment-Host -->
                 <osgi.fragment.host/>
+                <!-- Override this property to inject extra DynamicImport elements.
+                NOTE: The osgi.dynamicimport.extra property expects this property to end with a comma to support chaining -->
+                <osgi.dynamicimport.extra/>
+                <osgi.dynamicimport.basepackage/>
                 <!-- This represents the DynamicImport-Package -->
-                <osgi.dynamicimport.package/>
+                <osgi.dynamicimport.package>${osgi.dynamicimport.extra}${osgi.dynamicimport.basepackage}
+                </osgi.dynamicimport.package>
                 <!-- This represents the BND DS Annotations -->
                 <osgi.annotations.ds>*</osgi.annotations.ds>
+                <!-- This represents the BND DS Annotations Options -->
+                <osgi.annotations.ds.options/>
                 <!-- This represents the BND Meta Type Annotations -->
                 <osgi.annotations.metatype>*</osgi.annotations.metatype>
                 <!-- This represents the path to the META-INF folder -->
@@ -2147,6 +2153,7 @@
                                 <_removeheaders>${osgi.removeheaders}</_removeheaders>
                                 <_sorted>true</_sorted>
                                 <_dsannotations>${osgi.annotations.ds}</_dsannotations>
+                                <_dsannotations-options>${osgi.annotations.ds.options}</_dsannotations-options>
                                 <_metatypeannotations>${osgi.annotations.metatype}</_metatypeannotations>
                                 <Import-Package>${osgi.import.packages}</Import-Package>
                                 <Export-Package>${osgi.export.packages}</Export-Package>
@@ -2918,36 +2925,36 @@ if (Files.exists(fileToDelete)) {
                 </plugins>
             </build>
         </profile>
-      <profile>
-        <id>nexus-deployment</id>
-        <activation>
-          <property>
-            <name>[DIAMONDQ]</name>
-            <value>profile(nexus-deploy)</value>
-          </property>
-        </activation>
-        <properties >
-          <nexus.auto.release>true</nexus.auto.release>
-          <nexus.skip.staging>false</nexus.skip.staging>
-          <nexus.skip.local.staging>false</nexus.skip.local.staging>
-        </properties>
-        <build>
-          <plugins>
-            <plugin>
-              <groupId>org.sonatype.plugins</groupId>
-              <artifactId>nexus-staging-maven-plugin</artifactId>
-              <extensions>true</extensions>
-              <configuration>
-                <autoReleaseAfterClose>${nexus.auto.release}</autoReleaseAfterClose>
-                <skipLocalStaging>${nexus.skip.local.staging}</skipLocalStaging>
-                <skipStaging>${nexus.skip.staging}</skipStaging>
-                <serverId>${nexus.serverId}</serverId>
-                <nexusUrl>${nexus.url}</nexusUrl>
-              </configuration>
-            </plugin>
-          </plugins>
-        </build>
-      </profile>
+        <profile>
+            <id>nexus-deployment</id>
+            <activation>
+                <property>
+                    <name>[DIAMONDQ]</name>
+                    <value>profile(nexus-deploy)</value>
+                </property>
+            </activation>
+            <properties>
+                <nexus.auto.release>true</nexus.auto.release>
+                <nexus.skip.staging>false</nexus.skip.staging>
+                <nexus.skip.local.staging>false</nexus.skip.local.staging>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <autoReleaseAfterClose>${nexus.auto.release}</autoReleaseAfterClose>
+                            <skipLocalStaging>${nexus.skip.local.staging}</skipLocalStaging>
+                            <skipStaging>${nexus.skip.staging}</skipStaging>
+                            <serverId>${nexus.serverId}</serverId>
+                            <nexusUrl>${nexus.url}</nexusUrl>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>default</id>
             <activation>
