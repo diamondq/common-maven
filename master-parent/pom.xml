@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.39</version>
+    <version>7.0.40</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -1146,7 +1146,7 @@
                             <execution>
                                 <id>attach-sources</id>
                                 <configuration>
-                                    <skip>true</skip>
+                                    <skipSource>true</skipSource>
                                 </configuration>
                             </execution>
                         </executions>
