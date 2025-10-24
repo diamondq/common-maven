@@ -4,10 +4,10 @@
   <parent>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.41</version>
+    <version>7.0.43</version>
   </parent>
   <artifactId>diamondq-parent</artifactId>
-  <version>7.0.39</version>
+  <version>7.0.41</version>
   <packaging>pom</packaging>
   <name>DiamondQ: DiamondQ Parent</name>
   <description>A common POM for parents of DiamondQ projects.</description>

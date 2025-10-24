@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.41</version>
+    <version>7.0.43</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -172,6 +172,7 @@
                                 <configuration>
                                     <flattenMode>${flatten.mode}</flattenMode>
                                     <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <updatePomFile>true</updatePomFile>
                                 </configuration>
                             </execution>
                         </executions>
@@ -300,6 +301,44 @@
                                 <configuration>
                                     <flattenMode>${flatten.mode}</flattenMode>
                                     <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <updatePomFile>true</updatePomFile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!-- A leaf project should have its POM flattened. This allows for interpolation within the version as well as just
+   increasing the cleanliness of the result. -->
+        <profile>
+            <id>pom-project</id>
+            <activation>
+                <property>
+                    <name>[DIAMONDQ]</name>
+                    <value>type(pom)</value>
+                </property>
+            </activation>
+            <properties>
+                <flatten.mode>resolveCiFriendliesOnly</flatten.mode>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>flatten-maven-plugin</artifactId>
+                        <version>1.7.3</version>
+                        <executions>
+                            <execution>
+                                <id>codehaus-flatten</id>
+                                <goals>
+                                    <goal>flatten</goal>
+                                </goals>
+                                <phase>prepare-package</phase>
+                                <configuration>
+                                    <flattenMode>${flatten.mode}</flattenMode>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <updatePomFile>true</updatePomFile>
                                 </configuration>
                             </execution>
                         </executions>
@@ -457,29 +496,33 @@
                                 </goals>
                                 <configuration>
                                     <target>
-                                        <mkdir dir="${project.build.directory}/property-files" />
-                                        <exec executable="docker" output="${project.build.directory}/property-files/digest.txt"
-                                              failonerror="true" error="${project.build.directory}/inspection_errors.txt" osfamily="unix">
-                                            <arg value="inspect" />
-                                            <arg value='--format={{index (split (index .RepoDigests 0) "@") 1}}' />
-                                            <arg value="${dockerbuild.repository}:${docker.tag}" />
+                                        <mkdir dir="${project.build.directory}/property-files"/>
+                                        <exec executable="docker"
+                                              output="${project.build.directory}/property-files/digest.txt"
+                                              failonerror="true"
+                                              error="${project.build.directory}/inspection_errors.txt" osfamily="unix">
+                                            <arg value="inspect"/>
+                                            <arg value='--format={{index (split (index .RepoDigests 0) "@") 1}}'/>
+                                            <arg value="${dockerbuild.repository}:${docker.tag}"/>
                                         </exec>
-                                        <exec executable="docker" output="${project.build.directory}/property-files/digest.txt"
-                                              failonerror="true" error="${project.build.directory}/inspection_errors.txt"
+                                        <exec executable="docker"
+                                              output="${project.build.directory}/property-files/digest.txt"
+                                              failonerror="true"
+                                              error="${project.build.directory}/inspection_errors.txt"
                                               osfamily="windows">
-                                            <arg value="inspect" />
-                                            <arg value="--format={{index (split (index .RepoDigests 0) \&quot;@\&quot;) 1}}" />
-                                            <arg value="${dockerbuild.repository}:${docker.tag}" />
+                                            <arg value="inspect"/>
+                                            <arg value="--format={{index (split (index .RepoDigests 0) \&quot;@\&quot;) 1}}"/>
+                                            <arg value="${dockerbuild.repository}:${docker.tag}"/>
                                         </exec>
                                         <echo message="${docker.tag}"
-                                              file="${project.build.directory}/property-files/tag.txt" />
+                                              file="${project.build.directory}/property-files/tag.txt"/>
                                         <echo message="${dockerbuild.repository}"
-                                              file="${project.build.directory}/property-files/repository.txt" />
+                                              file="${project.build.directory}/property-files/repository.txt"/>
                                         <echo message="${dockerbuild.repository}:${docker.tag}"
-                                              file="${project.build.directory}/property-files/full.txt" />
+                                              file="${project.build.directory}/property-files/full.txt"/>
                                         <zip destfile="${project.build.directory}/${project.artifactId}-${project.version}-build-info.zip">
                                             <fileset dir="${project.build.directory}/property-files">
-                                                <include name="*.txt" />
+                                                <include name="*.txt"/>
                                             </fileset>
                                         </zip>
                                     </target>
@@ -500,7 +543,9 @@
                                 <configuration>
                                     <artifacts>
                                         <artifact>
-                                            <file>${project.build.directory}/${project.artifactId}-${project.version}-build-info.zip</file>
+                                            <file>
+                                                ${project.build.directory}/${project.artifactId}-${project.version}-build-info.zip
+                                            </file>
                                             <type>zip</type>
                                             <classifier>build-info</classifier>
                                         </artifact>
@@ -2655,7 +2700,8 @@ if (Files.exists(fileToDelete)) {
             <activation>
                 <property>
                     <name>[DIAMONDQ]</name>
-                    <value>and(type(java),type(osgi),or(file(profiles/internal-i18n-enums),file(profiles/i18n-enums)))</value>
+                    <value>and(type(java),type(osgi),or(file(profiles/internal-i18n-enums),file(profiles/i18n-enums)))
+                    </value>
                 </property>
             </activation>
             <properties>
