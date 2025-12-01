@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.43</version>
+    <version>7.0.45</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -424,6 +424,7 @@
                 <dockerfile.location>${project.basedir}/Dockerfile</dockerfile.location>
                 <docker.tag>${project.version}-${docker-build-timestamp}</docker.tag>
                 <docker-base.skip>false</docker-base.skip>
+                <docker.imagePullPolicy>Always</docker.imagePullPolicy>
             </properties>
             <build>
                 <plugins>
@@ -463,6 +464,28 @@
                                 <phase>package</phase>
                                 <goals>
                                     <goal>build</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>${docker-base.skip}</skip>
+                                    <verbose>build</verbose>
+                                    <images>
+                                        <image>
+                                            <name>${dockerbuild.repository}</name>
+                                            <build>
+                                                <dockerFile>${dockerfile.location}</dockerFile>
+                                                <tags combine.children="append">
+                                                    <tag>${docker.tag}</tag>
+                                                </tags>
+                                                <imagePullPolicy>${docker.imagePullPolicy}</imagePullPolicy>
+                                            </build>
+                                        </image>
+                                    </images>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>push-from-dockerfile</id>
+                                <phase>deploy</phase>
+                                <goals>
                                     <goal>push</goal>
                                 </goals>
                                 <configuration>
@@ -476,7 +499,7 @@
                                                 <tags combine.children="append">
                                                     <tag>${docker.tag}</tag>
                                                 </tags>
-                                                <imagePullPolicy>Always</imagePullPolicy>
+                                                <imagePullPolicy>${docker.imagePullPolicy}</imagePullPolicy>
                                             </build>
                                         </image>
                                     </images>
