@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.45</version>
+    <version>7.0.46</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -422,7 +422,7 @@
                 <dockerbuild.image>${project.artifactId}</dockerbuild.image>
                 <dockerbuild.repository>${dockerbuild.registry}/${dockerbuild.image}</dockerbuild.repository>
                 <dockerfile.location>${project.basedir}/Dockerfile</dockerfile.location>
-                <docker.tag>${project.version}-${docker-build-timestamp}</docker.tag>
+                <docker.tag>${project.version}-${git.commit.id.abbrev}</docker.tag>
                 <docker-base.skip>false</docker-base.skip>
                 <docker.imagePullPolicy>Always</docker.imagePullPolicy>
             </properties>
@@ -520,23 +520,6 @@
                                 <configuration>
                                     <target>
                                         <mkdir dir="${project.build.directory}/property-files"/>
-                                        <exec executable="docker"
-                                              output="${project.build.directory}/property-files/digest.txt"
-                                              failonerror="true"
-                                              error="${project.build.directory}/inspection_errors.txt" osfamily="unix">
-                                            <arg value="inspect"/>
-                                            <arg value='--format={{index (split (index .RepoDigests 0) "@") 1}}'/>
-                                            <arg value="${dockerbuild.repository}:${docker.tag}"/>
-                                        </exec>
-                                        <exec executable="docker"
-                                              output="${project.build.directory}/property-files/digest.txt"
-                                              failonerror="true"
-                                              error="${project.build.directory}/inspection_errors.txt"
-                                              osfamily="windows">
-                                            <arg value="inspect"/>
-                                            <arg value="--format={{index (split (index .RepoDigests 0) \&quot;@\&quot;) 1}}"/>
-                                            <arg value="${dockerbuild.repository}:${docker.tag}"/>
-                                        </exec>
                                         <echo message="${docker.tag}"
                                               file="${project.build.directory}/property-files/tag.txt"/>
                                         <echo message="${dockerbuild.repository}"
@@ -3645,6 +3628,7 @@ if (Files.exists(fileToDelete)) {
                     <skipPoms>false</skipPoms>
                     <includeOnlyProperties>
                         <includeOnlyProperty>git.commit.time</includeOnlyProperty>
+                        <includeOnlyProperty>git.commit.id.abbrev</includeOnlyProperty>
                     </includeOnlyProperties>
                 </configuration>
             </plugin>
