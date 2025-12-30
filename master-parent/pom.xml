@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.46</version>
+    <version>7.0.48</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -831,7 +831,7 @@
                             <dependency>
                                 <groupId>ch.qos.logback</groupId>
                                 <artifactId>logback-classic</artifactId>
-                                <version>1.5.18</version>
+                                <version>1.5.23</version>
                                 <scope>runtime</scope>
                             </dependency>
                         </dependencies>
@@ -995,7 +995,7 @@
                             <dependency>
                                 <groupId>ch.qos.logback</groupId>
                                 <artifactId>logback-classic</artifactId>
-                                <version>1.5.18</version>
+                                <version>1.5.23</version>
                                 <scope>runtime</scope>
                             </dependency>
                         </dependencies>
@@ -1603,12 +1603,12 @@
                 </property>
             </activation>
             <properties>
-                <immutables.version>2.10.1</immutables.version>
+                <immutables.version>2.12.0</immutables.version>
             </properties>
             <dependencies>
                 <dependency>
                     <groupId>org.immutables</groupId>
-                    <artifactId>value</artifactId>
+                    <artifactId>value-annotations</artifactId>
                     <version>${immutables.version}</version>
                     <scope>provided</scope>
                 </dependency>
@@ -1626,9 +1626,6 @@
                                     <version>${immutables.version}</version>
                                 </path>
                             </annotationProcessorPaths>
-                            <annotationProcessors combine.children="append">
-                                <annotationProcessor>org.immutables.processor.ProxyProcessor</annotationProcessor>
-                            </annotationProcessors>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -3329,7 +3326,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>com.diamondq.maven</groupId>
                     <artifactId>i18n-maven-plugin</artifactId>
-                    <version>1.1.0</version>
+                    <version>1.1.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
