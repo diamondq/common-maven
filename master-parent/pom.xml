@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.48</version>
+    <version>7.0.49</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -2114,28 +2114,48 @@
                 <osgi.dont.export.impl>
                     !${osgi.base.package}.impl,!${osgi.base.package}.impl.*,!${osgi.base.package}.*.impl,!${osgi.base.package}.*.impl.*
                 </osgi.dont.export.impl>
-                <!-- Override this property to inject extra packages to not export. -->
+                <!-- Override this property to inject extra packages to not export.
+                     NOTE: Due to the later use of sjoin, there cannot be any semicolons ';' within the strings.
+                     Instead, use @@, which will be automatically replaced with a semicolon before passing to the
+                     maven-bundle-plugin.
+                -->
                 <osgi.extra.dont.export.packages/>
-                <!-- Override this property to inject extra Export-Package commands. -->
+                <!-- Override this property to inject extra Export-Package commands.
+                     NOTE: Due to the later use of sjoin, there cannot be any semicolons ';' within the strings.
+                     Instead, use @@, which will be automatically replaced with a semicolon before passing to the
+                     maven-bundle-plugin.
+                -->
                 <osgi.extra.export.packages/>
                 <!-- The base package that is always exported -->
                 <osgi.export.base.package>${osgi.base.package}.*</osgi.export.base.package>
                 <!-- This is the Export-Package. Generally override one of the component properties -->
                 <osgi.export.packages>
-                    $[sjoin;,;${osgi.dont.export.i18n};${osgi.dont.export.impl};${osgi.extra.dont.export.packages};${osgi.extra.export.packages};${osgi.export.base.package}]
+                    $[replace;$[sjoin;,;${osgi.dont.export.i18n};${osgi.dont.export.impl};${osgi.extra.dont.export.packages};${osgi.extra.export.packages};${osgi.export.base.package}];@@;\\;]
                 </osgi.export.packages>
-                <!-- Override this property to inject extra Import-Package elements. -->
+                <!-- Override this property to inject extra Import-Package elements.
+                     NOTE: Due to the later use of sjoin, there cannot be any semicolons ';' within the strings.
+                     Instead, use @@, which will be automatically replaced with a semicolon before passing to the
+                     maven-bundle-plugin.
+                -->
                 <osgi.extra.import.packages/>
                 <!-- This represents the packages to import. The default is * -->
-                <osgi.import.packages>$[sjoin;,;${osgi.extra.import.packages};*]</osgi.import.packages>
+                <osgi.import.packages>$[replace;$[sjoin;,;${osgi.extra.import.packages};*];@@;\\;]</osgi.import.packages>
                 <!-- This represents the Fragment-Host -->
                 <osgi.fragment.host/>
-                <!-- Override this property to inject extra DynamicImport elements. -->
+                <!-- Override this property to inject extra DynamicImport elements.
+                     NOTE: Due to the later use of sjoin, there cannot be any semicolons ';' within the strings.
+                     Instead, use @@, which will be automatically replaced with a semicolon before passing to the
+                     maven-bundle-plugin.
+                -->
                 <osgi.dynamicimport.extra/>
+                <!--
+                     NOTE: Due to the later use of sjoin, there cannot be any semicolons ';' within the strings.
+                     Instead, use @@, which will be automatically replaced with a semicolon before passing to the
+                     maven-bundle-plugin.
+                -->
                 <osgi.dynamicimport.basepackage/>
                 <!-- This represents the DynamicImport-Package -->
-                <osgi.dynamicimport.package>$[sjoin;,;${osgi.dynamicimport.extra};${osgi.dynamicimport.basepackage}]
-                </osgi.dynamicimport.package>
+                <osgi.dynamicimport.package>$[replace;$[sjoin;,;${osgi.dynamicimport.extra};${osgi.dynamicimport.basepackage}];@@;\\;]</osgi.dynamicimport.package>
                 <!-- This represents the BND DS Annotations -->
                 <osgi.annotations.ds>*</osgi.annotations.ds>
                 <!-- This represents the BND DS Annotations Options -->
@@ -3396,7 +3416,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.46.0</version>
+                    <version>0.48.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
