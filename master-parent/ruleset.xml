@@ -41,5 +41,25 @@
         <ignoreVersion type="regex">.*\.jre6</ignoreVersion>
       </ignoreVersions>
     </rule>
+    <rule groupId="rocks.xmpp" comparisonMethod="maven">
+      <ignoreVersions>
+        <ignoreVersion type="regex">.*-DQ-SNAPSHOT</ignoreVersion>
+      </ignoreVersions>
+    </rule>
+    <rule groupId="com.diamondq.common" comparisonMethod="maven">
+      <ignoreVersions>
+        <ignoreVersion type="regex">.*-SNAPSHOT</ignoreVersion>
+      </ignoreVersions>
+    </rule>
+    <rule groupId="io.micronaut" comparisonMethod="maven">
+      <ignoreVersions>
+        <ignoreVersion type="regex">.*</ignoreVersion>
+      </ignoreVersions>
+    </rule>
+    <rule groupId="io.micronaut.*" comparisonMethod="maven">
+      <ignoreVersions>
+        <ignoreVersion type="regex">.*</ignoreVersion>
+      </ignoreVersions>
+    </rule>
   </rules>
 </ruleset>

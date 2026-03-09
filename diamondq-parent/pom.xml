@@ -4,10 +4,10 @@
   <parent>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.50</version>
+    <version>7.0.52</version>
   </parent>
   <artifactId>diamondq-parent</artifactId>
-  <version>7.0.47</version>
+  <version>7.0.49</version>
   <packaging>pom</packaging>
   <name>DiamondQ: DiamondQ Parent</name>
   <description>A common POM for parents of DiamondQ projects.</description>
@@ -15,9 +15,9 @@
   <properties>
     <slf4j.version>2.0.17</slf4j.version>
     <log4j2.version>2.25.3</log4j2.version>
-    <jackson.version>2.20.1</jackson.version>
-    <jackson.short.version>2.20</jackson.short.version>
-    <immutables.version>2.12.0</immutables.version>
+    <jackson.version>2.21.1</jackson.version>
+    <jackson.short.version>2.21</jackson.short.version>
+    <immutables.version>2.12.1</immutables.version>
     <docker.registry>docker-group-registry.diamondq.com</docker.registry>
     <dockerbuild.registry>docker-registry.diamondq.com</dockerbuild.registry>
   </properties>
@@ -223,121 +223,121 @@
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.core.contenttype</artifactId>
-            <version>3.7.0</version>
+            <version>3.9.800</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.core.jobs</artifactId>
-            <version>3.10.0</version>
+            <version>3.15.700</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.core.runtime</artifactId>
-            <version>3.14.0</version>
+            <version>3.34.100</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.cm</artifactId>
-            <version>1.3.0</version>
+            <version>1.6.300</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.common</artifactId>
-            <version>3.10.0</version>
+            <version>3.20.300</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.console</artifactId>
-            <version>1.3.0</version>
+            <version>1.4.1100</version>
           </dependency>
           <!-- Felix Gogo is the underlying implementation for the Equinox console. However, it needs to be locked to 0.10 
             due to the Equinox Console package dependencies -->
           <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.gogo.runtime</artifactId>
-            <version>1.0.12</version>
+            <version>1.1.6</version>
           </dependency>
           <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.gogo.shell</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.4</version>
           </dependency>
           <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.gogo.command</artifactId>
-            <version>1.0.2</version>
+            <version>1.1.2</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.ds</artifactId>
-            <version>1.5.100</version>
+            <version>1.6.200</version>
           </dependency>
           <!-- Felix SCR is the implementation for Equinox DS. However, something is broken in the 2.1.x versions with the 
             1.5.0 versions of ds, so locking to 2.0.x -->
           <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.scr</artifactId>
-            <version>2.0.14</version>
+            <version>2.2.14</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.event</artifactId>
-            <version>1.4.200</version>
+            <version>1.7.300</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.launcher</artifactId>
-            <version>1.5.0</version>
+            <version>1.7.100</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.preferences</artifactId>
-            <version>3.7.100</version>
+            <version>3.12.600</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.region</artifactId>
-            <version>1.4.100</version>
+            <version>1.5.800</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.registry</artifactId>
-            <version>3.8.0</version>
+            <version>3.12.600</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.supplement</artifactId>
-            <version>1.8.0</version>
+            <version>1.12.100</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.transforms.hook</artifactId>
-            <version>1.2.100</version>
+            <version>1.4.400</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.equinox.weaving.hook</artifactId>
-            <version>1.2.100</version>
+            <version>1.4.400</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.osgi</artifactId>
-            <version>3.13.0</version>
+            <version>3.24.0</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.osgi.compatibility.state</artifactId>
-            <version>1.1.100</version>
+            <version>1.3.0</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.osgi.services</artifactId>
-            <version>3.7.0</version>
+            <version>3.12.300</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.platform</groupId>
             <artifactId>org.eclipse.osgi.util</artifactId>
-            <version>3.5.0</version>
+            <version>3.7.400</version>
           </dependency>
           <!-- ConfigAdmin Felix Gogo commands -->
           <dependency>
@@ -349,17 +349,17 @@
           <dependency>
             <groupId>org.ops4j.pax.logging</groupId>
             <artifactId>pax-logging-api</artifactId>
-            <version>1.11.5</version>
+            <version>2.3.2</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.logging</groupId>
             <artifactId>pax-logging-service</artifactId>
-            <version>1.11.5</version>
+            <version>2.3.2</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.logging</groupId>
             <artifactId>pax-logging-logback</artifactId>
-            <version>1.11.5</version>
+            <version>2.3.2</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.logging</groupId>
@@ -370,7 +370,7 @@
           <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.fileinstall</artifactId>
-            <version>3.6.4</version>
+            <version>3.7.4</version>
           </dependency>
           <!-- Apache Aries JNDI -->
           <dependency>
@@ -392,7 +392,7 @@
           <dependency>
             <groupId>org.apache.aries.spifly</groupId>
             <artifactId>org.apache.aries.spifly.dynamic.bundle</artifactId>
-            <version>1.2.3</version>
+            <version>1.3.7</version>
           </dependency>
           <dependency>
             <groupId>org.apache.aries</groupId>
@@ -402,17 +402,17 @@
           <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>
             <artifactId>pax-jdbc-hsqldb</artifactId>
-            <version>1.3.1</version>
+            <version>1.5.7</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>
             <artifactId>pax-jdbc</artifactId>
-            <version>1.3.1</version>
+            <version>1.5.7</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>
             <artifactId>pax-jdbc-config</artifactId>
-            <version>1.3.1</version>
+            <version>1.5.7</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>
@@ -422,12 +422,12 @@
           <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>
             <artifactId>pax-jdbc-pool-dbcp2</artifactId>
-            <version>1.3.1</version>
+            <version>1.5.7</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>
             <artifactId>pax-jdbc-pool-c3p0</artifactId>
-            <version>1.3.1</version>
+            <version>1.5.7</version>
           </dependency>
           <dependency>
             <groupId>javax.annotation</groupId>
@@ -449,23 +449,23 @@
           <dependency>
             <groupId>org.apache.servicemix.bundles</groupId>
             <artifactId>org.apache.servicemix.bundles.c3p0</artifactId>
-            <version>0.9.5.4_1</version>
+            <version>0.11.2_1</version>
           </dependency>
           <dependency>
             <groupId>org.apache.servicemix.bundles</groupId>
             <artifactId>org.apache.servicemix.bundles.c3p0</artifactId>
-            <version>0.9.5.4_1</version>
+            <version>0.11.2_1</version>
             <classifier>sources</classifier>
           </dependency>
           <dependency>
             <groupId>org.apache.servicemix.bundles</groupId>
             <artifactId>org.apache.servicemix.bundles.dnsjava</artifactId>
-            <version>2.1.9_1</version>
+            <version>3.6.3_1</version>
           </dependency>
           <dependency>
             <groupId>org.apache.servicemix.bundles</groupId>
             <artifactId>org.apache.servicemix.bundles.xmlresolver</artifactId>
-            <version>1.2_5</version>
+            <version>6.0.11_1</version>
           </dependency>
           <!-- Undertow (currently limited to 1.4.x, which is Servlet 3 compliant due to Pax-Web) -->
           <dependency>
@@ -487,38 +487,38 @@
           <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-api</artifactId>
-            <version>7.2.3</version>
+            <version>11.1.0</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-spi</artifactId>
-            <version>7.2.3</version>
+            <version>11.1.0</version>
           </dependency>
           <dependency>
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-bundleutils</artifactId>
-            <version>4.14</version>
+            <version>4.30</version>
           </dependency>
           <dependency>
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-reflect</artifactId>
-            <version>4.14</version>
+            <version>4.30</version>
           </dependency>
           <dependency>
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-finder</artifactId>
-            <version>4.14</version>
+            <version>4.30</version>
           </dependency>
           <!-- pax-http-undertow -->
           <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-runtime</artifactId>
-            <version>7.2.3</version>
+            <version>11.1.0</version>
           </dependency>
           <dependency>
             <groupId>org.ops4j.pax.web</groupId>
             <artifactId>pax-web-undertow</artifactId>
-            <version>7.2.3</version>
+            <version>11.1.0</version>
           </dependency>
           <!-- Jersey -->
           <dependency>
@@ -539,7 +539,7 @@
           <dependency>
             <groupId>org.glassfish.hk2</groupId>
             <artifactId>osgi-resource-locator</artifactId>
-            <version>1.0.1</version>
+            <version>3.0.0</version>
           </dependency>
           <dependency>
             <groupId>org.glassfish.hk2</groupId>
@@ -549,12 +549,12 @@
           <dependency>
             <groupId>org.glassfish.jersey.ext</groupId>
             <artifactId>jersey-bean-validation</artifactId>
-            <version>2.29</version>
+            <version>4.0.2</version>
           </dependency>
           <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-multipart</artifactId>
-            <version>2.29</version>
+            <version>4.0.2</version>
           </dependency>
           <dependency>
             <groupId>org.glassfish.jersey.bundles</groupId>
@@ -564,37 +564,37 @@
           <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.29</version>
+            <version>4.0.2</version>
           </dependency>
           <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
-            <version>2.29</version>
+            <version>4.0.2</version>
           </dependency>
           <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-common</artifactId>
-            <version>2.34</version>
+            <version>4.0.2</version>
           </dependency>
           <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
-            <version>2.29</version>
+            <version>4.0.2</version>
           </dependency>
           <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-server</artifactId>
-            <version>2.29</version>
+            <version>4.0.2</version>
           </dependency>
           <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>
-            <version>2.29</version>
+            <version>3.1.11</version>
           </dependency>
           <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
-            <version>2.29</version>
+            <version>4.0.2</version>
           </dependency>
           <dependency>
             <groupId>org.apache.servicemix.bundles</groupId>
@@ -609,7 +609,7 @@
           <dependency>
             <groupId>org.apache.sling</groupId>
             <artifactId>org.apache.sling.testing.osgi-mock.junit4</artifactId>
-            <version>2.4.10</version>
+            <version>3.5.4</version>
             <scope>test</scope>
           </dependency>
         </dependencies>
@@ -634,17 +634,17 @@
           <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-core</artifactId>
-            <version>2.3.18.Final</version>
+            <version>2.3.23.Final</version>
           </dependency>
           <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-servlet</artifactId>
-            <version>2.3.18.Final</version>
+            <version>2.3.23.Final</version>
           </dependency>
           <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-websockets-jsr</artifactId>
-            <version>2.3.18.Final</version>
+            <version>2.3.23.Final</version>
           </dependency>
           <dependency>
             <groupId>org.codehaus.janino</groupId>
@@ -700,7 +700,7 @@
           <dependency>
             <groupId>org.junit</groupId>
             <artifactId>junit-bom</artifactId>
-            <version>5.13.4</version>
+            <version>6.0.3</version>
             <scope>import</scope>
             <type>pom</type>
           </dependency>
@@ -712,7 +712,7 @@
           <dependency>
             <groupId>org.casbin</groupId>
             <artifactId>jcasbin</artifactId>
-            <version>1.84.0</version>
+            <version>1.99.0</version>
           </dependency>
           <dependency>
             <groupId>com.google.auto.service</groupId>
@@ -722,7 +722,7 @@
           <dependency>
             <groupId>com.google.testing.compile</groupId>
             <artifactId>compile-testing</artifactId>
-            <version>0.21.0</version>
+            <version>0.23.0</version>
           </dependency>
           <dependency>
             <groupId>com.squareup</groupId>
@@ -747,7 +747,7 @@
           <dependency>
             <groupId>io.smallrye</groupId>
             <artifactId>jandex</artifactId>
-            <version>3.4.0</version>
+            <version>3.5.3</version>
           </dependency>
           <!-- JTA -->
           <dependency>
@@ -764,17 +764,17 @@
           <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
-            <version>1.15.4</version>
+            <version>1.16.3</version>
           </dependency>
           <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-influx</artifactId>
-            <version>1.15.4</version>
+            <version>1.16.3</version>
           </dependency>
           <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-graphite</artifactId>
-            <version>1.15.4</version>
+            <version>1.16.3</version>
           </dependency>
           <dependency>
             <groupId>com.diamondq.common</groupId>
@@ -799,7 +799,7 @@
           <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>26.0.2</version>
+            <version>26.1.0</version>
           </dependency>
           <dependency>
             <groupId>org.jspecify</groupId>
@@ -815,12 +815,12 @@
           <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-core</artifactId>
-            <version>4.0.5</version>
+            <version>4.0.6</version>
           </dependency>
           <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
-            <version>4.0.5</version>
+            <version>4.0.6</version>
           </dependency>
           <dependency>
             <groupId>javax.activation</groupId>
@@ -1112,79 +1112,69 @@
           <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>9.8</version>
+            <version>9.9.1</version>
           </dependency>
           <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm-commons</artifactId>
-            <version>9.8</version>
+            <version>9.9.1</version>
           </dependency>
           <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm-util</artifactId>
-            <version>9.8</version>
+            <version>9.9.1</version>
           </dependency>
           <!-- JDBC -->
           <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.7.7</version>
+            <version>42.7.10</version>
           </dependency>
           <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.3.232</version>
+            <version>2.4.240</version>
           </dependency>
           <!-- Bouncy Castle -->
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk18on</artifactId>
-            <version>1.81</version>
+            <version>1.83</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-debug-jdk18on</artifactId>
-            <version>1.81</version>
+            <version>1.83</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpkix-jdk18on</artifactId>
-            <version>1.81</version>
+            <version>1.83</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcmail-jdk18on</artifactId>
-            <version>1.81</version>
+            <version>1.83</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpg-jdk18on</artifactId>
-            <version>1.81</version>
-          </dependency>
-          <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-ext-jdk18on</artifactId>
-            <version>1.81</version>
-          </dependency>
-          <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-ext-debug-jdk18on</artifactId>
-            <version>1.81</version>
+            <version>1.83</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bctls-jdk15on</artifactId>
-            <version>1.81</version>
+            <version>1.83</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15to18</artifactId>
-            <version>1.81</version>
+            <version>1.83</version>
           </dependency>
           <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-debug-jdk15to18</artifactId>
-            <version>1.81</version>
+            <version>1.83</version>
           </dependency>
           <!-- Misc -->
           <dependency>
@@ -1210,7 +1200,7 @@
           <dependency>
             <groupId>org.jboss.logging</groupId>
             <artifactId>jboss-logging</artifactId>
-            <version>3.6.1.Final</version>
+            <version>3.6.2.Final</version>
           </dependency>
           <dependency>
             <groupId>javax</groupId>
@@ -1245,7 +1235,7 @@
           <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>swagger-ui</artifactId>
-            <version>5.28.1</version>
+            <version>5.32.0</version>
           </dependency>
           <dependency>
             <groupId>io.swagger</groupId>
@@ -1255,23 +1245,23 @@
           <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-jaxrs2</artifactId>
-            <version>2.2.36</version>
+            <version>2.2.44</version>
           </dependency>
           <dependency>
             <groupId>org.eclipse.jdt</groupId>
             <artifactId>org.eclipse.jdt.annotation</artifactId>
-            <version>2.4.0</version>
+            <version>2.4.100</version>
           </dependency>
           <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker</artifactId>
-            <version>3.51.0</version>
+            <version>3.54.0</version>
             <optional>true</optional>
           </dependency>
           <dependency>
             <groupId>org.checkerframework</groupId>
             <artifactId>checker-qual</artifactId>
-            <version>3.51.0</version>
+            <version>3.54.0</version>
             <optional>true</optional>
           </dependency>
           <dependency>
@@ -1289,7 +1279,7 @@
           <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.5.0</version>
+            <version>2.5.2</version>
           </dependency>
           <!-- Babbler XMPP Libraries -->
           <dependency>
@@ -1389,37 +1379,37 @@
           <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.19.0</version>
+            <version>5.22.0</version>
             <scope>test</scope>
           </dependency>
           <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>7.28.2</version>
+            <version>7.34.2</version>
             <scope>test</scope>
           </dependency>
           <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java8</artifactId>
-            <version>7.28.2</version>
+            <version>7.34.2</version>
             <scope>test</scope>
           </dependency>
           <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>7.28.2</version>
+            <version>7.34.2</version>
             <scope>test</scope>
           </dependency>
           <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
-            <version>7.28.2</version>
+            <version>7.34.2</version>
             <scope>test</scope>
           </dependency>
           <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>33.4.8-jre</version>
+            <version>33.5.0-jre</version>
             <exclusions>
               <!-- This is excluded because we want to make sure it's marked optional -->
               <exclusion>
@@ -1461,22 +1451,22 @@
           <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.5.23</version>
+            <version>1.5.32</version>
           </dependency>
           <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <version>1.5.23</version>
+            <version>1.5.32</version>
           </dependency>
           <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.18.0</version>
+            <version>3.20.0</version>
           </dependency>
           <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.19.0</version>
+            <version>1.21.0</version>
           </dependency>
           <dependency>
             <groupId>com.diamondq.common</groupId>
@@ -1546,12 +1536,12 @@
           <dependency>
             <groupId>io.sentry</groupId>
             <artifactId>sentry</artifactId>
-            <version>7.13.0</version>
+            <version>8.33.0</version>
           </dependency>
           <dependency>
             <groupId>io.sentry</groupId>
             <artifactId>sentry-logback</artifactId>
-            <version>7.13.0</version>
+            <version>8.33.0</version>
           </dependency>
         </dependencies>
       </dependencyManagement>
@@ -1582,7 +1572,7 @@
             <plugin>
               <groupId>io.smallrye</groupId>
               <artifactId>jandex-maven-plugin</artifactId>
-              <version>3.4.0</version>
+              <version>3.5.3</version>
             </plugin>
           </plugins>
         </pluginManagement>
