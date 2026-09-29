@@ -7,7 +7,7 @@
     <version>7.0.56</version>
   </parent>
   <artifactId>diamondq-parent</artifactId>
-  <version>7.0.52</version>
+  <version>7.0.53</version>
   <packaging>pom</packaging>
   <name>DiamondQ: DiamondQ Parent</name>
   <description>A common POM for parents of DiamondQ projects.</description>
@@ -1549,11 +1549,6 @@
         </dependencies>
       </dependencyManagement>
       <dependencies>
-        <dependency>
-          <groupId>org.eclipse.jdt</groupId>
-          <artifactId>org.eclipse.jdt.annotation</artifactId>
-          <optional>true</optional>
-        </dependency>
         <dependency>
           <groupId>org.jspecify</groupId>
           <artifactId>jspecify</artifactId>
