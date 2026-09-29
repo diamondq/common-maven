@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.56</version>
+    <version>7.0.57</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -1792,6 +1792,37 @@
                 </plugins>
             </build>
         </profile>
+        <!-- Netty management for Vert.x projects.
+             IMPORTANT: This profile must stay declared BEFORE the micronaut-* profiles. When several imported BOMs manage the same
+             artifact, the first import wins, and profiles are injected in declaration order. Micronaut's BOM pins netty to 4.1.x,
+             but Vert.x 5 needs netty 4.2.x, so for projects using both, this netty-bom has to come first. -->
+        <profile>
+            <id>vertx-netty</id>
+            <activation>
+                <property>
+                    <name>[DIAMONDQ]</name>
+                    <value>and(type(java),file(profiles/vertx-annotations))</value>
+                </property>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.netty</groupId>
+                        <artifactId>netty-tcnative-classes</artifactId>
+                        <version>2.0.84.Final</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>io.netty</groupId>
+                        <artifactId>netty-bom</artifactId>
+                        <version>4.2.18.Final</version>
+                        <!-- IMPORTANT NOTE: Keep the above dependency override for netty-tcnative-classes up to date. It's currently
+              present because the current netty-bom includes an invalid version -->
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
         <!-- Micronaut dependencies -->
         <profile>
             <id>micronaut-dependencies</id>
@@ -2053,20 +2084,8 @@
             </activation>
             <dependencyManagement>
                 <dependencies>
-                    <dependency>
-                        <groupId>io.netty</groupId>
-                        <artifactId>netty-tcnative-classes</artifactId>
-                        <version>2.0.70.Final</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>io.netty</groupId>
-                        <artifactId>netty-bom</artifactId>
-                        <version>4.2.0.Final</version>
-                        <!-- IMPORTANT NOTE: Keep the above dependency override for netty-tcnative-classes up to date. It's currently
-              present because the current netty-bom includes an invalid version -->
-                        <type>pom</type>
-                        <scope>import</scope>
-                    </dependency>
+                    <!-- The netty-bom / netty-tcnative-classes management lives in the vertx-netty profile, which must be declared
+                         BEFORE the micronaut profiles (see the note there). -->
                     <dependency>
                         <groupId>io.vertx</groupId>
                         <artifactId>vertx-stack-depchain</artifactId>
