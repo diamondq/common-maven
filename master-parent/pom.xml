@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.57</version>
+    <version>7.0.58</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -1838,6 +1838,15 @@
             </properties>
             <dependencyManagement>
                 <dependencies>
+                    <!-- micronaut-platform 4.2.3 pins jakarta.annotation-api to 2.1.1 (Jakarta EE 10), but the DiamondQ common libraries use
+                         Jakarta EE 11 (cdi-api 4.1.0), which needs 3.0.0. An explicit entry beats the imported BOM. 3.0.0 is compatible
+                         with Micronaut (same package; only @ManagedBean was removed). Remove once micronaut.version is built on EE 11.
+                         Keep in sync across the micronaut-dependencies, micronaut-openapi and micronaut-security profiles. -->
+                    <dependency>
+                        <groupId>jakarta.annotation</groupId>
+                        <artifactId>jakarta.annotation-api</artifactId>
+                        <version>3.0.0</version>
+                    </dependency>
                     <dependency>
                         <groupId>io.micronaut.validation</groupId>
                         <artifactId>micronaut-validation-bom</artifactId>
@@ -1920,6 +1929,15 @@
             </properties>
             <dependencyManagement>
                 <dependencies>
+                    <!-- micronaut-platform 4.2.3 pins jakarta.annotation-api to 2.1.1 (Jakarta EE 10), but the DiamondQ common libraries use
+                         Jakarta EE 11 (cdi-api 4.1.0), which needs 3.0.0. An explicit entry beats the imported BOM. 3.0.0 is compatible
+                         with Micronaut (same package; only @ManagedBean was removed). Remove once micronaut.version is built on EE 11.
+                         Keep in sync across the micronaut-dependencies, micronaut-openapi and micronaut-security profiles. -->
+                    <dependency>
+                        <groupId>jakarta.annotation</groupId>
+                        <artifactId>jakarta.annotation-api</artifactId>
+                        <version>3.0.0</version>
+                    </dependency>
                     <dependency>
                         <groupId>io.micronaut.openapi</groupId>
                         <artifactId>micronaut-openapi-bom</artifactId>
@@ -1975,6 +1993,15 @@
             </properties>
             <dependencyManagement>
                 <dependencies>
+                    <!-- micronaut-platform 4.2.3 pins jakarta.annotation-api to 2.1.1 (Jakarta EE 10), but the DiamondQ common libraries use
+                         Jakarta EE 11 (cdi-api 4.1.0), which needs 3.0.0. An explicit entry beats the imported BOM. 3.0.0 is compatible
+                         with Micronaut (same package; only @ManagedBean was removed). Remove once micronaut.version is built on EE 11.
+                         Keep in sync across the micronaut-dependencies, micronaut-openapi and micronaut-security profiles. -->
+                    <dependency>
+                        <groupId>jakarta.annotation</groupId>
+                        <artifactId>jakarta.annotation-api</artifactId>
+                        <version>3.0.0</version>
+                    </dependency>
                     <dependency>
                         <groupId>io.micronaut.security</groupId>
                         <artifactId>micronaut-security-bom</artifactId>
