@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.diamondq</groupId>
     <artifactId>master-parent</artifactId>
-    <version>7.0.58</version>
+    <version>7.0.59</version>
     <packaging>pom</packaging>
     <name>DiamondQ: Master Parent</name>
     <description>A common root-level POM for parents. Reusable by any</description>
@@ -1150,7 +1150,8 @@
                                 <id>default-test</id>
                                 <configuration>
                                     <systemPropertyVariables>
-                                        <env.eclipse>${environment.eclipse}</env.eclipse>
+                                        <!--suppress MavenModelInspection -->
+                                      <env.eclipse>${environment.eclipse}</env.eclipse>
                                         <env.maven>true</env.maven>
                                     </systemPropertyVariables>
                                     <!--suppress MavenModelInspection -->
@@ -1235,7 +1236,8 @@
                                 <id>default-test</id>
                                 <configuration>
                                     <systemPropertyVariables>
-                                        <env.eclipse>${environment.eclipse}</env.eclipse>
+                                        <!--suppress MavenModelInspection -->
+                                      <env.eclipse>${environment.eclipse}</env.eclipse>
                                         <env.maven>true</env.maven>
                                     </systemPropertyVariables>
                                     <testSourceDirectory>${project.build.sourceDirectory}</testSourceDirectory>
@@ -1840,7 +1842,7 @@
                 <dependencies>
                     <!-- micronaut-platform 4.2.3 pins jakarta.annotation-api to 2.1.1 (Jakarta EE 10), but the DiamondQ common libraries use
                          Jakarta EE 11 (cdi-api 4.1.0), which needs 3.0.0. An explicit entry beats the imported BOM. 3.0.0 is compatible
-                         with Micronaut (same package; only @ManagedBean was removed). Remove once micronaut.version is built on EE 11.
+                         with Micronaut (the same package; only @ManagedBean was removed). Remove once micronaut.version is built on EE 11.
                          Keep in sync across the micronaut-dependencies, micronaut-openapi and micronaut-security profiles. -->
                     <dependency>
                         <groupId>jakarta.annotation</groupId>
@@ -1931,7 +1933,7 @@
                 <dependencies>
                     <!-- micronaut-platform 4.2.3 pins jakarta.annotation-api to 2.1.1 (Jakarta EE 10), but the DiamondQ common libraries use
                          Jakarta EE 11 (cdi-api 4.1.0), which needs 3.0.0. An explicit entry beats the imported BOM. 3.0.0 is compatible
-                         with Micronaut (same package; only @ManagedBean was removed). Remove once micronaut.version is built on EE 11.
+                         with Micronaut (the same package; only @ManagedBean was removed). Remove once micronaut.version is built on EE 11.
                          Keep in sync across the micronaut-dependencies, micronaut-openapi and micronaut-security profiles. -->
                     <dependency>
                         <groupId>jakarta.annotation</groupId>
@@ -1995,7 +1997,7 @@
                 <dependencies>
                     <!-- micronaut-platform 4.2.3 pins jakarta.annotation-api to 2.1.1 (Jakarta EE 10), but the DiamondQ common libraries use
                          Jakarta EE 11 (cdi-api 4.1.0), which needs 3.0.0. An explicit entry beats the imported BOM. 3.0.0 is compatible
-                         with Micronaut (same package; only @ManagedBean was removed). Remove once micronaut.version is built on EE 11.
+                         with Micronaut (the same package; only @ManagedBean was removed). Remove once micronaut.version is built on EE 11.
                          Keep in sync across the micronaut-dependencies, micronaut-openapi and micronaut-security profiles. -->
                     <dependency>
                         <groupId>jakarta.annotation</groupId>
@@ -2340,7 +2342,7 @@
                 <osgi.export.base.package>${osgi.base.package}.*</osgi.export.base.package>
                 <!-- This is the Export-Package. Generally override one of the component properties -->
                 <osgi.export.packages>
-                    $[replace;$[sjoin;,;${osgi.dont.export.i18n};${osgi.dont.export.impl};${osgi.extra.dont.export.packages};${osgi.extra.export.packages};${osgi.export.base.package}];@@;\\;]
+                    $&lt;replace;$&lt;sjoin;,;${osgi.dont.export.i18n};${osgi.dont.export.impl};${osgi.extra.dont.export.packages};${osgi.extra.export.packages};${osgi.export.base.package}>;@@;\\;>
                 </osgi.export.packages>
                 <!-- Override this property to inject extra Import-Package elements.
                      NOTE: Due to the later use of sjoin, there cannot be any semicolons ';' within the strings.
@@ -2349,7 +2351,9 @@
                 -->
                 <osgi.extra.import.packages/>
                 <!-- This represents the packages to import. The default is * -->
-                <osgi.import.packages>$[replace;$[sjoin;,;${osgi.extra.import.packages};*];@@;\\;]</osgi.import.packages>
+                <!-- NOTE: The bnd macros use the $<...> delimiters. Maven's interpolator can't handle nested ${...},
+                     and $[...] breaks on version ranges such as [3.7,3.8). -->
+                <osgi.import.packages>$&lt;replace;$&lt;sjoin;,;${osgi.extra.import.packages};*>;@@;\\;></osgi.import.packages>
                 <!-- This represents the Fragment-Host -->
                 <osgi.fragment.host/>
                 <!-- Override this property to inject extra DynamicImport elements.
@@ -2365,7 +2369,7 @@
                 -->
                 <osgi.dynamicimport.basepackage/>
                 <!-- This represents the DynamicImport-Package -->
-                <osgi.dynamicimport.package>$[replace;$[sjoin;,;${osgi.dynamicimport.extra};${osgi.dynamicimport.basepackage}];@@;\\;]</osgi.dynamicimport.package>
+                <osgi.dynamicimport.package>$&lt;replace;$&lt;sjoin;,;${osgi.dynamicimport.extra};${osgi.dynamicimport.basepackage}>;@@;\\;></osgi.dynamicimport.package>
                 <!-- This represents the BND DS Annotations -->
                 <osgi.annotations.ds>*</osgi.annotations.ds>
                 <!-- This represents the BND DS Annotations Options -->
@@ -3553,7 +3557,7 @@ if (Files.exists(fileToDelete)) {
                 <plugin>
                     <groupId>org.codehaus.gmavenplus</groupId>
                     <artifactId>gmavenplus-plugin</artifactId>
-                    <version>4.3.1</version>
+                    <version>5.1.0</version>
                 </plugin>
                 <plugin>
                     <groupId>com.carrotgarden.maven</groupId>
